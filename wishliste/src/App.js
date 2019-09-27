@@ -9,13 +9,13 @@ class App extends Component {
   };
 
   componentDidMount(){
-    const url = "/api/test.php";
+    const url = '/api/test.php';
     axios.get(url).then(response => response.data)
     .then((data) => {
       this.setState({ results:data })
       console.log(this.state.results)
-    });
-  }
+    })
+  };
 
   render(){
     return (
