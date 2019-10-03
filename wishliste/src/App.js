@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
@@ -20,22 +20,17 @@ class App extends Component {
   render(){
     return (
       <div className="App">
+        <div className="Header-bar">
+          <div className="Header-text">WishListé</div>
+        </div>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          testing start: <br /> 
-          {this.state.results} <br />
-          testing end
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <div className="Container-head">
+            Group #7 3-tier architecture demo <br /> 
+          </div>
+          <div className="Container-list">
+            {this.state.results}
+          </div>
         </header>
       </div>
     );
