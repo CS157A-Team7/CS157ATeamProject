@@ -1,0 +1,2 @@
+Contributions:
+Francisco Romero - Brainstorming ER Diagram, Created some of tables and example tuples
