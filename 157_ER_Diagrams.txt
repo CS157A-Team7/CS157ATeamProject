@@ -1,2 +1,4 @@
 Contributions:
-Francisco Romero - Brainstorming ER Diagram, Created some of tables and example tuples
+Francisco Romero - Brainstorming ER Diagram, Created some of tables and example tuples.
+
+https://docs.google.com/document/d/1M6ijBFXjuyZVdPkI_fV5mo2WgzS5zOAamyuQ8ddWFx8/edit?usp=sharing
