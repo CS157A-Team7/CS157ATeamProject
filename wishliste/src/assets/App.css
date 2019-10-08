@@ -37,6 +37,17 @@
   font-size: calc(40px + 2vmin);
 }
 
+.Header-icons {
+  position: absolute;
+  right: 5%;
+  bottom: 30%;
+  width: 10%;
+}
+
+.Header-icon{
+  margin-right: 10%; 
+}
+
 .Container-head {
   background-color: #202833;
   width: 100vh;
