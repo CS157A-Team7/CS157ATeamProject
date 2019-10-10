@@ -16,27 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `todo_list`
+-- Table structure for table `friends_with`
 --
 
-DROP TABLE IF EXISTS `todo_list`;
+DROP TABLE IF EXISTS `friends_with`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `todo_list` (
-  `list_id` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  PRIMARY KEY (`list_id`)
+CREATE TABLE `friends_with` (
+  `Username 1` varchar(45) NOT NULL,
+  `Username 2` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Username 1`),
+  KEY `Username 2_idx` (`Username 2`),
+  CONSTRAINT `Username 1` FOREIGN KEY (`Username 1`) REFERENCES `account` (`username`),
+  CONSTRAINT `Username 2` FOREIGN KEY (`Username 2`) REFERENCES `account` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `todo_list`
+-- Dumping data for table `friends_with`
 --
 
-LOCK TABLES `todo_list` WRITE;
-/*!40000 ALTER TABLE `todo_list` DISABLE KEYS */;
-INSERT INTO `todo_list` VALUES (1,'2019-10-01'),(2,'2019-10-02'),(3,'2019-10-03'),(4,'2019-10-04'),(5,'2019-10-05'),(6,'2019-10-06'),(7,'2019-10-07'),(8,'2019-10-08'),(9,'2019-10-09'),(10,'2019-10-10'),(11,'2019-10-11'),(12,'2019-10-12'),(13,'2019-10-13'),(14,'2019-10-14'),(15,'2019-10-15');
-/*!40000 ALTER TABLE `todo_list` ENABLE KEYS */;
+LOCK TABLES `friends_with` WRITE;
+/*!40000 ALTER TABLE `friends_with` DISABLE KEYS */;
+/*!40000 ALTER TABLE `friends_with` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-10 15:43:09
+-- Dump completed on 2019-10-10 15:43:07
