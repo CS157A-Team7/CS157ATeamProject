@@ -35,7 +35,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('another.user@gmail.com','StrongPassword123!'),('ash_ketchum@hotmail.com','Gotta5atch3m@ll'),('bill@aol.com','iambill'),('ching-seh.wu@sjsu.edu','1234'),('dr.seuss@yahoo.com','catIndaHat!'),('emily@yahoo.com','0987654321'),('eric@gmail.com','h75i603s'),('freddy.krueger@hotmail.com','Nightmare@ElmStreet'),('jason.vorhees@gmail.com','fridaydathirteenth!'),('josh.peck@aol.com','bobAndAlice!'),('sam@aol.com','5amIam'),('sarah@gmail.com','54321'),('ted.mosby@gmail.com','howImetYourMother!'),('Ted.Stroehmann@yahoo.com','5omething@boutMary'),('Yu.Narukami@yahoo.jp','Persona!');
+INSERT INTO `account` VALUES ('alice@aol.com','bobAndAlice!'),('another.user@gmail.com','StrongPassword123!'),('ash_ketchum@hotmail.com','Gotta5atch3m@ll'),('bill@aol.com','iambill'),('ching-seh.wu@sjsu.edu','1234'),('dr.seuss@yahoo.com','catIndaHat!'),('emily@yahoo.com','0987654321'),('eric@gmail.com','h75i603s'),('freddy.krueger@hotmail.com','Nightmare@ElmStreet'),('jason.vorhees@gmail.com','fridaydathirteenth!'),('josh.peck@aol.com','bobAndAlice!'),('sam@aol.com','5amIam'),('sarah@gmail.com','54321'),('ted.mosby@gmail.com','howImetYourMother!'),('Ted.Stroehmann@yahoo.com','5omething@boutMary'),('Yu.Narukami@yahoo.jp','Persona!');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-10 13:58:17
+-- Dump completed on 2019-10-10 15:06:35

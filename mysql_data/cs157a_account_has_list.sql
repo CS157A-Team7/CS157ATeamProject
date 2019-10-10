@@ -16,27 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `todo_list`
+-- Table structure for table `account_has_list`
 --
 
-DROP TABLE IF EXISTS `todo_list`;
+DROP TABLE IF EXISTS `account_has_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `todo_list` (
+CREATE TABLE `account_has_list` (
+  `username` varchar(45) NOT NULL,
   `list_id` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  PRIMARY KEY (`list_id`)
+  PRIMARY KEY (`username`,`list_id`),
+  KEY `list_name_idx` (`list_id`),
+  CONSTRAINT `list_id` FOREIGN KEY (`list_id`) REFERENCES `list` (`list_id`),
+  CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `account` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `todo_list`
+-- Dumping data for table `account_has_list`
 --
 
-LOCK TABLES `todo_list` WRITE;
-/*!40000 ALTER TABLE `todo_list` DISABLE KEYS */;
-INSERT INTO `todo_list` VALUES (1,'2019-10-01'),(2,'2019-10-02'),(3,'2019-10-03'),(4,'2019-10-04'),(5,'2019-10-05'),(6,'2019-10-06'),(7,'2019-10-07'),(8,'2019-10-08'),(9,'2019-10-09'),(10,'2019-10-10'),(11,'2019-10-11'),(12,'2019-10-12'),(13,'2019-10-13'),(14,'2019-10-14'),(15,'2019-10-15');
-/*!40000 ALTER TABLE `todo_list` ENABLE KEYS */;
+LOCK TABLES `account_has_list` WRITE;
+/*!40000 ALTER TABLE `account_has_list` DISABLE KEYS */;
+INSERT INTO `account_has_list` VALUES ('dr.seuss@yahoo.com',1),('sarah@gmail.com',2),('ash_ketchum@hotmail.com',3),('Ted.Stroehmann@yahoo.com',4),('josh.peck@aol.com',5),('alice@aol.com',6),('eric@gmail.com',7),('eric@gmail.com',8),('Yu.Narukami@yahoo.jp',9),('Yu.Narukami@yahoo.jp',10),('alice@aol.com',11),('bill@aol.com',12),('emily@yahoo.com',13),('ching-seh.wu@sjsu.edu',14),('ash_ketchum@hotmail.com',15),('dr.seuss@yahoo.com',16),('sarah@gmail.com',17),('ted.mosby@gmail.com',18),('ash_ketchum@hotmail.com',19),('ash_ketchum@hotmail.com',20),('ash_ketchum@hotmail.com',21),('emily@yahoo.com',22),('ching-seh.wu@sjsu.edu',23),('freddy.krueger@hotmail.com',24),('sarah@gmail.com',25),('bill@aol.com',28),('emily@yahoo.com',28),('sarah@gmail.com',28),('ching-seh.wu@sjsu.edu',29),('sam@aol.com',30);
+/*!40000 ALTER TABLE `account_has_list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-10 15:06:36
+-- Dump completed on 2019-10-10 15:06:38
