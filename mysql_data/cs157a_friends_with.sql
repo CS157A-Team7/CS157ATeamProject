@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `friends_with`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `friends_with` (
   `Username 1` varchar(45) NOT NULL,
-  `Username 2` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Username 1`),
+  `Username 2` varchar(45) NOT NULL,
+  PRIMARY KEY (`Username 1`,`Username 2`),
   KEY `Username 2_idx` (`Username 2`),
-  CONSTRAINT `Username 1` FOREIGN KEY (`Username 1`) REFERENCES `account` (`username`),
-  CONSTRAINT `Username 2` FOREIGN KEY (`Username 2`) REFERENCES `account` (`username`)
+  CONSTRAINT `Username1` FOREIGN KEY (`Username 1`) REFERENCES `account` (`username`),
+  CONSTRAINT `Username2` FOREIGN KEY (`Username 2`) REFERENCES `account` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,6 +38,7 @@ CREATE TABLE `friends_with` (
 
 LOCK TABLES `friends_with` WRITE;
 /*!40000 ALTER TABLE `friends_with` DISABLE KEYS */;
+INSERT INTO `friends_with` VALUES ('ching-seh.wu@sjsu.edu','alice@aol.com'),('emily@yahoo.com','alice@aol.com'),('ching-seh.wu@sjsu.edu','ash_ketchum@hotmail.com'),('ash_ketchum@hotmail.com','bill@aol.com'),('ching-seh.wu@sjsu.edu','bill@aol.com'),('ching-seh.wu@sjsu.edu','emily@yahoo.com'),('dr.seuss@yahoo.com','eric@gmail.com'),('dr.seuss@yahoo.com','freddy.krueger@hotmail.com'),('ching-seh.wu@sjsu.edu','josh.peck@aol.com'),('ash_ketchum@hotmail.com','sam@aol.com'),('dr.seuss@yahoo.com','sam@aol.com'),('ching-seh.wu@sjsu.edu','sarah@gmail.com'),('ching-seh.wu@sjsu.edu','Ted.Stroehmann@yahoo.com'),('dr.seuss@yahoo.com','Yu.Narukami@yahoo.jp'),('eric@gmail.com','Yu.Narukami@yahoo.jp');
 /*!40000 ALTER TABLE `friends_with` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-10 15:43:07
+-- Dump completed on 2019-10-14 14:42:26
