@@ -1,4 +1,5 @@
 Contributions:
 Francisco Romero - Updated ER Diagram, Created Schemas Section, Added a table to database
+Holly Lind - Updated explanations, Created most of the tables in database
 
 https://docs.google.com/document/d/1h3nYTdQZvXtm0Ze93TB8EeQpxFyStEF8Ad-hDEqltcg/edit?usp=sharing
