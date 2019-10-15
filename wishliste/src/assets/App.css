@@ -68,3 +68,25 @@
   padding-right: 5vh;
   text-align: left;
 }
+
+.Item-Container{
+  float: left;
+  border-style: solid;
+}
+
+.Item-Checkbox{
+  float: left;
+  width:20%;
+  background-color: aliceblue;
+}
+
+.Item-Title{
+  float: left;
+  text-decoration: underline;
+  width: 80%;
+  background-color: #09d3ac;
+}
+
+.Item-Description{
+  float: left;
+}
