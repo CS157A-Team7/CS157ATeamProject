@@ -8,8 +8,12 @@ const Item = (props) => {
                     <div className="Item-Checkbox">
                         <input type="checkbox"/>
                     </div>
-                    <h3 className="Item-Title">{item.name}</h3>
-                    <p className="Item-Description">{item.description}</p>
+                    <div className="Item-Title-Container">
+                         <h3>{item.name}</h3>
+                    </div>
+                    <div className="Item-Description-Container">
+                        <p>{item.description}</p>
+                    </div>
                 </div>
             ))}
         </div>

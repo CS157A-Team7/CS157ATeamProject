@@ -11,9 +11,13 @@ const ItemDescriptionPage = () => {
     return (
         <div>
             <Header/>
-            <div>
-                <FontAwesomeIcon icon={faArrowLeft} className="fa-lg"/>
-                <h2>{list.title}</h2>
+            <div className="Title-Container">
+                <div className="Back-Arrow-Container">
+                    <button className="Back-Arrow"><FontAwesomeIcon icon={faArrowLeft} className="fa-lg"/> </button>
+                </div>
+                <div className="List-Title-Container">
+                    <h2 className="List-Title">{list.title}</h2>
+                </div>
             </div>
             <Item items={list.items}/>
         </div>
