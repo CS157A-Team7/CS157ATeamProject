@@ -6,17 +6,6 @@
   height: 40vmin;
 }
 
-.App-header {
-  background-color: white;
-  /* min-height: 100vh; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #65fbf1;
-}
-
 .App-link {
   color: #09d3ac;
 }
@@ -27,6 +16,7 @@
   text-align: left;
   color: #65fbf1;
   position: relative;
+  margin-bottom: 3vmin;
 }
 
 .Header-text {
@@ -37,23 +27,112 @@
   font-size: calc(40px + 2vmin);
 }
 
-.Container-head {
-  background-color: #202833;
-  width: 100vh;
-  margin-top: 5vh;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
-  padding-left: 5vh;
-  padding-right: 5vh;
+.Social-container {
+  height: 20vmin;
+  width: 30%;
+  float: right;
+  /* background-color: white; */
+  display: flex;
+  flex-direction: row;
+  flex-flow: row-reverse;
+  margin-right: 5vmin;
 }
 
-.Container-list {
+.Social-facebook {
+  margin-top: 50px;
+  padding-left: 5vmin;
+  width: 50px;
+  background-image: url(assets/facebook40.png);
+  background-repeat: no-repeat;
+}
+
+.Social-twitter {
+  margin-top: 50px;
+  padding-left: 5vmin;
+  width: 50px;
+  background-image: url(assets/twitter40.png);
+  background-repeat: no-repeat;
+}
+
+.Social-user {
+  margin-top: 50px;
+  padding-left: 5vmin;
+  width: 50px;
+  background-image: url(assets/user40.png);
+  background-repeat: no-repeat;
+}
+
+.Button-container {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  font-size: calc(8px + 2vmin);
+  color: #65fbf1;
+}
+
+.New-list-button {
+  background-color: #202833;
+  margin-left: 4%;
+  margin-right: -2%;
+  margin-bottom: 5vmin;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  width: 29.3%;
+  max-width: 30vmin;
+}
+
+.List-row {
+  background-color: white;
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: center; */
+  font-size: calc(10px + 2vmin);
+  color: #65fbf1;
+}
+
+.List-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-left: 4%;
+  margin-bottom: 5vmin;
+}
+
+.List-head {
+  background-color: #202833;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.List-items {
   background-color: #46a29f;
-  width: 100vh;
-  margin-bottom: 5vh;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
-  padding-left: 5vh;
-  padding-right: 5vh;
+  padding-left: 0vh;
+  padding-right: 2vh;
   text-align: left;
+  font-size: calc(8px + 2vmin);
+}
+
+li.unchecked {
+  list-style-image: url(assets/checkbox15.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+li.checked {
+  list-style-image: url(assets/checked15.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
