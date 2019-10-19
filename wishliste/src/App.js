@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import './assets/App.css';
 import axios from 'axios';
+import Header from './components/header';
 import SignUp from './SignUp.js';
 
 class App extends Component {
@@ -22,9 +23,7 @@ class App extends Component {
     return (
 
       <div className="App">
-        <div className="Header-bar">
-          <div className="Header-text">WishListé</div>
-        </div>
+        <Header />
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <div className="Container-head">

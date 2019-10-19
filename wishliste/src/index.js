@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import ItemDescriptionPage from './pages/itemDescriptionPage';
 import * as serviceWorker from './serviceWorker';
 
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
