@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import './assets/App.css';
 import axios from 'axios';
 import Header from './components/header';
+import SignUp from './SignUp.js';
 
 class App extends Component {
   state = {
@@ -20,18 +21,22 @@ class App extends Component {
 
   render(){
     return (
+
       <div className="App">
         <Header />
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <div className="Container-head">
-            Group #7 3-tier architecture demo <br /> 
+            Group #7 3-tier architecture demo <br />
           </div>
           <div className="Container-list">
             {this.state.results}
           </div>
         </header>
-      </div>
+
+        
+
+        </div>
     );
   }
 }

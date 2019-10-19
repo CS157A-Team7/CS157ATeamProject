@@ -1,4 +1,6 @@
 Contributions:
 Francisco Romero - Brainstorming ER Diagram, Created some of tables and example tuples.
+Holly Lind - Brainstorming ER Diagram, wrote explanations for entity sets and relationships, created some example tuples.
+Pratyusha Pogaru - Brainstorming ER Diagram, created some example tuples in the tables, revised table structure
 
 https://docs.google.com/document/d/1M6ijBFXjuyZVdPkI_fV5mo2WgzS5zOAamyuQ8ddWFx8/edit?usp=sharing
