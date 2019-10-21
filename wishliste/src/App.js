@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import './assets/App.css';
 import axios from 'axios';
+import Header from './components/header';
 import SignUp from './SignUp.js';
 import List from './List.js';
 import AllLists from './AllLists.js'
@@ -128,14 +129,13 @@ class App extends Component {
     return (
 
       <div className="App">
-        <div className="Header-bar">
-          <div className="Header-text">WishListé</div>
-          <div className="Social-container">
-            <div className="Social-user"></div>
-            <div className="Social-facebook"></div>
-            <div className="Social-twitter"></div>    
+        <Header />
+        <header className="App-header">
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <div className="Container-head">
+            Group #7 3-tier architecture demo <br />
           </div>
-        </div>
+        </header>
 
         <div className="Button-container">
           <div className="New-list-button">new wishlist</div>

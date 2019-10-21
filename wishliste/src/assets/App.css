@@ -45,7 +45,7 @@
 }
 
 .Header-icon{
-  margin-right: 10%;
+  margin-right: 10%; 
 }
 
 .Container-head {
@@ -67,4 +67,55 @@
   padding-left: 5vh;
   padding-right: 5vh;
   text-align: left;
+}
+
+.Item-Container{
+  width:100%;
+  margin-bottom: 1%;
+  float: left;
+  border-style: solid;
+}
+
+.Item-Checkbox{
+  float: left;
+  width:35%;
+  padding-top: 50px;
+}
+
+.Item-Title-Container{
+  float: left;
+  text-decoration: underline;
+  width: 65%;
+}
+
+.Item-Description-Container{
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+.Title-Container{
+  float:left;
+  width: 100%;
+  clear: both;
+}
+
+.Back-Arrow-Container{
+  float:left;
+  width: 40%;
+  padding-top: 25px;
+}
+
+.Back-Arrow{
+  background-color: white;
+  border: none;
+}
+
+.List-Title{
+  text-decoration: underline;
+}
+
+.List-Title-Container{
+  width: 60%;
+  float:left;
 }
