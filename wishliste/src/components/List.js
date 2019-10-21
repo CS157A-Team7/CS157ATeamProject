@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import '../assets/App.css';
 
 const ListHead = props => {
   return (

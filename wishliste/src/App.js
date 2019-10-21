@@ -4,8 +4,7 @@ import './assets/App.css';
 import axios from 'axios';
 import Header from './components/header';
 import SignUp from './SignUp.js';
-import List from './List.js';
-import AllLists from './AllLists.js'
+import AllLists from './components/AllLists.js';
 
 class App extends Component {
   state = {
@@ -130,14 +129,8 @@ class App extends Component {
 
       <div className="App">
         <Header />
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <div className="Container-head">
-            Group #7 3-tier architecture demo <br />
-          </div>
-        </header>
 
-        <div className="Button-container">
+        <div className="New-button-container">
           <div className="New-list-button">new wishlist</div>
           <div className="New-list-button">new surprise wishlist</div>
           <div className="New-list-button">new todo list</div>
@@ -145,7 +138,7 @@ class App extends Component {
 
         <AllLists allLists={this.state.lists} />
 
-        <header className="List-row">
+        <header className="Row-of-lists">
           <div className="List-container">
             <div className="List-head">
               3-tier architecture demo (just to show it still works)

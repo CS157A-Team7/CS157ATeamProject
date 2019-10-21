@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import '../assets/App.css';
 import List from './List.js';
 
 const ListRow = props => {
@@ -9,7 +9,7 @@ const ListRow = props => {
   }
 
   return (
-    <header className="List-row">
+    <header className="Row-of-lists">
       {lists}
     </header>  
   )
