@@ -4,7 +4,10 @@ import List from './List.js';
 
 const ListRow = props => {
   var lists = [];
-  for (var i = props.startIndex; i <= props.endIndex; i++) {
+  for (var i = props.startIndex; i < props.startIndex + 4; i++) {
+    if (props.allLists[i] == null) {
+      break;
+    }
     lists.push(<List listData={props.allLists[i]} />)
   }
 
@@ -20,17 +23,8 @@ class AllLists extends Component {
     const { allLists } = this.props
 
     var everything = [];
-    var counter = 0;
-    var moreToDraw = true;
-    while (moreToDraw) {
-      if (allLists.length - counter > 4) {
-        everything.push(<ListRow allLists={allLists} startIndex={counter} endIndex={counter+3} />)
-        counter += 4;
-      }
-      else {
-        everything.push(<ListRow allLists={allLists} startIndex={counter} endIndex={allLists.length-1} />)
-        moreToDraw = false;
-      }
+    for (var i = 0; i < allLists.length; i += 4) {
+      everything.push(<ListRow allLists={allLists} startIndex={i} />)
     }
 
     return (
