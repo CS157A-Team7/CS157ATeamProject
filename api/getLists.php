@@ -3,9 +3,9 @@
     $conn = new mysqli($host, $user, $password, $dbname);
     if($conn->connect_error) die($conn->connect_error);
 
-    $list_id = $_GET['list_id'];
+    $username = $_POST['username'];
 
-    $query = "SELECT item_id,name,description,checked FROM item NATURAL JOIN list_has_items WHERE list_id='$list_id'";
+    $query = "SELECT list_id,name,description FROM list NATURAL JOIN account_has_list WHERE username='$username'";
     $result = $conn->query($query);
     if(!$result) die ("Database access failed: " . $conn->error);
 
