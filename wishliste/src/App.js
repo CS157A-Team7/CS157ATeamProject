@@ -115,15 +115,27 @@ class App extends Component {
   };
 
   componentDidMount(){
-    const url = '/api/test.php';
-    axios.get(url).then(response => response.data)
-    .then((data) => {
-      this.setState({ results:data })
+    const params = new URLSearchParams();
+    params.append('username', 'ash_ketchum@hotmail.com');
+    axios.post('/api/getListswithItems.php', params)
+    .then((response) => {
+      this.setState({ results:response.data });
       console.log(this.state.results)
     })
+    .catch(function(error){
+        console.log(error);
+    });
   };
 
   render(){
+
+    if(!this.state.results){
+      return(
+        <div>
+          <hr/>
+        </div>
+      )
+    };
 
     return (
 
@@ -136,21 +148,7 @@ class App extends Component {
           <div className="New-list-button">new todo list</div>
         </div>
 
-        <AllLists allLists={this.state.lists} />
-
-        <header className="Row-of-lists">
-          <div className="List-container">
-            <div className="List-head">
-              3-tier architecture demo (just to show it still works)
-            </div>
-            <div className="List-items">
-              <ul>
-                <li className="unchecked">{this.state.results}</li>
-              </ul>
-            </div>
-          </div>
-        </header>
-
+        <AllLists allLists={this.state.results} />
         </div>
     );
   }
