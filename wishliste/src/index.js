@@ -19,9 +19,13 @@ const routing = (
           <li>
             <Link to="/SignUp">Signup</Link>
           </li>
+          <li>
+            <Link to="/List">List</Link>
+          </li>
         </ul>
         <Route exact path="/" component={App} />
         <Route path= "/SignUp" component={SignUp} />
+        <Route path="/List" component={ItemDescriptionPage}/>
       </div>
     </Router>
   )
