@@ -12,7 +12,7 @@ const ListHead = props => {
 const ListBody = props => {
   const items = props.listData.items.map((item) => {
     return (
-      <li className={item.checked}>
+      <li className={item.checked==1?'checked':'unchecked'}>
         {item.name}
       </li>
     )
