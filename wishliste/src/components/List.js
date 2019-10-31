@@ -12,7 +12,7 @@ const ListHead = props => {
 const ListBody = props => {
   const items = props.listData.items.map((item) => {
     return (
-      <li className={item.checked}>
+      <li className={item.checked==1?'checked':'unchecked'}>
         {item.name}
       </li>
     )
@@ -32,7 +32,7 @@ class List extends Component {
     const { listData } = this.props
 
     return (
-      <div className="List-container">
+      <div className="List-container" onClick={() => console.log("hello " + listData.name)}>
         <ListHead listData={listData} />
         <ListBody listData={listData} />
       </div>
