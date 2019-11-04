@@ -11,7 +11,9 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
-    isOpen: false
+    isOpen: false,
+    newItemName: "",
+    newItemDescription: ""
   };
 
   componentDidMount(){
@@ -26,15 +28,7 @@ class HomePage extends Component {
         console.log(error);
     });
   };
-
-  handleOpen = () => {
-    this.setState({isOpen: true});
-  }
-
-  handleClose = () => {
-    this.setState({isOpen: false});
-  }
-
+  
   render(){
 
     if(!this.state.results){
@@ -101,7 +95,7 @@ class HomePage extends Component {
             position="right top"
             on="click"
             open={this.state.isOpen}
-            onOpen={this.handleOpen}
+            onOpen={() => this.setState({isOpen: true})}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
             contentStyle={{ padding: "0px", border: "none" }}
@@ -112,7 +106,12 @@ class HomePage extends Component {
                 <form>
                   <label>
                     name
-                    <input type="text" name="name" />
+                    <input type="text" name="name" 
+                      onChange={(event) => {
+                        this.setState({ newItemName: event.target.value }) 
+                        console.log(this.state.newItemName)
+                      }}
+                    />
                   </label>
                 </form>
               </div>
@@ -120,12 +119,17 @@ class HomePage extends Component {
                 <form>
                   <label>
                     description
-                    <input type="text" name="description" />
+                    <input type="text" name="description" 
+                      onChange={(event) => {
+                        this.setState({ newItemDescription: event.target.value })
+                        console.log(this.state.newItemDescription)
+                      }}
+                    />
                   </label>
                 </form>
               </div>
               <input type="button" value="Confirm" />
-              <input type="button" value="Cancel" onClick={this.handleClose}/>
+              <input type="button" value="Cancel" onClick={() => this.setState({isOpen: false})}/>
             </div>
           </Popup>
 
