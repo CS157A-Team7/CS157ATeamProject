@@ -13,7 +13,8 @@ class HomePage extends Component {
     results: [],
     isOpen: false,
     newItemName: "",
-    newItemDescription: ""
+    newItemDescription: "",
+    itemAdded: false,
   };
 
   componentDidMount(){
@@ -28,7 +29,44 @@ class HomePage extends Component {
         console.log(error);
     });
   };
+
+  componentDidUpdate(){
+    if(this.state.itemAdded){
+      const params = new URLSearchParams();
+      params.append('username', 'ash_ketchum@hotmail.com');
+      axios.post('/api/getListswithItems.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+
+      this.setState({itemAdded: false})
+    }
+  }
   
+  addItem = () => {
+    axios.get('/api/addItemToTable.php', {
+      params: {
+        name: this.state.newItemName,
+        description: this.state.newItemDescription,
+        checked: 0,
+        list_id: 19
+      }
+    })
+    .then((response) => {
+      this.setState({ itemAdded: response.data });
+      console.log(response.data)
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+
+    console.log(this.state.newItem);
+  }
+
   render(){
 
     if(!this.state.results){
@@ -128,7 +166,7 @@ class HomePage extends Component {
                   </label>
                 </form>
               </div>
-              <input type="button" value="Confirm" />
+              <input type="button" value="Confirm" onClick= {this.addItem} />
               <input type="button" value="Cancel" onClick={() => this.setState({isOpen: false})}/>
             </div>
           </Popup>
