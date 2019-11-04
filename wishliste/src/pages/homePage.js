@@ -11,6 +11,7 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
+    isOpen: false
   };
 
   componentDidMount(){
@@ -25,6 +26,14 @@ class HomePage extends Component {
         console.log(error);
     });
   };
+
+  handleOpen = () => {
+    this.setState({isOpen: true});
+  }
+
+  handleClose = () => {
+    this.setState({isOpen: false});
+  }
 
   render(){
 
@@ -91,7 +100,8 @@ class HomePage extends Component {
             trigger={<div className="New-list-button-thin">+</div>}
             position="right top"
             on="click"
-            closeOnDocumentClick
+            open={this.state.isOpen}
+            onOpen={this.handleOpen}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
             contentStyle={{ padding: "0px", border: "none" }}
@@ -114,8 +124,8 @@ class HomePage extends Component {
                   </label>
                 </form>
               </div>
-              <input type="submit" value="Confirm" />
-              <input type="submit" value="Cancel" />
+              <input type="button" value="Confirm" />
+              <input type="button" value="Cancel" onClick={this.handleClose}/>
             </div>
           </Popup>
 
