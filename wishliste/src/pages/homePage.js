@@ -40,11 +40,8 @@ class HomePage extends Component {
 
       <div className="App">
         <Header />
-        <div className="New-button-container-containter">
-        {/* <div className="New-button-container"> */}
-          {/* <div className="New-list-button">new wishlist</div>
-          <div className="New-list-button">new surprise wishlist</div>
-          <div className="New-list-button">new todo list</div> */}
+        <div className="New-button-container-container">
+
         <div className="New-button-container-thin">
           <Popup
             trigger={<div className="New-list-button-thin">+</div>}
@@ -90,7 +87,38 @@ class HomePage extends Component {
 
         <div className="New-button-container-thin">
 
-          <div className="New-list-button-thin">+</div>
+          <Popup
+            trigger={<div className="New-list-button-thin">+</div>}
+            position="right top"
+            on="click"
+            closeOnDocumentClick
+            mouseLeaveDelay={300}
+            mouseEnterDelay={0}
+            contentStyle={{ padding: "0px", border: "none" }}
+            arrow={false}
+          >
+            <div className="New-list-menu">
+              <div className="New-list-menu-item" onClick={() => console.log("input item name")}>
+                <form>
+                  <label>
+                    name
+                    <input type="text" name="name" />
+                  </label>
+                </form>
+              </div>
+              <div className="New-list-menu-item" onClick={() => console.log("input item description")}>
+                <form>
+                  <label>
+                    description
+                    <input type="text" name="description" />
+                  </label>
+                </form>
+              </div>
+              <input type="submit" value="Confirm" />
+              <input type="submit" value="Cancel" />
+            </div>
+          </Popup>
+
           <div className="New-list-button-thin">trash</div>
           <div className="New-list-button-thin">edit</div>
 
