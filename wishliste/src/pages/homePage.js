@@ -3,6 +3,10 @@ import '../assets/App.css';
 import axios from 'axios';
 import Header from '../components/header';
 import AllLists from '../components/AllLists.js';
+import ListNames from '../components/ListNames';
+import FullList from '../components/FullList';
+import FullList2 from '../components/FullList2';
+import Popup from 'reactjs-popup';
 
 class HomePage extends Component {
   state = {
@@ -36,14 +40,71 @@ class HomePage extends Component {
 
       <div className="App">
         <Header />
-
-        <div className="New-button-container">
-          <div className="New-list-button">new wishlist</div>
+        <div className="New-button-container-containter">
+        {/* <div className="New-button-container"> */}
+          {/* <div className="New-list-button">new wishlist</div>
           <div className="New-list-button">new surprise wishlist</div>
-          <div className="New-list-button">new todo list</div>
+          <div className="New-list-button">new todo list</div> */}
+        <div className="New-button-container-thin">
+          <Popup
+            trigger={<div className="New-list-button-thin">+</div>}
+            position="right top"
+            on="click"
+            closeOnDocumentClick
+            mouseLeaveDelay={300}
+            mouseEnterDelay={0}
+            contentStyle={{ padding: "0px", border: "none" }}
+            arrow={false}
+          >
+            <div className="New-list-menu">
+              <div className="New-list-menu-item" onClick={() => console.log("Create New Wishlist")}>
+                new wishlist
+              </div>
+              <div className="New-list-menu-item" onClick={() => console.log("Create New Surprise Wishlist")}>
+                new surprise wishlist
+              </div>
+              <div className="New-list-menu-item" onClick={() => console.log("Create New To-do List")}>
+                new to-do list
+              </div>
+            </div>
+          </Popup>
+
+          <Popup
+            trigger={<div className="New-list-button-thin">trash</div>}
+            position="right top"
+            on="click"
+            closeOnDocumentClick
+            mouseLeaveDelay={300}
+            mouseEnterDelay={0}
+            contentStyle={{ padding: "0px", border: "none" }}
+            arrow={false}
+          >
+            <div className="New-list-menu">
+              <div className="New-list-menu-item" onClick={() => console.log("Delete list(s)")}>
+                delete list
+              </div>
+            </div>
+          </Popup>
+
         </div>
 
-        <AllLists allLists={this.state.results} />
+        <div className="New-button-container-thin">
+
+          <div className="New-list-button-thin">+</div>
+          <div className="New-list-button-thin">trash</div>
+          <div className="New-list-button-thin">edit</div>
+
+        </div>
+
+        </div>
+
+        {/* <AllLists allLists={this.state.results} /> */}
+
+        <div className="New-Homepage-Layout">
+          <ListNames listData={this.state.results} />
+          <FullList2 listData={this.state.results[2]} />
+        </div>
+        
       </div>
     );
   }
