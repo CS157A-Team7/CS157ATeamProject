@@ -35,6 +35,7 @@ class List extends Component {
       <div className="List-container" onClick={() => console.log("hello " + listData.name)}>
         <ListHead listData={listData} />
         <ListBody listData={listData} />
+        <div className="List-extra-space" />
       </div>
     )
   }
