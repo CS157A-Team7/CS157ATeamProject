@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `account_has_list`
+-- Table structure for table `account_has_lists`
 --
 
-DROP TABLE IF EXISTS `account_has_list`;
+DROP TABLE IF EXISTS `account_has_lists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `account_has_list` (
+CREATE TABLE `account_has_lists` (
   `username` varchar(45) NOT NULL,
-  `list_id` int(11) NOT NULL,
-  PRIMARY KEY (`username`,`list_id`),
-  KEY `list_name_idx` (`list_id`),
-  CONSTRAINT `list_id` FOREIGN KEY (`list_id`) REFERENCES `list` (`list_id`),
-  CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `account` (`username`)
+  `list_id` int(10) NOT NULL,
+  PRIMARY KEY (`username`,`list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `account_has_list`
+-- Dumping data for table `account_has_lists`
 --
 
-LOCK TABLES `account_has_list` WRITE;
-/*!40000 ALTER TABLE `account_has_list` DISABLE KEYS */;
-INSERT INTO `account_has_list` VALUES ('dr.seuss@yahoo.com',1),('sarah@gmail.com',2),('ash_ketchum@hotmail.com',3),('Ted.Stroehmann@yahoo.com',4),('josh.peck@aol.com',5),('alice@aol.com',6),('eric@gmail.com',7),('eric@gmail.com',8),('Yu.Narukami@yahoo.jp',9),('Yu.Narukami@yahoo.jp',10),('alice@aol.com',11),('bill@aol.com',12),('emily@yahoo.com',13),('ching-seh.wu@sjsu.edu',14),('ash_ketchum@hotmail.com',15),('dr.seuss@yahoo.com',16),('sarah@gmail.com',17),('ted.mosby@gmail.com',18),('ash_ketchum@hotmail.com',19),('ash_ketchum@hotmail.com',20),('ash_ketchum@hotmail.com',21),('emily@yahoo.com',22),('ching-seh.wu@sjsu.edu',23),('freddy.krueger@hotmail.com',24),('sarah@gmail.com',25),('bill@aol.com',28),('emily@yahoo.com',28),('sarah@gmail.com',28),('ching-seh.wu@sjsu.edu',29),('sam@aol.com',30);
-/*!40000 ALTER TABLE `account_has_list` ENABLE KEYS */;
+LOCK TABLES `account_has_lists` WRITE;
+/*!40000 ALTER TABLE `account_has_lists` DISABLE KEYS */;
+INSERT INTO `account_has_lists` VALUES ('alice@aol.com',6),('alice@aol.com',11),('ash_ketchum@hotmail.com',3),('ash_ketchum@hotmail.com',15),('ash_ketchum@hotmail.com',19),('ash_ketchum@hotmail.com',20),('ash_ketchum@hotmail.com',21),('bill@aol.com',12),('bill@aol.com',28),('ching-seh.wu@sjsu.edu',14),('ching-seh.wu@sjsu.edu',23),('ching-seh.wu@sjsu.edu',29),('dr.seuss@yahoo.com',1),('dr.seuss@yahoo.com',16),('emily@yahoo.com',12),('emily@yahoo.com',22),('emily@yahoo.com',28),('eric@gmail.com',7),('eric@gmail.com',8),('freddy.krueger@hotmail.com',24),('josh.peck@aol.com',5),('sam@aol.com',30),('sarah@gmail.com',2),('sarah@gmail.com',13),('sarah@gmail.com',17),('sarah@gmail.com',25),('sarah@gmail.com',28),('ted.mosby@gmail.com',18),('Ted.Stroehmann@yahoo.com',3),('Ted.Stroehmann@yahoo.com',4),('Yu.Narukami@yahoo.jp',9),('Yu.Narukami@yahoo.jp',10);
+/*!40000 ALTER TABLE `account_has_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-10 15:43:16
+-- Dump completed on 2019-11-04 15:16:51
