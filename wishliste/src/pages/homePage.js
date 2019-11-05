@@ -11,10 +11,13 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
-    isOpen: false,
+    newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
     itemAdded: false,
+    newWishlistOpen: false,
+    newSWishlistOpen: false,
+    newTodoListOpen: false,
   };
 
   componentDidMount(){
@@ -81,70 +84,126 @@ class HomePage extends Component {
 
       <div className="App">
         <Header />
+
         <div className="New-button-container-container">
+          <div className="New-button-container-thin">
+            <Popup
+              trigger={<div className="New-list-button-thin">+</div>}
+              position="right top"
+              on="click"
+              closeOnDocumentClick
+              mouseLeaveDelay={300}
+              mouseEnterDelay={0}
+              contentStyle={{ padding: "0px", border: "none" }}
+              arrow={false}
+            >
+              <div className="Plain-menu">
+                <Popup
+                  trigger={<div className="Plain-menu-item">New Wishlist</div>}
+                  position="right top"
+                  on="click"
+                  open={this.state.newWishlistOpen}
+                  onOpen={() => this.setState({newWishlistOpen: true})}
+                  onClose={() => this.setState({newWishlistOpen: false})}
+                  closeOnDocumentClick
+                  mouseLeaveDelay={300}
+                  mouseEnterDelay={0}
+                  contentStyle={{ padding: "0px", border: "none" }}
+                  arrow={false}
+                >
+                  <div className="Plain-menu">
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="name" placeholder="Name"/>
+                      </label>
+                    </form>
+                    <div className="Menu-button-container">
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New wishlist")}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
+                    </div>
+                  </div>
+                </Popup>
+                <Popup
+                  trigger={<div className="Plain-menu-item">New Surprise Wishlist</div>}
+                  position="right top"
+                  on="click"
+                  open={this.state.newSWishlistOpen}
+                  onOpen={() => this.setState({newSWishlistOpen: true})}
+                  onClose={() => this.setState({newSWishlistOpen: false})}
+                  closeOnDocumentClick
+                  mouseLeaveDelay={300}
+                  mouseEnterDelay={0}
+                  contentStyle={{ padding: "0px", border: "none" }}
+                  arrow={false}
+                >
+                  <div className="Plain-menu">
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="name" placeholder="Name"/>
+                      </label>
+                    </form>
+                    <div className="Menu-button-container">
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New surprise wishlist")}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
+                    </div>
+                  </div>
+                </Popup>
+                <Popup
+                  trigger={<div className="Plain-menu-item">New To-do List</div>}
+                  position="right top"
+                  on="click"
+                  open={this.state.newTodoListOpen}
+                  onOpen={() => this.setState({newTodoListOpen: true})}
+                  onClose={() => this.setState({newTodoListOpen: false})}
+                  closeOnDocumentClick
+                  mouseLeaveDelay={300}
+                  mouseEnterDelay={0}
+                  contentStyle={{ padding: "0px", border: "none" }}
+                  arrow={false}
+                >
+                  <div className="Plain-menu">
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="name" placeholder="Name"/>
+                      </label>
+                    </form>
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="date" placeholder="Date"/>
+                      </label>
+                    </form>
+                    <div className="Menu-button-container">
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New to-do list")}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
+                    </div>
+                  </div>
+                </Popup>
+              </div>
+            </Popup>
 
-        <div className="New-button-container-thin">
-          <Popup
-            trigger={<div className="New-list-button-thin">+</div>}
-            position="right top"
-            on="click"
-            closeOnDocumentClick
-            mouseLeaveDelay={300}
-            mouseEnterDelay={0}
-            contentStyle={{ padding: "0px", border: "none" }}
-            arrow={false}
-          >
-            <div className="New-list-menu">
-              <div className="New-list-menu-item" onClick={() => console.log("Create New Wishlist")}>
-                new wishlist
-              </div>
-              <div className="New-list-menu-item" onClick={() => console.log("Create New Surprise Wishlist")}>
-                new surprise wishlist
-              </div>
-              <div className="New-list-menu-item" onClick={() => console.log("Create New To-do List")}>
-                new to-do list
-              </div>
+            <div className="New-list-button-thin" onClick={() => console.log("Delete list(s)")}>
+              trash
             </div>
-          </Popup>
+          </div>
 
-          <Popup
-            trigger={<div className="New-list-button-thin">trash</div>}
-            position="right top"
-            on="click"
-            closeOnDocumentClick
-            mouseLeaveDelay={300}
-            mouseEnterDelay={0}
-            contentStyle={{ padding: "0px", border: "none" }}
-            arrow={false}
-          >
-            <div className="New-list-menu">
-              <div className="New-list-menu-item" onClick={() => console.log("Delete list(s)")}>
-                delete list
-              </div>
-            </div>
-          </Popup>
-
-        </div>
-
-        <div className="New-button-container-thin">
-
-          <Popup
-            trigger={<div className="New-list-button-thin">+</div>}
-            position="right top"
-            on="click"
-            open={this.state.isOpen}
-            onOpen={() => this.setState({isOpen: true})}
-            mouseLeaveDelay={300}
-            mouseEnterDelay={0}
-            contentStyle={{ padding: "0px", border: "none" }}
-            arrow={false}
-          >
-            <div className="New-list-menu">
-              <div className="New-list-menu-item" onClick={() => console.log("input item name")}>
-                <form>
+          <div className="New-button-container-thin">
+            <Popup
+              trigger={<div className="New-list-button-thin">+</div>}
+              position="right top"
+              on="click"
+              open={this.state.newItemOpen}
+              onOpen={() => this.setState({newItemOpen: true})}
+              closeOnDocumentClick
+              mouseLeaveDelay={300}
+              mouseEnterDelay={0}
+              contentStyle={{ padding: "0px", border: "none" }}
+              arrow={false}
+            >
+              <div className="Plain-menu">
+                <form className="Label-menu-item">
                   <label>
-                    name
-                    <input type="text" name="name" 
+                    New item
+                    <input type="text" name="name" placeholder="Name"
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)
@@ -152,12 +211,9 @@ class HomePage extends Component {
                     />
                   </label>
                 </form>
-              </div>
-              <div className="New-list-menu-item" onClick={() => console.log("input item description")}>
-                <form>
+                <form className="Label-menu-item">
                   <label>
-                    description
-                    <input type="text" name="description" 
+                    <input type="text" name="description" placeholder="Description"
                       onChange={(event) => {
                         this.setState({ newItemDescription: event.target.value })
                         console.log(this.state.newItemDescription)
@@ -165,17 +221,20 @@ class HomePage extends Component {
                     />
                   </label>
                 </form>
+                <div className="Menu-button-container">
+                  <input className="Menu-button" type="button" value="Confirm" onClick={this.addItem} />
+                  <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newItemOpen: false})}/>
+                </div>
               </div>
-              <input type="button" value="Confirm" onClick= {this.addItem} />
-              <input type="button" value="Cancel" onClick={() => this.setState({isOpen: false})}/>
+            </Popup>
+
+            <div className="New-list-button-thin" onClick={() => console.log("Delete item(s)")}>
+              trash
             </div>
-          </Popup>
-
-          <div className="New-list-button-thin">trash</div>
-          <div className="New-list-button-thin">edit</div>
-
-        </div>
-
+            <div className="New-list-button-thin" onClick={() => console.log("Edit list")}>
+              edit
+            </div>
+          </div>
         </div>
 
         {/* <AllLists allLists={this.state.results} /> */}

@@ -322,21 +322,38 @@ li.checked {
 }
 
 /* Popup menu style (originally used for new list button on home screen) */
-.New-list-menu {
+.Plain-menu {
   width: 200px;
   display: flex;
   flex-direction: column;
 }
 
-.New-list-menu-item {
+.Plain-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
   border-bottom: 1px solid #202833;
   padding: 5px;
 }
 
-.New-list-menu-item:hover {
+.Plain-menu-item:hover {
   font-weight: bold;
+}
+
+.Label-menu-item {
+  color: #202833;
+  font-size: calc(4px + 2vmin);
+  /* padding: 5px; */
+}
+
+.Menu-button-container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+}
+
+.Menu-button {
+  width: 44%;
+  margin-left: 4%; 
 }
 
 /* Button style (thin container) */
