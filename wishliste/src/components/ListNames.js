@@ -8,7 +8,7 @@ class ListNames extends Component {
 
     const names = listData.map((list) => {
         return (
-            <div className="List-Names-head" onClick={() => console.log("Display " + list.name)}>
+            <div className="List-Names-head" onClick={() => {this.props.getList(list)}}>
               {list.name}
             </div>
         )

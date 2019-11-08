@@ -11,6 +11,7 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
+    list: {}, 
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
@@ -68,6 +69,12 @@ class HomePage extends Component {
     });
 
     console.log(this.state.newItem);
+  }
+
+  handleGetList = list => {
+    const selectedList = list;
+    this.setState({list: selectedList});
+    console.log(this.state.list);
   }
 
   render(){
@@ -240,8 +247,8 @@ class HomePage extends Component {
         {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
-          <ListNames listData={this.state.results} />
-          <FullList2 listData={this.state.results[2]} />
+          <ListNames listData={this.state.results} getList={this.handleGetList} />
+          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} /> : ''}
         </div>
         
       </div>
