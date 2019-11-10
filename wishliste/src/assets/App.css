@@ -116,14 +116,20 @@
 
 .New-list-button {
   background-color: #202833;
-  margin-left: 4%;
-  margin-right: -2%;
+  /* margin-left: 4%; */
+  /* margin-right: -2%; */
+  margin-right: 5vmin;
   margin-bottom: 5vmin;
   padding-top: 2vh;
   padding-bottom: 2vh;
-  width: 29.3%;
-  max-width: 30vmin;
+  /* width: 29.3%; */
+  /* max-width: 30vmin; */
+  width: 30vmin;
   text-align: center;
+}
+
+.New-list-button:hover {
+  background-color: #009bc2;
 }
 
 .New-list-button-thin {
@@ -192,7 +198,7 @@
 li.unchecked {
   list-style-image: url(checkbox15.png);
   list-style-position: inside;
-  margin-left: -2vh;
+  /* margin-left: -2vh; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -201,10 +207,26 @@ li.unchecked {
 li.checked {
   list-style-image: url(checked15.png);
   list-style-position: inside;
-  margin-left: -2vh;
+  /* margin-left: -2vh; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+li.not-deleting {
+  list-style-position: outside;
+  list-style-type: none;
+  margin-left: -2vh;
+}
+
+li.deleting-unchecked {
+  list-style-image: url(trash-deselected-15.png);
+  list-style-position: outside;
+}
+
+li.deleting-checked {
+  list-style-image: url(trash-selected-15.png);
+  list-style-position: outside;
 }
 
 /* List style used on item description page */

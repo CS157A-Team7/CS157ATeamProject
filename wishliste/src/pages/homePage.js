@@ -19,6 +19,7 @@ class HomePage extends Component {
     newWishlistOpen: false,
     newSWishlistOpen: false,
     newTodoListOpen: false,
+    deletingItems: false,
   };
 
   componentDidMount(){
@@ -195,7 +196,7 @@ class HomePage extends Component {
             </div>
           </div>
 
-          {Object.entries(this.state.list).length === 0 ? '' : 
+          {Object.entries(this.state.list).length === 0 ? '' : !this.state.deletingItems ?
           <div className="New-button-container-thin">
             <Popup
               trigger={<div className="New-list-button-thin">+</div>}
@@ -238,20 +239,35 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" onClick={() => console.log("Delete item(s)")}>
+            <div className="New-list-button-thin" onClick={() => this.setState({deletingItems: true})}>
               trash
             </div>
             <div className="New-list-button-thin" onClick={() => console.log("Edit list")}>
               edit
             </div>
-          </div>}
+          </div>
+          : //else (if user is deleting items)...
+          <div className="New-button-container-thin">
+            <div className="New-list-button" 
+              onClick={() => {
+                console.log("Delete all selected items")
+                this.setState({deletingItems: false})
+              }}
+            >
+              Confirm Delete
+            </div>
+            <div className="New-list-button" onClick={() => this.setState({deletingItems: false})}>
+              Cancel
+            </div>
+          </div>
+          }
         </div>
 
         {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
           <ListNames listData={this.state.results} getList={this.handleGetList} />
-          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} /> : ''}
+          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} deletingItems={this.state.deletingItems} /> : ''}
         </div>
         
       </div>
