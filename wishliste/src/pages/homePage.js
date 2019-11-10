@@ -11,6 +11,7 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
+    list: {}, 
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
@@ -46,7 +47,7 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({itemAdded: false})
+      this.setState({itemAdded: false});
     }
   }
   
@@ -56,18 +57,26 @@ class HomePage extends Component {
         name: this.state.newItemName,
         description: this.state.newItemDescription,
         checked: 0,
-        list_id: 19
+        list_id: this.state.list.list_id
       }
     })
     .then((response) => {
-      this.setState({ itemAdded: response.data });
-      console.log(response.data)
+      if(response.data){
+        this.setState({ itemAdded: true });
+      };
+      console.log(response.data);
     })
     .catch(function(error){
         console.log(error);
     });
-
+    this.setState({newItemOpen: false});
     console.log(this.state.newItem);
+  }
+
+  handleGetList = list => {
+    const selectedList = list;
+    this.setState({list: selectedList});
+    console.log(this.state.list);
   }
 
   render(){
@@ -186,6 +195,7 @@ class HomePage extends Component {
             </div>
           </div>
 
+          {Object.entries(this.state.list).length === 0 ? '' : 
           <div className="New-button-container-thin">
             <Popup
               trigger={<div className="New-list-button-thin">+</div>}
@@ -234,14 +244,14 @@ class HomePage extends Component {
             <div className="New-list-button-thin" onClick={() => console.log("Edit list")}>
               edit
             </div>
-          </div>
+          </div>}
         </div>
 
         {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
-          <ListNames listData={this.state.results} />
-          <FullList2 listData={this.state.results[2]} />
+          <ListNames listData={this.state.results} getList={this.handleGetList} />
+          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} /> : ''}
         </div>
         
       </div>
