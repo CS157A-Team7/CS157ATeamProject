@@ -11,7 +11,8 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
-    list: {}, 
+    list: {},
+    itemsToDelete: [], 
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
@@ -78,6 +79,22 @@ class HomePage extends Component {
     const selectedList = list;
     this.setState({list: selectedList});
     console.log(this.state.list);
+  }
+
+  handleItemsToDelete = item => {
+    if(this.state.itemsToDelete.includes(item))
+    {
+      const filteredItems = this.state.itemsToDelete.filter(i => i.item_id !== item.item_id);
+      this.setState({
+        itemsToDelete: filteredItems
+      });
+    }
+    else{
+      this.setState({
+        itemsToDelete: [...this.state.itemsToDelete, item]
+      });
+    }
+    console.log(this.state.itemsToDelete);
   }
 
   render(){
@@ -267,7 +284,13 @@ class HomePage extends Component {
 
         <div className="New-Homepage-Layout">
           <ListNames listData={this.state.results} getList={this.handleGetList} />
-          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} deletingItems={this.state.deletingItems} /> : ''}
+          {Object.entries(this.state.list).length !== 0 ? 
+            <FullList2 
+              listData={this.state.list} 
+              deletingItems={this.state.deletingItems} 
+              handleItemsToDelete={this.handleItemsToDelete} 
+            /> : ''
+          }
         </div>
         
       </div>
