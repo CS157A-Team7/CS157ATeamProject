@@ -12,7 +12,7 @@ const ListHead = props => {
 const ListBody = props => {
   const items = props.listData.items.map((item) => {
     return (
-      <li className={!props.deletingItems?'not-deleting':'deleting-unchecked'}
+      <li className={!props.deletingItems?'not-deleting':props.itemsToDelete.includes(item)?'deleting-checked':'deleting-unchecked'}
         onClick={() => {
           if (props.deletingItems) {
             console.log("Select/deselect "+item.name+" to be deleted");
@@ -43,7 +43,7 @@ const ListBody = props => {
 
 class FullList2 extends Component {
   render() {
-    const { listData, deletingItems, handleItemsToDelete } = this.props
+    const { listData, deletingItems, handleItemsToDelete, itemsToDelete } = this.props
 
     if (!listData) {
       return (
@@ -56,7 +56,7 @@ class FullList2 extends Component {
     return (
       <div className="Full-List2-container">
         <ListHead listData={listData} />
-        <ListBody listData={listData} deletingItems={deletingItems} handleItemsToDelete={handleItemsToDelete} />
+        <ListBody listData={listData} deletingItems={deletingItems} handleItemsToDelete={handleItemsToDelete} itemsToDelete={itemsToDelete} />
       </div>
     )
   }

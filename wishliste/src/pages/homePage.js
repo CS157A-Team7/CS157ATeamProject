@@ -304,6 +304,7 @@ class HomePage extends Component {
               listData={this.state.list} 
               deletingItems={this.state.deletingItems} 
               handleItemsToDelete={this.handleItemsToDelete} 
+              itemsToDelete={this.state.itemsToDelete}
             /> : ''
           }
         </div>
