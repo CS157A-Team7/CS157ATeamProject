@@ -15,7 +15,8 @@ const ListBody = props => {
       <li className={!props.deletingItems?'not-deleting':'deleting-unchecked'}
         onClick={() => {
           if (props.deletingItems) {
-            console.log("Select/deselect "+item.name+" to be deleted")
+            console.log("Select/deselect "+item.name+" to be deleted");
+            props.handleItemsToDelete(item);
           } else {
             console.log("Check/uncheck "+item.name)
           }
@@ -42,7 +43,7 @@ const ListBody = props => {
 
 class FullList2 extends Component {
   render() {
-    const { listData, deletingItems } = this.props
+    const { listData, deletingItems, handleItemsToDelete } = this.props
 
     if (!listData) {
       return (
@@ -55,7 +56,7 @@ class FullList2 extends Component {
     return (
       <div className="Full-List2-container">
         <ListHead listData={listData} />
-        <ListBody listData={listData} deletingItems={deletingItems} />
+        <ListBody listData={listData} deletingItems={deletingItems} handleItemsToDelete={handleItemsToDelete} />
       </div>
     )
   }

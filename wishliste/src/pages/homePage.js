@@ -11,11 +11,12 @@ import Popup from 'reactjs-popup';
 class HomePage extends Component {
   state = {
     results: [],
-    list: {}, 
+    list: {},
+    itemsToDelete: [], 
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
-    itemAdded: false,
+    dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
     newTodoListOpen: false,
@@ -36,7 +37,7 @@ class HomePage extends Component {
   };
 
   componentDidUpdate(){
-    if(this.state.itemAdded){
+    if(this.state.dbChange){
       const params = new URLSearchParams();
       params.append('username', 'ash_ketchum@hotmail.com');
       axios.post('/api/getListswithItems.php', params)
@@ -48,7 +49,7 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({itemAdded: false});
+      this.setState({dbChange: false});
     }
   }
   
@@ -63,7 +64,7 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ itemAdded: true });
+        this.setState({ dbChange: true });
       };
       console.log(response.data);
     })
@@ -74,10 +75,44 @@ class HomePage extends Component {
     console.log(this.state.newItem);
   }
 
+  deleteItems = () => { 
+    axios({
+    url: '/api/deleteItemsFromTable.php',
+    method: 'post',
+    data: this.state.itemsToDelete  
+    })
+    .then((response) => {
+      console.log(response.data);
+      this.setState({itemsToDelete: []});
+      this.setState({ dbChange: true });
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    this.setState({deletingItems: false})
+    console.log(this.state.itemsToDelete);
+  }
+
   handleGetList = list => {
     const selectedList = list;
     this.setState({list: selectedList});
     console.log(this.state.list);
+  }
+
+  handleItemsToDelete = item => {
+    if(this.state.itemsToDelete.includes(item))
+    {
+      const filteredItems = this.state.itemsToDelete.filter(i => i.item_id !== item.item_id);
+      this.setState({
+        itemsToDelete: filteredItems
+      });
+    }
+    else{
+      this.setState({
+        itemsToDelete: [...this.state.itemsToDelete, item]
+      });
+    }
+    console.log(this.state.itemsToDelete);
   }
 
   render(){
@@ -249,10 +284,7 @@ class HomePage extends Component {
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
             <div className="New-list-button" 
-              onClick={() => {
-                console.log("Delete all selected items")
-                this.setState({deletingItems: false})
-              }}
+              onClick={this.deleteItems}
             >
               Confirm Delete
             </div>
@@ -267,7 +299,13 @@ class HomePage extends Component {
 
         <div className="New-Homepage-Layout">
           <ListNames listData={this.state.results} getList={this.handleGetList} />
-          {Object.entries(this.state.list).length !== 0 ? <FullList2 listData={this.state.list} deletingItems={this.state.deletingItems} /> : ''}
+          {Object.entries(this.state.list).length !== 0 ? 
+            <FullList2 
+              listData={this.state.list} 
+              deletingItems={this.state.deletingItems} 
+              handleItemsToDelete={this.handleItemsToDelete} 
+            /> : ''
+          }
         </div>
         
       </div>
