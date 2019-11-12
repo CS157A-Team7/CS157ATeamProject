@@ -162,6 +162,11 @@ class HomePage extends Component {
                         <input type="text" name="name" placeholder="Name"/>
                       </label>
                     </form>
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="description" placeholder="Description"/>
+                      </label>
+                    </form>
                     <div className="Menu-button-container">
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New wishlist")}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
@@ -187,6 +192,16 @@ class HomePage extends Component {
                         <input type="text" name="name" placeholder="Name"/>
                       </label>
                     </form>
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="description" placeholder="Description"/>
+                      </label>
+                    </form>
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="date" placeholder="Expiration date"/>
+                      </label>
+                    </form>
                     <div className="Menu-button-container">
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New surprise wishlist")}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
@@ -210,6 +225,11 @@ class HomePage extends Component {
                     <form className="Label-menu-item">
                       <label>
                         <input type="text" name="name" placeholder="Name"/>
+                      </label>
+                    </form>
+                    <form className="Label-menu-item">
+                      <label>
+                        <input type="text" name="description" placeholder="Description"/>
                       </label>
                     </form>
                     <form className="Label-menu-item">
