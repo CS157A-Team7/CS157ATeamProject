@@ -16,7 +16,7 @@ class HomePage extends Component {
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
-    itemAdded: false,
+    dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
     newTodoListOpen: false,
@@ -37,7 +37,7 @@ class HomePage extends Component {
   };
 
   componentDidUpdate(){
-    if(this.state.itemAdded){
+    if(this.state.dbChange){
       const params = new URLSearchParams();
       params.append('username', 'ash_ketchum@hotmail.com');
       axios.post('/api/getListswithItems.php', params)
@@ -49,7 +49,7 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({itemAdded: false});
+      this.setState({dbChange: false});
     }
   }
   
@@ -64,7 +64,7 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ itemAdded: true });
+        this.setState({ dbChange: true });
       };
       console.log(response.data);
     })
@@ -73,6 +73,24 @@ class HomePage extends Component {
     });
     this.setState({newItemOpen: false});
     console.log(this.state.newItem);
+  }
+
+  deleteItems = () => { 
+    axios({
+    url: '/api/deleteItemsFromTable.php',
+    method: 'post',
+    data: this.state.itemsToDelete  
+    })
+    .then((response) => {
+      console.log(response.data);
+      this.setState({itemsToDelete: []});
+      this.setState({ dbChange: true });
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    this.setState({deletingItems: false})
+    console.log(this.state.itemsToDelete);
   }
 
   handleGetList = list => {
@@ -266,10 +284,7 @@ class HomePage extends Component {
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
             <div className="New-list-button" 
-              onClick={() => {
-                console.log("Delete all selected items")
-                this.setState({deletingItems: false})
-              }}
+              onClick={this.deleteItems}
             >
               Confirm Delete
             </div>
