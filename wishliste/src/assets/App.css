@@ -287,6 +287,7 @@ li.deleting-checked {
 
 .List-Names-head {
   background-color: #202833;
+  opacity: .9;
   padding-top: 2vh;
   padding-bottom: 2vh;
   padding-left: 2vh;
@@ -301,6 +302,20 @@ li.deleting-checked {
 
 .List-Names-head:hover {
   background-color: #009bc2;
+}
+
+.List-Names-head-selected {
+  background-color: #202833;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-style: solid;
+  border-color: white;
 }
 
 /* List style used in right column of experimental home screen */

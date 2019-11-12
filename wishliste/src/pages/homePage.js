@@ -318,7 +318,7 @@ class HomePage extends Component {
         {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
-          <ListNames listData={this.state.results} getList={this.handleGetList} />
+          <ListNames listData={this.state.results} getList={this.handleGetList} listSelected={this.state.list} />
           {Object.entries(this.state.list).length !== 0 ? 
             <FullList2 
               listData={this.state.list} 

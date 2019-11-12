@@ -4,11 +4,13 @@ import '../assets/App.css';
 
 class ListNames extends Component {
   render() {
-    const { listData } = this.props
+    const { listData, listSelected } = this.props
 
     const names = listData.map((list) => {
         return (
-            <div className="List-Names-head" onClick={() => {this.props.getList(list)}}>
+            <div className={list===listSelected?"List-Names-head-selected":"List-Names-head"} 
+              onClick={() => {this.props.getList(list)}}
+            >
               {list.name}
             </div>
         )
