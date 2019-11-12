@@ -25,7 +25,7 @@ const ListBody = props => {
         <li className={item.checked==1?'checked':'unchecked'}>
           {item.name}
         </li>
-        <div className="Full-List2-description">
+        <div className="Full-List2-item-description">
           {item.description} 
         </div>
       </li>
@@ -34,6 +34,9 @@ const ListBody = props => {
 
   return (
     <div className="Full-List2-items">
+      <div className="Full-List2-list-description">
+        {props.listData.description}
+      </div>
       <ul>
         {items}
       </ul>
