@@ -37,11 +37,7 @@ const ItemDescriptionPage = () => {
     return (
         <div>
             <Header/>
-            {/* <div className="Title-Container"> */}
-            <div className="New-button-container">
-                {/* <div className="Back-Arrow-Container">
-                    <button className="Back-Arrow"><FontAwesomeIcon icon={faArrowLeft} className="fa-lg"/> </button>
-                </div> */}
+            {/* <div className="New-button-container">
                 <div className="New-list-button-thin" onClick={() => console.log("Go back to home screen")}>
                     back
                 </div>
@@ -51,9 +47,8 @@ const ItemDescriptionPage = () => {
                 <div className="New-list-button-thin" onClick={() => console.log("Delete item(s)")}>
                     trash
                 </div>
-            </div>
+            </div> */}
 
-            {/* <Item items={list}/>  */}
             <FullList listData={list} />
         </div>
         
