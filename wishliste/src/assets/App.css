@@ -347,6 +347,20 @@ li.deleting-checked {
   border-color: white;
 }
 
+.List-Names-deleting {
+  background-color: #202833;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-style: solid;
+  border-color: white;
+}
+
 /* List style used in right column of experimental home screen */
 .Full-List2-container {
   display: flex;
@@ -447,4 +461,13 @@ li.deleting-checked {
 .New-button-container-container {
   display: flex;
   flex-direction: row;
+}
+
+.Delete-icon-deselected {
+  float: left;
+}
+
+.Delete-icon-selected {
+  float: left;
+  color: #009bc2;
 }
