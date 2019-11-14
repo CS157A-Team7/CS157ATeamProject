@@ -147,6 +147,21 @@
   background-color: #009bc2;
 }
 
+.Edit-button-selected {
+  background-color: #46a29f;
+  margin-right: 5vmin;
+  margin-bottom: 5vmin;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  width: 10vmin;
+  text-align: center;
+  color: #65fbf1;
+}
+
+.Edit-button-selected:hover {
+  background-color: #009bc2;
+}
+
 /* Container for 4 lists on home screen*/
 .Row-of-lists {
   background-color: white;
@@ -371,6 +386,7 @@ li.deleting-checked {
   width: 200px;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .Plain-menu-item {

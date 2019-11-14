@@ -21,6 +21,7 @@ class HomePage extends Component {
     newSWishlistOpen: false,
     newTodoListOpen: false,
     deletingItems: false,
+    editingItems: false,
   };
 
   componentDidMount(){
@@ -294,10 +295,23 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" onClick={() => this.setState({deletingItems: true})}>
+            <div className="New-list-button-thin" 
+              onClick={() => {
+                this.setState({deletingItems: true})
+                this.setState({editingItems: false})
+              }}
+            >
               trash
             </div>
-            <div className="New-list-button-thin" onClick={() => console.log("Edit list")}>
+            <div className={this.state.editingItems?"Edit-button-selected":"New-list-button-thin"} 
+              onClick={() => {
+                if (this.state.editingItems) {
+                  this.setState({editingItems: false})
+                } else {
+                  this.setState({editingItems: true})
+                }
+              }}
+            >
               edit
             </div>
           </div>
@@ -325,6 +339,7 @@ class HomePage extends Component {
               deletingItems={this.state.deletingItems} 
               handleItemsToDelete={this.handleItemsToDelete} 
               itemsToDelete={this.state.itemsToDelete}
+              editingItems={this.state.editingItems}
             /> : ''
           }
         </div>
