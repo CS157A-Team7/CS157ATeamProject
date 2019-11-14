@@ -114,6 +114,19 @@
   margin-left: 4%;
 }
 
+.Centered-button-container {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  font-size: calc(8px + 2vmin);
+  color: #65fbf1;
+  border-style: solid;
+  border-color: white;
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: -5vh;
+}
+
 .New-list-button {
   background-color: #202833;
   /* margin-left: 4%; */
@@ -258,6 +271,7 @@ li.deleting-checked {
 
 .Full-List-head {
   background-color: #202833;
+  margin-top: 5vh;
   padding-top: 2vh;
   padding-bottom: 2vh;
   padding-left: 2vh;
@@ -320,6 +334,20 @@ li.deleting-checked {
 }
 
 .List-Names-head-selected {
+  background-color: #202833;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-style: solid;
+  border-color: white;
+}
+
+.List-Names-deleting {
   background-color: #202833;
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -433,4 +461,13 @@ li.deleting-checked {
 .New-button-container-container {
   display: flex;
   flex-direction: row;
+}
+
+.Delete-icon-deselected {
+  float: left;
+}
+
+.Delete-icon-selected {
+  float: left;
+  color: #009bc2;
 }
