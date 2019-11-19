@@ -16,6 +16,13 @@ class HomePage extends Component {
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
+    newListName: "",
+    newListDescription: "",
+    newListDate: "",
+    url: "",
+    owner: "",
+    typeOfList: 0,
+    type: 0,
     dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
@@ -54,6 +61,32 @@ class HomePage extends Component {
     }
   }
   
+  addList = () => {
+    axios.get('/api/addNewList.php', {
+      params: {
+        name: this.state.newListName,
+        description: this.state.newListDescription,
+        url: this.state.url,
+        owner: this.state.owner,
+        type: this.state.type,
+        expiration_date: this.state.newListDate,
+        date: this.state.newListDate,
+        username: 'ash_ketchum@hotmail.com',
+        listType: this.state.typeOfList
+      }
+    })
+    .then((response) => {
+      if(response.data){
+        this.setState({ dbChange: true });
+      };
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    console.log("CreatedList");
+  }
+
   addItem = () => {
     axios.get('/api/addItemToTable.php', {
       params: {
@@ -160,16 +193,30 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 0},
+                          () => {this.addList()});
+                        this.setState({newWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -190,21 +237,40 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Expiration date"/>
+                        <input type="text" name="date" placeholder="Expiration date"
+                         onChange={(event) => {
+                          this.setState({ newListDate: event.target.value }) 
+                          console.log(this.state.newListDate)
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New surprise wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 1}, 
+                          () => {this.addList()});
+                        this.setState({newSWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -225,21 +291,40 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Date"/>
+                        <input type="text" name="date" placeholder="Date"
+                         onChange={(event) => {
+                          this.setState({ newListDate: event.target.value }) 
+                          console.log(this.state.newListDate)
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New to-do list")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={()=>{
+                        this.setState({typeOfList: 2},
+                          () => {this.addList()});
+                        this.setState({newTodoListOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
                     </div>
                   </div>
