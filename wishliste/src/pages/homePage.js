@@ -96,6 +96,24 @@ class HomePage extends Component {
     console.log(this.state.itemsToDelete);
   }
 
+  deleteLists = () => {
+    axios({
+      url: '/api/deleteLists.php',
+      method: 'post',
+      data: this.state.listsToDelete  
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({listsToDelete: []});
+        this.setState({ dbChange: true });
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({deletingLists: false})
+      console.log(this.state.itemsToDelete);
+  }
+
   handleGetList = list => {
     const selectedList = list;
     this.setState({list: selectedList});
@@ -273,7 +291,7 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            <div className="New-list-button" onClick={() => console.log("Delete all selected lists")}>
+            <div className="New-list-button" onClick={this.deleteLists}>
               Confirm Delete
             </div>
             <div className="New-list-button" onClick={() => this.setState({deletingLists: false})}>
