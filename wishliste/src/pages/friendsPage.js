@@ -4,6 +4,8 @@ import axios from 'axios';
 import Header from '../components/header';
 import FriendsList from '../components/FriendsList';
 import Popup from 'reactjs-popup';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
 class FriendsPage extends Component {
   state = {
@@ -23,7 +25,11 @@ class FriendsPage extends Component {
 
         <div className="Centered-button-container">
           <Popup
-            trigger={<div className="New-list-button-thin">+</div>}
+            trigger={
+              <div className="Fa-icon-style">
+                <FontAwesomeIcon icon={faPlus} size="s" />
+              </div>
+            }
             position="right top"
             on="click"
             open={this.state.addingFriend}
