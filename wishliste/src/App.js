@@ -4,6 +4,7 @@ import './assets/App.css';
 import SignUp from './SignUp.js';
 import HomePage from './pages/homePage';
 import ItemDescriptionPage from './pages/itemDescriptionPage';
+import FriendsPage from './pages/friendsPage';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 
@@ -29,10 +30,14 @@ class App extends Component {
                 <li>
                   <Link to="/List">List</Link>
                 </li>
+                <li>
+                  <Link to="/Friends">Friends</Link>
+                </li>
               </ul>
               <Route exact path="/" component={HomePage} />
               <Route path="/SignUp" component={SignUp} />
               <Route path="/List" component={ItemDescriptionPage} />
+              <Route path="/Friends" component={FriendsPage} />
             </div>
           </Switch>
         </div>

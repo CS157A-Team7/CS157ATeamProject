@@ -7,6 +7,8 @@ import ListNames from '../components/ListNames';
 import FullList from '../components/FullList';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
 
 class HomePage extends Component {
   state = {
@@ -29,6 +31,8 @@ class HomePage extends Component {
     newTodoListOpen: false,
     deletingItems: false,
     editingItems: false,
+    deletingLists: false,
+    listsToDelete: [],
   };
 
   componentDidMount(){
@@ -149,6 +153,22 @@ class HomePage extends Component {
     console.log(this.state.itemsToDelete);
   }
 
+  handleListsToDelete = list => {
+    if(this.state.listsToDelete.includes(list))
+    {
+      const filteredLists = this.state.listsToDelete.filter(i => i.list_id !== list.list_id);
+      this.setState({
+        listsToDelete: filteredLists
+      });
+    }
+    else{
+      this.setState({
+        listsToDelete: [...this.state.listsToDelete, list]
+      });
+    }
+    console.log(this.state.listsToDelete);
+  }
+
   render(){
 
     if(!this.state.results){
@@ -165,9 +185,15 @@ class HomePage extends Component {
         <Header />
 
         <div className="New-button-container-container">
+
+          {!this.state.deletingLists?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               closeOnDocumentClick
@@ -257,12 +283,8 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Expiration date"
-                         onChange={(event) => {
-                          this.setState({ newListDate: event.target.value }) 
-                          console.log(this.state.newListDate)
-                        }}
-                        />
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" />
                       </label>
                     </form>
                     <div className="Menu-button-container">
@@ -311,12 +333,8 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Date"
-                         onChange={(event) => {
-                          this.setState({ newListDate: event.target.value }) 
-                          console.log(this.state.newListDate)
-                        }}
-                        />
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" placeholder="Date"/>
                       </label>
                     </form>
                     <div className="Menu-button-container">
@@ -332,15 +350,29 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" onClick={() => console.log("Delete list(s)")}>
-              trash
+            <div className="Fa-icon-style" onClick={() => this.setState({deletingLists: true})}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
           </div>
+          : //else (if user is deleting lists...)
+          <div className="New-button-container-thin">
+            <div className="New-list-button" onClick={() => console.log("Delete all selected lists")}>
+              Confirm Delete
+            </div>
+            <div className="New-list-button" onClick={() => this.setState({deletingLists: false})}>
+              Cancel
+            </div>
+          </div>
+          } 
 
           {Object.entries(this.state.list).length === 0 ? '' : !this.state.deletingItems ?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               open={this.state.newItemOpen}
@@ -380,15 +412,15 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" 
+            <div className="Fa-icon-style" 
               onClick={() => {
                 this.setState({deletingItems: true})
                 this.setState({editingItems: false})
               }}
             >
-              trash
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
-            <div className={this.state.editingItems?"Edit-button-selected":"New-list-button-thin"} 
+            <div className={this.state.editingItems?"Fa-icon-style-selected":"Fa-icon-style"} 
               onClick={() => {
                 if (this.state.editingItems) {
                   this.setState({editingItems: false})
@@ -397,7 +429,7 @@ class HomePage extends Component {
                 }
               }}
             >
-              edit
+              <FontAwesomeIcon icon={faPen} size="s" />
             </div>
           </div>
           : //else (if user is deleting items)...
@@ -417,7 +449,14 @@ class HomePage extends Component {
         {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
-          <ListNames listData={this.state.results} getList={this.handleGetList} listSelected={this.state.list} />
+          <ListNames 
+            listData={this.state.results} 
+            getList={this.handleGetList} 
+            listSelected={this.state.list}
+            deletingLists={this.state.deletingLists} 
+            listsToDelete={this.state.listsToDelete}
+            handleListsToDelete={this.handleListsToDelete}
+          />
           {Object.entries(this.state.list).length !== 0 ? 
             <FullList2 
               listData={this.state.list} 
