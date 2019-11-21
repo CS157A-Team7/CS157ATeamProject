@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
+import axios from 'axios';
 
 const ListHead = props => {
 
@@ -51,7 +52,7 @@ const ListHead = props => {
                 props.setEditingOption('list_name');
                 let newTitle = listTitle === '' ? props.listData.name : listTitle;
                 props.handleListNameChange(newTitle);
-                props.updateDB();
+                props.updateDB(newTitle, '', '');
                 props.closeEditMenu();
               }}
             />
@@ -163,7 +164,7 @@ const ListBody = props => {
                   let newName = itemName === '' ? item.name : itemName;
                   let newDescription = itemDescription === '' ? item.description : itemDescription;
                   props.handleItemChange(index,newName, newDescription);
-                  props.updateDB();
+                  props.updateDB(newName, newDescription, item.item_id);
                   props.closeEditMenu();
                 }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
@@ -229,7 +230,7 @@ const ListBody = props => {
                   props.setEditingOption('description');
                   let newDescription = listDescription === '' ? props.listData.description : listDescription;
                   props.handleListDescriptionChange(newDescription);
-                  props.updateDB();
+                  props.updateDB('', newDescription, '');
                   props.closeEditMenu();
                 }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
@@ -266,8 +267,48 @@ class FullList2 extends Component {
     this.setState({editing: option})
   };
 
-  updateDB = () => {
+  updateDB = (name, description, item_id) => {
+    const params = new URLSearchParams();
     
+    if(this.state.editing === 'list_name')
+    {
+      params.append('list_id', this.props.listData.list_id);
+      params.append('name', name);
+      axios.post('/api/updateListName.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
+    else if(this.state.editing === 'description')
+    {
+      params.append('list_id', this.props.listData.list_id);
+      params.append('description', description);
+      axios.post('/api/updateListDescription.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
+    else {
+      params.append('item_id', item_id);
+      params.append('name', name);
+      params.append('description', description);
+      axios.post('/api/updateItem.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
   }
 
   render() {
