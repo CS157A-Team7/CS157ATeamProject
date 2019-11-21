@@ -187,6 +187,15 @@ class HomePage extends Component {
     console.log(this.state.listsToDelete);
   }
 
+  handleListNameChange = newName => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        name: newName
+      }
+    });
+  };
+
   render(){
 
     if(!this.state.results){
@@ -482,6 +491,7 @@ class HomePage extends Component {
               handleItemsToDelete={this.handleItemsToDelete} 
               itemsToDelete={this.state.itemsToDelete}
               editingItems={this.state.editingItems}
+              handleListNameChange={this.handleListNameChange}
             /> : ''
           }
         </div>

@@ -49,6 +49,7 @@ const ListHead = props => {
               value="Confirm" 
               onClick={() => {
                 props.setEditingOption('list_name');
+                props.handleListNameChange(listTitle);
                 props.updateDB();
                 props.closeEditMenu();
               }}
@@ -256,7 +257,7 @@ class FullList2 extends Component {
   }
 
   render() {
-    const { listData, deletingItems, handleItemsToDelete, itemsToDelete, editingItems } = this.props
+    const { listData, deletingItems, handleItemsToDelete, itemsToDelete, editingItems, handleListNameChange } = this.props
 
     if (!listData) {
       return (
@@ -276,6 +277,7 @@ class FullList2 extends Component {
           closeEditMenu={this.closeEditMenu}
           updateDB = {this.updateDB}
           setEditingOption = {this.setEditingOption}
+          handleListNameChange = {handleListNameChange}
         />
         <ListBody 
           listData={listData} 
