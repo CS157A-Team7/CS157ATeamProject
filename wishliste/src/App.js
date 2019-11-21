@@ -27,13 +27,13 @@ class App extends Component {
             <div>
               <ul>
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/Home">Home</Link>
                 </li>
                 <li>
                   <Link to="/SignUp">Signup</Link>
                 </li>
                 <li>
-                  <Link to="/SignIn">Sign in</Link>
+                  <Link to="/">Sign in</Link>
                 </li>
                 <li>
                   <Link to="/ForgotPassword">Forgot password</Link>
@@ -51,10 +51,10 @@ class App extends Component {
                   <Link to="/Friends">Friends</Link>
                 </li>
               </ul>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/Home" component={HomePage} />
               {/* <Route path="/SignUp" component={SignUp} /> */}
               <Route path="/SignUp" component={SignUpPage} />
-              <Route path="/SignIn" component={SignInPage} />
+              <Route path="/" component={SignInPage} />
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
