@@ -196,6 +196,28 @@ class HomePage extends Component {
     });
   };
 
+  handleListDescriptionChange = newDescription => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        description: newDescription
+      }
+    });
+  }
+
+  handleItemChange = (index, newName, newDescription) => {
+    let items = this.state.list.items;
+    items[index].name = newName;
+    items[index].description = newDescription;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    });
+  };
+
   render(){
 
     if(!this.state.results){
@@ -492,6 +514,8 @@ class HomePage extends Component {
               itemsToDelete={this.state.itemsToDelete}
               editingItems={this.state.editingItems}
               handleListNameChange={this.handleListNameChange}
+              handleListDescriptionChange={this.handleListDescriptionChange}
+              handleItemChange={this.handleItemChange}
             /> : ''
           }
         </div>

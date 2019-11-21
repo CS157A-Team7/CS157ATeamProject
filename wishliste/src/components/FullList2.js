@@ -49,7 +49,8 @@ const ListHead = props => {
               value="Confirm" 
               onClick={() => {
                 props.setEditingOption('list_name');
-                props.handleListNameChange(listTitle);
+                let newTitle = listTitle === '' ? props.listData.name : listTitle;
+                props.handleListNameChange(newTitle);
                 props.updateDB();
                 props.closeEditMenu();
               }}
@@ -97,7 +98,7 @@ const ListBody = props => {
   const [itemDescription, setItemDescription] = useState('');
   const [listDescription, setListDescription] = useState('');
 
-  const items = props.listData.items.map((item) => {
+  const items = props.listData.items.map((item, index) => {
     if (props.editingItems) {
       return (
         <Popup
@@ -159,6 +160,9 @@ const ListBody = props => {
                 value="Confirm" 
                 onClick={() => {
                   props.setEditingOption('item');
+                  let newName = itemName === '' ? item.name : itemName;
+                  let newDescription = itemDescription === '' ? item.description : itemDescription;
+                  props.handleItemChange(index,newName, newDescription);
                   props.updateDB();
                   props.closeEditMenu();
                 }}/>
@@ -217,7 +221,17 @@ const ListBody = props => {
               </label>
             </form>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited list description")}/>
+              <input 
+                className="Menu-button" 
+                type="button"
+                value="Confirm" 
+                onClick={() => {
+                  props.setEditingOption('description');
+                  let newDescription = listDescription === '' ? props.listData.description : listDescription;
+                  props.handleListDescriptionChange(newDescription);
+                  props.updateDB();
+                  props.closeEditMenu();
+                }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
             </div>
           </div>
@@ -257,7 +271,15 @@ class FullList2 extends Component {
   }
 
   render() {
-    const { listData, deletingItems, handleItemsToDelete, itemsToDelete, editingItems, handleListNameChange } = this.props
+    const { 
+      listData, 
+      deletingItems, 
+      handleItemsToDelete, 
+      itemsToDelete, 
+      editingItems, 
+      handleListNameChange, 
+      handleListDescriptionChange,
+      handleItemChange } = this.props
 
     if (!listData) {
       return (
@@ -290,6 +312,8 @@ class FullList2 extends Component {
           closeEditMenu={this.closeEditMenu}
           updateDB = {this.updateDB}
           setEditingOption = {this.setEditingOption}
+          handleItemChange = {handleItemChange}
+          handleListDescriptionChange = {handleListDescriptionChange}
         />
       </div>
     )
