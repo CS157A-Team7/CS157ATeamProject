@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
 import './assets/App.css';
-import SignUp from './SignUp.js';
+// import SignUp from './SignUp.js';
+import SignUpPage from './pages/signUpPage';
+import SignInPage from './pages/signInPage';
 import HomePage from './pages/homePage';
 import ItemDescriptionPage from './pages/itemDescriptionPage';
 import FriendsPage from './pages/friendsPage';
@@ -28,6 +30,9 @@ class App extends Component {
                   <Link to="/SignUp">Signup</Link>
                 </li>
                 <li>
+                  <Link to="/SignIn">Sign in</Link>
+                </li>
+                <li>
                   <Link to="/List">List</Link>
                 </li>
                 <li>
@@ -35,7 +40,9 @@ class App extends Component {
                 </li>
               </ul>
               <Route exact path="/" component={HomePage} />
-              <Route path="/SignUp" component={SignUp} />
+              {/* <Route path="/SignUp" component={SignUp} /> */}
+              <Route path="/SignUp" component={SignUpPage} />
+              <Route path="/SignIn" component={SignInPage} />
               <Route path="/List" component={ItemDescriptionPage} />
               <Route path="/Friends" component={FriendsPage} />
             </div>
