@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -40,14 +37,14 @@ const useStyles = makeStyles(theme => ({
 
 const signIn = (username, password) => {
   console.log("try to sign in w/ username " + username + " and password " + password);
-  //check the db to see if match exists
-  //if not, make password box red(?)
+  //check the db to see if account exists
+  //if not, show error(?)
 }
 
 const SignInPage = () => {
   const classes = useStyles();
-  var username;
-  var password;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,7 +68,7 @@ const SignInPage = () => {
                 name="username"
                 autoComplete="email"
                 onChange={(event) => {
-                  username = event.target.value
+                  setUsername(event.target.value)
                   console.log(username)
                 }}
               />
@@ -87,7 +84,7 @@ const SignInPage = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={(event) => {
-                  password = event.target.value
+                  setPassword(event.target.value)
                   console.log(password)
                 }}
               />
@@ -95,7 +92,6 @@ const SignInPage = () => {
 
           </Grid>
           <Button
-            // type="submit"
             type="button"
             fullWidth
             variant="contained"
@@ -105,20 +101,19 @@ const SignInPage = () => {
           >
             Sign In
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
+          <Grid container>
+            <Grid item xs>
               <Link href="#" variant="body2" onClick={() => console.log("Go to forgot password page")}>
                 Forgot password?
               </Link>
             </Grid>
-          </Grid>
-          <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2" onClick={() => console.log("Go to sign up page")}>
-                New to WishListé?
+                Don't have an account? Sign up
               </Link>
             </Grid>
-        </Grid>
+          </Grid>
+
         </form>
       </div>
 

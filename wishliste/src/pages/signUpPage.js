@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,17 +33,10 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  error_outline: {
-    marginTop: '50%',
-  },
 }));
 
 const signUp = (email, password1, password2) => {
-  if (password1 !== password2) {
-    console.log("passwords don't match; sign up failed");
-    //make confirm password box outlined in red or something
-    return false;
-  } else {
+  if (password1 === password2) {
     console.log("sign up w/ username " + email + " and password " + password1);
     //do db stuff
   }
@@ -54,10 +44,9 @@ const signUp = (email, password1, password2) => {
 
 const SignUpPage = () => {
   const classes = useStyles();
-  var email;
-  var password1;
-  var password2;
-  var passwordsMatch = true;
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -104,7 +93,7 @@ const SignUpPage = () => {
                 name="email"
                 autoComplete="email"
                 onChange={(event) => {
-                  email = event.target.value
+                  setEmail(event.target.value)
                   console.log(email)
                 }}
               />
@@ -120,12 +109,12 @@ const SignUpPage = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={(event) => {
-                  password1 = event.target.value
+                  setPassword1(event.target.value)
                   console.log(password1)
                 }}
               />
             </Grid>
-            <Grid item xs={12} className={passwordsMatch?'':classes.error_outline}>
+            <Grid item xs={12}> 
               <TextField
                 variant="outlined"
                 required
@@ -136,21 +125,22 @@ const SignUpPage = () => {
                 id="confirm_password"
                 autoComplete="current-password"
                 onChange={(event) => {
-                  password2 = event.target.value
-                  console.log(password2 + " matching:" + passwordsMatch)
+                  setPassword2(event.target.value)
+                  console.log(password2)
                 }}
+                error={password2!==""&&password1!==password2}
+                helperText={password2!==""&&password1!==password2?"Passwords don't match":""}
               />
             </Grid>
 
           </Grid>
           <Button
-            // type="submit"
             type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => passwordsMatch = signUp(email, password1, password2)}
+            onClick={() => signUp(email, password1, password2)}
           >
             Sign Up
           </Button>
