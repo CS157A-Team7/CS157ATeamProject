@@ -1,8 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
 
 const ListHead = props => {
+
+  const [listTitle, setListTitle] = useState('');
+
   if (props.editingItems) {
     return (
       <Popup
@@ -27,11 +30,29 @@ const ListHead = props => {
           <form className="Label-menu-item">
             <label>
               Edit list name
-              <input type="text" name="name" placeholder="Name" defaultValue={props.listData.name} />
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" 
+                defaultValue={props.listData.name}
+                onChange={(event) => {
+                  setListTitle(event.target.value); 
+                  console.log(listTitle);
+                }} 
+              />
             </label>
           </form>
           <div className="Menu-button-container">
-            <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited list name")}/>
+            <input 
+              className="Menu-button" 
+              type="button" 
+              value="Confirm" 
+              onClick={() => {
+                props.setEditingOption('list_name');
+                props.updateDB();
+                props.closeEditMenu();
+              }}
+            />
             <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
           </div>
         </div>
@@ -70,6 +91,11 @@ const ListItem = props => {
 }
 
 const ListBody = props => {
+
+  const [itemName, setItemName] = useState('');
+  const [itemDescription, setItemDescription] = useState('');
+  const [listDescription, setListDescription] = useState('');
+
   const items = props.listData.items.map((item) => {
     if (props.editingItems) {
       return (
@@ -99,16 +125,42 @@ const ListBody = props => {
             <form className="Label-menu-item">
               <label>
                 Edit item
-                <input type="text" name="name" placeholder="Name" defaultValue={item.name}/>
+                <input 
+                  type="text" 
+                  name="name" 
+                  placeholder="Name" 
+                  defaultValue={item.name}
+                  onChange={(event) => {
+                    setItemName(event.target.value);
+                    console.log(itemName);
+                  }}
+                />
               </label>
             </form>
             <form className="Label-menu-item">
               <label>
-                <input type="text" name="description" placeholder="Description" defaultValue={item.description}/>
+                <input 
+                  type="text" 
+                  name="description" 
+                  placeholder="Description" 
+                  defaultValue={item.description}
+                  onChange={(event) => {
+                    setItemDescription(event.target.value); 
+                    console.log(itemDescription);
+                  }}
+                />
               </label>
             </form>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited " + item.name)}/>
+              <input 
+                className="Menu-button" 
+                type="button" 
+                value="Confirm" 
+                onClick={() => {
+                  props.setEditingOption('item');
+                  props.updateDB();
+                  props.closeEditMenu();
+                }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
             </div>
           </div>
@@ -151,7 +203,16 @@ const ListBody = props => {
             <form className="Label-menu-item">
               <label>
                 Edit list description
-                <input type="text" name="description" placeholder="Description" defaultValue={props.listData.description} />
+                <input 
+                  type="text" 
+                  name="description" 
+                  placeholder="Description" 
+                  defaultValue={props.listData.description} 
+                  onChange={(event) => {
+                    setListDescription(event.target.value);
+                    console.log(listDescription);
+                  }}
+                />
               </label>
             </form>
             <div className="Menu-button-container">
@@ -175,6 +236,7 @@ const ListBody = props => {
 class FullList2 extends Component {
   state = {
     editMenuOpen: {},
+    editing: ''
   }
 
   openEditMenu = element => {
@@ -183,6 +245,14 @@ class FullList2 extends Component {
 
   closeEditMenu = () => {
     this.setState({editMenuOpen: {}})
+  }
+
+  setEditingOption = option => {
+    this.setState({editing: option})
+  };
+
+  updateDB = () => {
+    
   }
 
   render() {
@@ -204,6 +274,8 @@ class FullList2 extends Component {
           editMenuOpen={this.state.editMenuOpen}
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
+          updateDB = {this.updateDB}
+          setEditingOption = {this.setEditingOption}
         />
         <ListBody 
           listData={listData} 
@@ -214,6 +286,8 @@ class FullList2 extends Component {
           editMenuOpen={this.state.editMenuOpen}
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
+          updateDB = {this.updateDB}
+          setEditingOption = {this.setEditingOption}
         />
       </div>
     )
