@@ -9,6 +9,9 @@ import ItemDescriptionPage from './pages/itemDescriptionPage';
 import FriendsPage from './pages/friendsPage';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
+import ForgotPasswordPage from './pages/forgotPasswordPage';
+import EmailSentPage from './pages/emailSent';
+import ResetPasswordPage from './pages/resetPasswordPage';
 
 class App extends Component {
   state = {
@@ -33,6 +36,15 @@ class App extends Component {
                   <Link to="/SignIn">Sign in</Link>
                 </li>
                 <li>
+                  <Link to="/ForgotPassword">Forgot password</Link>
+                </li>
+                <li>
+                  <Link to="/EmailSent">Email sent</Link>
+                </li>
+                <li>
+                  <Link to="/ResetPassword">Reset password</Link>
+                </li>
+                <li>
                   <Link to="/List">List</Link>
                 </li>
                 <li>
@@ -43,6 +55,9 @@ class App extends Component {
               {/* <Route path="/SignUp" component={SignUp} /> */}
               <Route path="/SignUp" component={SignUpPage} />
               <Route path="/SignIn" component={SignInPage} />
+              <Route path="/ForgotPassword" component={ForgotPasswordPage} />
+              <Route path="/EmailSent" component={EmailSentPage} />
+              <Route path="/ResetPassword" component={ResetPasswordPage} />
               <Route path="/List" component={ItemDescriptionPage} />
               <Route path="/Friends" component={FriendsPage} />
             </div>
