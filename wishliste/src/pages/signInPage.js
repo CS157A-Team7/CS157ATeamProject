@@ -36,9 +36,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const signIn = (username, password) => {
-  console.log("try to sign in w/ username " + username + " and password " + password);
+  //console.log("try to sign in w/ username " + username + " and password " + password);
   //check the db to see if account exists
   //if not, show error(?)
+
+  //no auth for now
+  localStorage.setItem('rememberMe', true);
+  localStorage.setItem('username', true ? username : '');
+
 }
 
 const SignInPage = () => {
