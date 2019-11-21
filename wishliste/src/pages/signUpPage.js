@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,16 +36,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const signUp = (email, password1, password2) => {
+const signUp = (email, password1, password2, setUsernameError) => {
   if (password1 === password2) {
     console.log("sign up w/ username " + email + " and password " + password1);
-    //do db stuff
+
+    const params = new URLSearchParams();
+    params.append('username', email);
+    params.append('password', password1);
+    axios.post('/api/addNewAccount.php', params)
+    .then((response) => {
+      if (response.data === 0) {
+        console.log("Username already taken");
+        setUsernameError(true);
+      } else {
+        //redirect to home page
+      }
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
   }
 }
 
 const SignUpPage = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -96,6 +114,8 @@ const SignUpPage = () => {
                   setEmail(event.target.value)
                   console.log(email)
                 }}
+                error={usernameError}
+                helperText={usernameError?"Username is taken":""}
               />
             </Grid>
             <Grid item xs={12}>
@@ -140,7 +160,7 @@ const SignUpPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => signUp(email, password1, password2)}
+            onClick={() => signUp(email, password1, password2, setUsernameError)}
           >
             Sign Up
           </Button>
