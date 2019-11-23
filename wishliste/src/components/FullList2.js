@@ -49,7 +49,6 @@ const ListHead = props => {
               type="button" 
               value="Confirm" 
               onClick={() => {
-                props.setEditingOption('list_name');
                 let newTitle = listTitle === '' ? props.listData.name : listTitle;
                 props.handleListNameChange(newTitle);
                 props.updateDB(newTitle, '', '');
@@ -160,7 +159,6 @@ const ListBody = props => {
                 type="button" 
                 value="Confirm" 
                 onClick={() => {
-                  props.setEditingOption('item');
                   let newName = itemName === '' ? item.name : itemName;
                   let newDescription = itemDescription === '' ? item.description : itemDescription;
                   props.handleItemChange(index,newName, newDescription);
@@ -227,7 +225,6 @@ const ListBody = props => {
                 type="button"
                 value="Confirm" 
                 onClick={() => {
-                  props.setEditingOption('description');
                   let newDescription = listDescription === '' ? props.listData.description : listDescription;
                   props.handleListDescriptionChange(newDescription);
                   props.updateDB('', newDescription, '');
@@ -251,8 +248,7 @@ const ListBody = props => {
 
 class FullList2 extends Component {
   state = {
-    editMenuOpen: {},
-    editing: ''
+    editMenuOpen: {}
   }
 
   openEditMenu = element => {
@@ -263,14 +259,12 @@ class FullList2 extends Component {
     this.setState({editMenuOpen: {}})
   }
 
-  setEditingOption = option => {
-    this.setState({editing: option})
-  };
-
   updateDB = (name, description, item_id) => {
     const params = new URLSearchParams();
-    
-    if(this.state.editing === 'list_name')
+    console.log(name);
+    console.log(description);
+    console.log(item_id);
+    if(name !== '' && description === '' && item_id === '')
     {
       params.append('list_id', this.props.listData.list_id);
       params.append('name', name);
@@ -283,7 +277,7 @@ class FullList2 extends Component {
           console.log(error);
       });
     }
-    else if(this.state.editing === 'description')
+    else if(name === '' && description !== '' && item_id === '')
     {
       params.append('list_id', this.props.listData.list_id);
       params.append('description', description);
@@ -339,7 +333,6 @@ class FullList2 extends Component {
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
           updateDB = {this.updateDB}
-          setEditingOption = {this.setEditingOption}
           handleListNameChange = {handleListNameChange}
         />
         <ListBody 
@@ -352,7 +345,6 @@ class FullList2 extends Component {
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
           updateDB = {this.updateDB}
-          setEditingOption = {this.setEditingOption}
           handleItemChange = {handleItemChange}
           handleListDescriptionChange = {handleListDescriptionChange}
         />
