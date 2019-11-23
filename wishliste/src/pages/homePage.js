@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import '../assets/App.css';
 import axios from 'axios';
 import Header from '../components/header';
-import AllLists from '../components/AllLists.js';
 import ListNames from '../components/ListNames';
-import FullList from '../components/FullList';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -208,7 +206,7 @@ class HomePage extends Component {
           <div className="New-button-container-thin">
             <Popup
               trigger={
-                <div className="Fa-icon-style">
+                <div className="Fa-icon-style Fa-icon-color">
                   <FontAwesomeIcon icon={faPlus} size="s" />
                 </div>
               }
@@ -368,16 +366,16 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="Fa-icon-style" onClick={() => this.setState({deletingLists: true})}>
+            <div className="Fa-icon-style Fa-icon-color" onClick={() => this.setState({deletingLists: true})}>
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            <div className="New-list-button" onClick={this.deleteLists}>
+            <div className="Confirm-delete-button" onClick={this.deleteLists}>
               Confirm Delete
             </div>
-            <div className="New-list-button" onClick={() => this.setState({deletingLists: false})}>
+            <div className="Confirm-delete-button" onClick={() => this.setState({deletingLists: false})}>
               Cancel
             </div>
           </div>
@@ -387,7 +385,7 @@ class HomePage extends Component {
           <div className="New-button-container-thin">
             <Popup
               trigger={
-                <div className="Fa-icon-style">
+                <div className="Fa-icon-style Fa-icon-color">
                   <FontAwesomeIcon icon={faPlus} size="s" />
                 </div>
               }
@@ -430,7 +428,7 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="Fa-icon-style" 
+            <div className="Fa-icon-style Fa-icon-color" 
               onClick={() => {
                 this.setState({deletingItems: true})
                 this.setState({editingItems: false})
@@ -438,7 +436,7 @@ class HomePage extends Component {
             >
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
-            <div className={this.state.editingItems?"Fa-icon-style-selected":"Fa-icon-style"} 
+            <div className={this.state.editingItems?"Fa-icon-style Fa-icon-selected-color":"Fa-icon-style Fa-icon-color"} 
               onClick={() => {
                 if (this.state.editingItems) {
                   this.setState({editingItems: false})
@@ -452,19 +450,17 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
-            <div className="New-list-button" 
+            <div className="Confirm-delete-button" 
               onClick={this.deleteItems}
             >
               Confirm Delete
             </div>
-            <div className="New-list-button" onClick={() => this.setState({deletingItems: false})}>
+            <div className="Confirm-delete-button" onClick={() => this.setState({deletingItems: false})}>
               Cancel
             </div>
           </div>
           }
         </div>
-
-        {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
           <ListNames 

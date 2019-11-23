@@ -10,7 +10,10 @@ class ListNames extends Component {
 
     const names = listData.map((list) => {
         return (
-            <div className={deletingLists?"List-Names-deleting":list===listSelected?"List-Names-head-selected":"List-Names-head"} 
+            <div className={deletingLists&&listsToDelete.includes(list)?"List-Name-deleting-selected"
+              :deletingLists?"List-Name-deleting"
+              :list===listSelected?"List-Name-selected"
+              :"List-Name"} 
               onClick={() => {
                 if (deletingLists) {
                   this.props.handleListsToDelete(list)
@@ -19,11 +22,11 @@ class ListNames extends Component {
                 }
               }}
             >
-              {!deletingLists?'':listsToDelete.includes(list)?
+              {/* {!deletingLists?'':listsToDelete.includes(list)?
                 <FontAwesomeIcon icon={faTrashAlt} className="Delete-icon-selected" size="xs" />
                 : 
                 <FontAwesomeIcon icon={faTrashAlt} className="Delete-icon-deselected" size="xs" />
-              }
+              } */}
               {list.name}
             </div>
         )
