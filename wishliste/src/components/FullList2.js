@@ -303,6 +303,7 @@ class FullList2 extends Component {
           console.log(error);
       });
     }
+    this.props.toggleDBChange();
   }
 
   render() {

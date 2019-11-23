@@ -61,7 +61,7 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({dbChange: false});
+      this.toggleDBChange();
     }
   }
   
@@ -81,7 +81,7 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ dbChange: true });
+        this.toggleDBChange();
       };
       console.log(response.data);
     })
@@ -102,7 +102,7 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ dbChange: true });
+        this.toggleDBChange();
       };
       console.log(response.data);
     })
@@ -122,7 +122,7 @@ class HomePage extends Component {
     .then((response) => {
       console.log(response.data);
       this.setState({itemsToDelete: []});
-      this.setState({ dbChange: true });
+      this.toggleDBChange();
     })
     .catch(function(error){
         console.log(error);
@@ -140,7 +140,7 @@ class HomePage extends Component {
       .then((response) => {
         console.log(response.data);
         this.setState({listsToDelete: []});
-        this.setState({ dbChange: true });
+        this.toggleDBChange();
       })
       .catch(function(error){
           console.log(error);
@@ -216,6 +216,14 @@ class HomePage extends Component {
         items: items
       }
     });
+  };
+
+  toggleDBChange = () => {
+    this.setState(state => {
+      return {
+        dbChange: !state.dbChange,
+      }
+    })
   };
 
   render(){
@@ -516,6 +524,7 @@ class HomePage extends Component {
               handleListNameChange={this.handleListNameChange}
               handleListDescriptionChange={this.handleListDescriptionChange}
               handleItemChange={this.handleItemChange}
+              toggleDBChange={this.toggleDBChange}
             /> : ''
           }
         </div>
