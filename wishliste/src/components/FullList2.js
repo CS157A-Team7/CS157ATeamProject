@@ -1,8 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
+import axios from 'axios';
 
 const ListHead = props => {
+
+  const [listTitle, setListTitle] = useState('');
+
   if (props.editingItems) {
     return (
       <Popup
@@ -27,11 +31,30 @@ const ListHead = props => {
           <form className="Label-menu-item">
             <label>
               Edit list name
-              <input type="text" name="name" placeholder="Name" defaultValue={props.listData.name} />
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" 
+                defaultValue={props.listData.name}
+                onChange={(event) => {
+                  setListTitle(event.target.value); 
+                  console.log(listTitle);
+                }} 
+              />
             </label>
           </form>
           <div className="Menu-button-container">
-            <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited list name")}/>
+            <input 
+              className="Menu-button" 
+              type="button" 
+              value="Confirm" 
+              onClick={() => {
+                let newTitle = listTitle === '' ? props.listData.name : listTitle;
+                props.handleListNameChange(newTitle);
+                props.updateDB(newTitle, '', '');
+                props.closeEditMenu();
+              }}
+            />
             <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
           </div>
         </div>
@@ -70,7 +93,12 @@ const ListItem = props => {
 }
 
 const ListBody = props => {
-  const items = props.listData.items.map((item) => {
+
+  const [itemName, setItemName] = useState('');
+  const [itemDescription, setItemDescription] = useState('');
+  const [listDescription, setListDescription] = useState('');
+
+  const items = props.listData.items.map((item, index) => {
     if (props.editingItems) {
       return (
         <Popup
@@ -99,16 +127,44 @@ const ListBody = props => {
             <form className="Label-menu-item">
               <label>
                 Edit item
-                <input type="text" name="name" placeholder="Name" defaultValue={item.name}/>
+                <input 
+                  type="text" 
+                  name="name" 
+                  placeholder="Name" 
+                  defaultValue={item.name}
+                  onChange={(event) => {
+                    setItemName(event.target.value);
+                    console.log(itemName);
+                  }}
+                />
               </label>
             </form>
             <form className="Label-menu-item">
               <label>
-                <input type="text" name="description" placeholder="Description" defaultValue={item.description}/>
+                <input 
+                  type="text" 
+                  name="description" 
+                  placeholder="Description" 
+                  defaultValue={item.description}
+                  onChange={(event) => {
+                    setItemDescription(event.target.value); 
+                    console.log(itemDescription);
+                  }}
+                />
               </label>
             </form>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited " + item.name)}/>
+              <input 
+                className="Menu-button" 
+                type="button" 
+                value="Confirm" 
+                onClick={() => {
+                  let newName = itemName === '' ? item.name : itemName;
+                  let newDescription = itemDescription === '' ? item.description : itemDescription;
+                  props.handleItemChange(index,newName, newDescription);
+                  props.updateDB(newName, newDescription, item.item_id);
+                  props.closeEditMenu();
+                }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
             </div>
           </div>
@@ -151,11 +207,29 @@ const ListBody = props => {
             <form className="Label-menu-item">
               <label>
                 Edit list description
-                <input type="text" name="description" placeholder="Description" defaultValue={props.listData.description} />
+                <input 
+                  type="text" 
+                  name="description" 
+                  placeholder="Description" 
+                  defaultValue={props.listData.description} 
+                  onChange={(event) => {
+                    setListDescription(event.target.value);
+                    console.log(listDescription);
+                  }}
+                />
               </label>
             </form>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Edited list description")}/>
+              <input 
+                className="Menu-button" 
+                type="button"
+                value="Confirm" 
+                onClick={() => {
+                  let newDescription = listDescription === '' ? props.listData.description : listDescription;
+                  props.handleListDescriptionChange(newDescription);
+                  props.updateDB('', newDescription, '');
+                  props.closeEditMenu();
+                }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
             </div>
           </div>
@@ -174,7 +248,7 @@ const ListBody = props => {
 
 class FullList2 extends Component {
   state = {
-    editMenuOpen: {},
+    editMenuOpen: {}
   }
 
   openEditMenu = element => {
@@ -185,8 +259,63 @@ class FullList2 extends Component {
     this.setState({editMenuOpen: {}})
   }
 
+  updateDB = (name, description, item_id) => {
+    const params = new URLSearchParams();
+    console.log(name);
+    console.log(description);
+    console.log(item_id);
+    if(name !== '' && description === '' && item_id === '')
+    {
+      params.append('list_id', this.props.listData.list_id);
+      params.append('name', name);
+      axios.post('/api/updateListName.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
+    else if(name === '' && description !== '' && item_id === '')
+    {
+      params.append('list_id', this.props.listData.list_id);
+      params.append('description', description);
+      axios.post('/api/updateListDescription.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
+    else {
+      params.append('item_id', item_id);
+      params.append('name', name);
+      params.append('description', description);
+      axios.post('/api/updateItem.php', params)
+      .then((response) => {
+        this.setState({ results:response.data });
+        console.log(this.state.results)
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
+    this.props.toggleDBChange();
+  }
+
   render() {
-    const { listData, deletingItems, handleItemsToDelete, itemsToDelete, editingItems } = this.props
+    const { 
+      listData, 
+      deletingItems, 
+      handleItemsToDelete, 
+      itemsToDelete, 
+      editingItems, 
+      handleListNameChange, 
+      handleListDescriptionChange,
+      handleItemChange } = this.props
 
     if (!listData) {
       return (
@@ -204,6 +333,8 @@ class FullList2 extends Component {
           editMenuOpen={this.state.editMenuOpen}
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
+          updateDB = {this.updateDB}
+          handleListNameChange = {handleListNameChange}
         />
         <ListBody 
           listData={listData} 
@@ -214,6 +345,9 @@ class FullList2 extends Component {
           editMenuOpen={this.state.editMenuOpen}
           openEditMenu={this.openEditMenu}
           closeEditMenu={this.closeEditMenu}
+          updateDB = {this.updateDB}
+          handleItemChange = {handleItemChange}
+          handleListDescriptionChange = {handleListDescriptionChange}
         />
       </div>
     )

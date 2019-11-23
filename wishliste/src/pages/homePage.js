@@ -7,6 +7,8 @@ import ListNames from '../components/ListNames';
 import FullList from '../components/FullList';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
 
 class HomePage extends Component {
   state = {
@@ -16,6 +18,13 @@ class HomePage extends Component {
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
+    newListName: "",
+    newListDescription: "",
+    newListDate: "",
+    url: "",
+    owner: "",
+    typeOfList: 0,
+    type: 0,
     dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
@@ -52,10 +61,36 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({dbChange: false});
+      this.toggleDBChange();
     }
   }
   
+  addList = () => {
+    axios.get('/api/addNewList.php', {
+      params: {
+        name: this.state.newListName,
+        description: this.state.newListDescription,
+        url: this.state.url,
+        owner: this.state.owner,
+        type: this.state.type,
+        expiration_date: this.state.newListDate,
+        date: this.state.newListDate,
+        username: 'ash_ketchum@hotmail.com',
+        listType: this.state.typeOfList
+      }
+    })
+    .then((response) => {
+      if(response.data){
+        this.toggleDBChange();
+      };
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    console.log("CreatedList");
+  }
+
   addItem = () => {
     axios.get('/api/addItemToTable.php', {
       params: {
@@ -67,7 +102,7 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ dbChange: true });
+        this.toggleDBChange();
       };
       console.log(response.data);
     })
@@ -87,13 +122,31 @@ class HomePage extends Component {
     .then((response) => {
       console.log(response.data);
       this.setState({itemsToDelete: []});
-      this.setState({ dbChange: true });
+      this.toggleDBChange();
     })
     .catch(function(error){
         console.log(error);
     });
     this.setState({deletingItems: false})
     console.log(this.state.itemsToDelete);
+  }
+
+  deleteLists = () => {
+    axios({
+      url: '/api/deleteLists.php',
+      method: 'post',
+      data: this.state.listsToDelete  
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({listsToDelete: []});
+        this.toggleDBChange();
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({deletingLists: false})
+      console.log(this.state.itemsToDelete);
   }
 
   handleGetList = list => {
@@ -134,6 +187,45 @@ class HomePage extends Component {
     console.log(this.state.listsToDelete);
   }
 
+  handleListNameChange = newName => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        name: newName
+      }
+    });
+  };
+
+  handleListDescriptionChange = newDescription => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        description: newDescription
+      }
+    });
+  }
+
+  handleItemChange = (index, newName, newDescription) => {
+    let items = this.state.list.items;
+    items[index].name = newName;
+    items[index].description = newDescription;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    });
+  };
+
+  toggleDBChange = () => {
+    this.setState(state => {
+      return {
+        dbChange: !state.dbChange,
+      }
+    })
+  };
+
   render(){
 
     if(!this.state.results){
@@ -154,7 +246,11 @@ class HomePage extends Component {
           {!this.state.deletingLists?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               closeOnDocumentClick
@@ -180,16 +276,30 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 0},
+                          () => {this.addList()});
+                        this.setState({newWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -210,21 +320,36 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Expiration date"/>
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New surprise wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 1}, 
+                          () => {this.addList()});
+                        this.setState({newSWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -245,21 +370,36 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name"
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Date"/>
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" placeholder="Date"/>
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New to-do list")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={()=>{
+                        this.setState({typeOfList: 2},
+                          () => {this.addList()});
+                        this.setState({newTodoListOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
                     </div>
                   </div>
@@ -267,13 +407,13 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" onClick={() => this.setState({deletingLists: true})}>
-              trash
+            <div className="Fa-icon-style" onClick={() => this.setState({deletingLists: true})}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            <div className="New-list-button" onClick={() => console.log("Delete all selected lists")}>
+            <div className="New-list-button" onClick={this.deleteLists}>
               Confirm Delete
             </div>
             <div className="New-list-button" onClick={() => this.setState({deletingLists: false})}>
@@ -285,7 +425,11 @@ class HomePage extends Component {
           {Object.entries(this.state.list).length === 0 ? '' : !this.state.deletingItems ?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               open={this.state.newItemOpen}
@@ -325,15 +469,15 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" 
+            <div className="Fa-icon-style" 
               onClick={() => {
                 this.setState({deletingItems: true})
                 this.setState({editingItems: false})
               }}
             >
-              trash
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
-            <div className={this.state.editingItems?"Edit-button-selected":"New-list-button-thin"} 
+            <div className={this.state.editingItems?"Fa-icon-style-selected":"Fa-icon-style"} 
               onClick={() => {
                 if (this.state.editingItems) {
                   this.setState({editingItems: false})
@@ -342,7 +486,7 @@ class HomePage extends Component {
                 }
               }}
             >
-              edit
+              <FontAwesomeIcon icon={faPen} size="s" />
             </div>
           </div>
           : //else (if user is deleting items)...
@@ -377,6 +521,10 @@ class HomePage extends Component {
               handleItemsToDelete={this.handleItemsToDelete} 
               itemsToDelete={this.state.itemsToDelete}
               editingItems={this.state.editingItems}
+              handleListNameChange={this.handleListNameChange}
+              handleListDescriptionChange={this.handleListDescriptionChange}
+              handleItemChange={this.handleItemChange}
+              toggleDBChange={this.toggleDBChange}
             /> : ''
           }
         </div>
