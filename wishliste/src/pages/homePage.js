@@ -147,6 +147,7 @@ class HomePage extends Component {
       console.log(this.state.itemsToDelete);
   }
 
+
   handleGetList = list => {
     const selectedList = list;
     this.setState({list: selectedList});
@@ -234,6 +235,16 @@ class HomePage extends Component {
         items: items
       }
     }, () => {
+      const params = new URLSearchParams();
+      params.append('checkmark', items[index].checked);
+      params.append('item_id', items[index].item_id);
+      axios.post('/api/updateItemCheckmark.php', params)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
     });
   };
 
