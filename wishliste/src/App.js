@@ -51,10 +51,10 @@ class App extends Component {
                   <Link to="/Friends">Friends</Link>
                 </li>
               </ul>
-              <Route exact path="/Home" component={HomePage} />
+              <Route path="/Home" component={HomePage} />
               {/* <Route path="/SignUp" component={SignUp} /> */}
               <Route path="/SignUp" component={SignUpPage} />
-              <Route path="/" component={SignInPage} />
+              <Route exact path="/" component={SignInPage} />
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
