@@ -26,7 +26,7 @@ class FriendsPage extends Component {
         <div className="Centered-button-container">
           <Popup
             trigger={
-              <div className="Fa-icon-style">
+              <div className="Fa-icon-style Fa-icon-color">
                 <FontAwesomeIcon icon={faPlus} size="s" />
               </div>
             }
