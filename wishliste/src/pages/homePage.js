@@ -224,6 +224,19 @@ class HomePage extends Component {
     })
   };
 
+  toggleCheckmark =  index => {
+    let items = this.state.list.items;
+    items[index].checked = items[index].checked == 1 ? 0 : 1;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    }, () => {
+    });
+  };
+
   render(){
 
     if(!this.state.results){
@@ -521,6 +534,7 @@ class HomePage extends Component {
               handleListDescriptionChange={this.handleListDescriptionChange}
               handleItemChange={this.handleItemChange}
               toggleDBChange={this.toggleDBChange}
+              toggleCheckmark={this.toggleCheckmark}
             /> : ''
           }
         </div>

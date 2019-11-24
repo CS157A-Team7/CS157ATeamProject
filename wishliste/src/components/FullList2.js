@@ -78,6 +78,7 @@ const ListItem = props => {
           console.log("Select/deselect "+props.item.name+" to be deleted");
           props.handleItemsToDelete(props.item);
         } else {
+          props.toggleCheckmark(props.index);
           console.log("Check/uncheck "+props.item.name)
         }
       }} 
@@ -176,7 +177,9 @@ const ListBody = props => {
           deletingItems={props.deletingItems} 
           handleItemsToDelete={props.handleItemsToDelete} 
           itemsToDelete={props.itemsToDelete}  
-          item={item} 
+          item={item}
+          index={index}
+          toggleCheckmark={props.toggleCheckmark} 
         />
       )
     }
@@ -315,7 +318,8 @@ class FullList2 extends Component {
       editingItems, 
       handleListNameChange, 
       handleListDescriptionChange,
-      handleItemChange } = this.props
+      handleItemChange,
+      toggleCheckmark } = this.props
 
     if (!listData) {
       return (
@@ -348,6 +352,7 @@ class FullList2 extends Component {
           updateDB = {this.updateDB}
           handleItemChange = {handleItemChange}
           handleListDescriptionChange = {handleListDescriptionChange}
+          toggleCheckmark = {toggleCheckmark}
         />
       </div>
     )
