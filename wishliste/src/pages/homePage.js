@@ -147,6 +147,7 @@ class HomePage extends Component {
       console.log(this.state.itemsToDelete);
   }
 
+
   handleGetList = list => {
     const selectedList = list;
     this.setState({list: selectedList});
@@ -222,6 +223,29 @@ class HomePage extends Component {
         dbChange: !state.dbChange,
       }
     })
+  };
+
+  toggleCheckmark =  index => {
+    let items = this.state.list.items;
+    items[index].checked = items[index].checked == 1 ? 0 : 1;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    }, () => {
+      const params = new URLSearchParams();
+      params.append('checkmark', items[index].checked);
+      params.append('item_id', items[index].item_id);
+      axios.post('/api/updateItemCheckmark.php', params)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    });
   };
 
   render(){
@@ -521,6 +545,7 @@ class HomePage extends Component {
               handleListDescriptionChange={this.handleListDescriptionChange}
               handleItemChange={this.handleItemChange}
               toggleDBChange={this.toggleDBChange}
+              toggleCheckmark={this.toggleCheckmark}
             /> : ''
           }
         </div>
