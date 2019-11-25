@@ -363,7 +363,13 @@ class HomePage extends Component {
                     <form className="Label-menu-item">
                       <label>
                         {/* Date: &nbsp; */}
-                        <input type="date" name="date" />
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                            this.setState({ newListDate: event.target.value}, () => {
+                              console.log(this.state.newListDate);
+                            })
+                          }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
@@ -413,7 +419,13 @@ class HomePage extends Component {
                     <form className="Label-menu-item">
                       <label>
                         {/* Date: &nbsp; */}
-                        <input type="date" name="date" placeholder="Date"/>
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                          this.setState({ newListDate: event.target.value}, () => {
+                            console.log(this.state.newListDate);
+                          })
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">

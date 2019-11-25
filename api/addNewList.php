@@ -1,17 +1,18 @@
 <?php
 	require_once 'login.php';
+	require_once 'sanitize.php';
     $conn = new mysqli($host, $user, $password, $dbname);
     if($conn->connect_error) die($conn->connect_error);
 	
-	$name = $_GET['name'];
-	$description = $_GET['description'];
-	$url = $_GET['url'];
-	$owner = $_GET['owner'];
-	$type = $_GET['type'];
-	$expiration_date = $_GET['expiration_date'];
-	$date = $_GET['date'];
-	$username = $_GET['username'];
-	$list_type = $_GET['listType'];
+	$name = sanitizeMySQL($conn, $_GET['name']);
+	$description = sanitizeMySQL($conn, $_GET['description']);
+	$url = sanitizeMySQL($conn, $_GET['url']);
+	$owner = sanitizeMySQL($conn, $_GET['owner']);
+	$type = sanitizeMySQL($conn, $_GET['type']);
+	$expiration_date = sanitizeMySQL($conn, $_GET['expiration_date']);
+	$date = sanitizeMySQL($conn, $_GET['date']);
+	$username = sanitizeMySQL($conn, $_GET['username']);
+	$list_type = sanitizeMySQL($conn, $_GET['listType']);
 	
 	echo $list_type;
 	
