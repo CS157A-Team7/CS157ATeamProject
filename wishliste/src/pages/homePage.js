@@ -261,7 +261,7 @@ class HomePage extends Component {
     return (
 
       <div className="App">
-        <Header />
+        <Header page="HomePage" />
 
         <div className="New-button-container-container">
 

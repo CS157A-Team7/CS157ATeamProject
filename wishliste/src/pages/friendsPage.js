@@ -21,7 +21,7 @@ class FriendsPage extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header page="FriendsPage" />
 
         <div className="Centered-button-container">
           <Popup
