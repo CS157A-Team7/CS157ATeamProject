@@ -30,7 +30,7 @@ const ListHead = props => {
         <div className="Plain-menu">
           <form className="Label-menu-item">
             <label>
-              Edit list name
+              Edit list name <br />
               <input 
                 type="text" 
                 name="name" 
@@ -40,6 +40,7 @@ const ListHead = props => {
                   setListTitle(event.target.value); 
                   console.log(listTitle);
                 }} 
+                autoFocus
               />
             </label>
           </form>
@@ -127,7 +128,7 @@ const ListBody = props => {
           <div className="Plain-menu">
             <form className="Label-menu-item">
               <label>
-                Edit item
+                Edit item <br />
                 <input 
                   type="text" 
                   name="name" 
@@ -137,6 +138,7 @@ const ListBody = props => {
                     setItemName(event.target.value);
                     console.log(itemName);
                   }}
+                  autoFocus
                 />
               </label>
             </form>
@@ -209,7 +211,7 @@ const ListBody = props => {
           <div className="Plain-menu">
             <form className="Label-menu-item">
               <label>
-                Edit list description
+                Edit list description <br />
                 <input 
                   type="text" 
                   name="description" 
@@ -219,6 +221,7 @@ const ListBody = props => {
                     setListDescription(event.target.value);
                     console.log(listDescription);
                   }}
+                  autoFocus
                 />
               </label>
             </form>

@@ -261,7 +261,7 @@ class HomePage extends Component {
     return (
 
       <div className="App">
-        <Header />
+        <Header page="HomePage" />
 
         <div className="New-button-container-container">
 
@@ -298,7 +298,7 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"
+                        <input type="text" name="name" placeholder="Name" autoFocus
                          onChange={(event) => {
                           this.setState({ newListName: event.target.value }) 
                           console.log(this.state.newListName)
@@ -342,7 +342,7 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"
+                        <input type="text" name="name" placeholder="Name" autoFocus
                          onChange={(event) => {
                           this.setState({ newListName: event.target.value }) 
                           console.log(this.state.newListName)
@@ -392,7 +392,7 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"
+                        <input type="text" name="name" placeholder="Name" autoFocus
                          onChange={(event) => {
                           this.setState({ newListName: event.target.value }) 
                           console.log(this.state.newListName)
@@ -465,8 +465,8 @@ class HomePage extends Component {
               <div className="Plain-menu">
                 <form className="Label-menu-item">
                   <label>
-                    New item
-                    <input type="text" name="name" placeholder="Name"
+                    New item <br />
+                    <input type="text" name="name" placeholder="Name" autoFocus
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)

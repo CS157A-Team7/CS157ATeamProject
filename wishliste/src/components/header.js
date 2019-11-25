@@ -8,7 +8,7 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {faAt} from '@fortawesome/free-solid-svg-icons';
 
-const Header = () => {
+const Header = (props) => {
     return (
         <div className="Header-bar">
             <div className="Header-text">WishListé</div>
@@ -30,14 +30,43 @@ const Header = () => {
                     contentStyle={{ padding: "0px", border: "none" }}
                     arrow={false}
                 >
-                    <div className="Plain-menu">
-                        <div className="Plain-menu-item" onClick={() => console.log("Go to friends page")}>
-                            Manage Friends
+                    {props.page === "HomePage" ?
+                        <div className="Plain-menu">
+                            <div className="Plain-menu-item" onClick={() => console.log("Go to friends page")}>
+                                Manage Friends
+                            </div>
+                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                                Logout
+                            </div>
                         </div>
-                        <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
-                            Logout
+                    : props.page === "FriendsPage" ?
+                        <div className="Plain-menu">
+                            <div className="Plain-menu-item" onClick={() => console.log("Go to home page")}>
+                                View Lists
+                            </div>
+                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                                Logout
+                            </div>
+                        </div>    
+                    : props.signedIn ? //Item Description page signed in
+                        <div className="Plain-menu">
+                            <div className="Plain-menu-item" onClick={() => console.log("Go to friends page")}>
+                                Manage Friends
+                            </div>
+                            <div className="Plain-menu-item" onClick={() => console.log("Go to home page")}>
+                                View Lists
+                            </div>
+                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                                Logout
+                            </div>
                         </div>
-                    </div>
+                    : //Item Description page not signed in
+                        <div className="Plain-menu">
+                            <div className="Plain-menu-item" onClick={() => console.log("Go to sign in page")}>
+                                Sign in
+                            </div>
+                        </div>
+                    }
                 </Popup>
             </div>
       </div>
