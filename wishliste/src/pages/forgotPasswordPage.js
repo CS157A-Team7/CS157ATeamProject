@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -44,6 +45,7 @@ const resetPassword = (username) => {
 
 const ForgotPasswordPage = () => {
   const classes = useStyles();
+  let history = useHistory();
   const [username, setUsername] = useState("");
 
   return (
@@ -86,7 +88,7 @@ const ForgotPasswordPage = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to sign in page")}>
+              <Link variant="body2" onClick={() => history.push('/')}>
                 Didn't mean to come here?
               </Link>
             </Grid>
