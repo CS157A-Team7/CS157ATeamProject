@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -50,6 +51,7 @@ const SignInPage = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -108,12 +110,12 @@ const SignInPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to forgot password page")}>
+              <Link variant="body2" onClick={() => history.push('/ForgotPassword')}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to sign up page")}>
+              <Link variant="body2" onClick={() => history.push('/SignUp')}>
                 Don't have an account? Sign up
               </Link>
             </Grid>

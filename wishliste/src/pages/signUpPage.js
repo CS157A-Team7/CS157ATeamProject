@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const signUp = (email, password1, password2, setUsernameError) => {
+const signUp = (email, password1, password2, setUsernameError, history) => {
   if (password1 === password2) {
     console.log("sign up w/ username " + email + " and password " + password1);
 
@@ -50,6 +51,7 @@ const signUp = (email, password1, password2, setUsernameError) => {
         setUsernameError(true);
       } else {
         //redirect to home page
+        history.push("/Home");
       }
       console.log(response.data);
     })
@@ -65,6 +67,7 @@ const SignUpPage = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  let history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -160,13 +163,13 @@ const SignUpPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => signUp(email, password1, password2, setUsernameError)}
+            onClick={() => signUp(email, password1, password2, setUsernameError, history)}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to sign in page")}>
+              <Link href="#" variant="body2" onClick={() => history.push('/')}>
                 Already have an account? Sign in
               </Link>
             </Grid>

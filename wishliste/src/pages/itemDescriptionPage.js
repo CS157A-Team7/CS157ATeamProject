@@ -7,10 +7,13 @@ import { faTrashAlt, faPlus, faPen, faArrowLeft } from '@fortawesome/free-solid-
 import axios from 'axios';
 import FullList from '../components/FullList';
 import '../assets/App.css';
+import { useHistory } from 'react-router-dom';
 
 const ItemDescriptionPage = () => {
     const [list, setList] = useState(null);
     const [signedIn, setSignedIn] = useState(true);
+    let history = useHistory();
+
 
     useEffect(() => {
         axios.get('/api/getListItems.php', {
@@ -41,7 +44,7 @@ const ItemDescriptionPage = () => {
 
             {signedIn ? 
                 <div className="Centered-button-container">
-                    <div className="Fa-icon-style Fa-icon-color" onClick={() => console.log("Go to home page")}>
+                    <div className="Fa-icon-style Fa-icon-color" onClick={() => history.push('/Home')}>
                         <FontAwesomeIcon icon={faArrowLeft} size="s" />
                     </div>
                     <div className="Fa-icon-style Fa-icon-color">
