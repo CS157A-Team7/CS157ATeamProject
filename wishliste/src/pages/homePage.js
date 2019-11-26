@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import '../assets/App.css';
 import axios from 'axios';
 import Header from '../components/header';
-import AllLists from '../components/AllLists.js';
 import ListNames from '../components/ListNames';
-import FullList from '../components/FullList';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus, faPen, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';
 
 class HomePage extends Component {
   state = {
@@ -16,6 +16,13 @@ class HomePage extends Component {
     newItemOpen: false,
     newItemName: "",
     newItemDescription: "",
+    newListName: "",
+    newListDescription: "",
+    newListDate: "",
+    url: "",
+    owner: "",
+    typeOfList: 0,
+    type: 0,
     dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
@@ -52,10 +59,36 @@ class HomePage extends Component {
           console.log(error);
       });
 
-      this.setState({dbChange: false});
+      this.toggleDBChange();
     }
   }
   
+  addList = () => {
+    axios.get('/api/addNewList.php', {
+      params: {
+        name: this.state.newListName,
+        description: this.state.newListDescription,
+        url: this.state.url,
+        owner: this.state.owner,
+        type: this.state.type,
+        expiration_date: this.state.newListDate,
+        date: this.state.newListDate,
+        username: 'ash_ketchum@hotmail.com',
+        listType: this.state.typeOfList
+      }
+    })
+    .then((response) => {
+      if(response.data){
+        this.toggleDBChange();
+      };
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    console.log("CreatedList");
+  }
+
   addItem = () => {
     axios.get('/api/addItemToTable.php', {
       params: {
@@ -67,7 +100,8 @@ class HomePage extends Component {
     })
     .then((response) => {
       if(response.data){
-        this.setState({ dbChange: true });
+        this.toggleDBChange();
+        this.updateList();
       };
       console.log(response.data);
     })
@@ -87,13 +121,51 @@ class HomePage extends Component {
     .then((response) => {
       console.log(response.data);
       this.setState({itemsToDelete: []});
-      this.setState({ dbChange: true });
+      this.toggleDBChange();
+      this.updateList();
     })
     .catch(function(error){
         console.log(error);
     });
     this.setState({deletingItems: false})
     console.log(this.state.itemsToDelete);
+  }
+
+  deleteLists = () => {
+    axios({
+      url: '/api/deleteLists.php',
+      method: 'post',
+      data: this.state.listsToDelete  
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({listsToDelete: []});
+        this.toggleDBChange();
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({deletingLists: false})
+      console.log(this.state.itemsToDelete);
+  }
+
+  updateList = () => {
+    axios.get('/api/getListItems.php', {
+      params: {
+        list_id: this.state.list.list_id
+      }
+    })
+    .then((response) => {
+      this.setState({
+        list: {
+          ...this.state.list,
+          items: response.data
+        }
+      });
+    })
+    .catch(function(error){
+      console.log(error);
+    });
   }
 
   handleGetList = list => {
@@ -134,6 +206,68 @@ class HomePage extends Component {
     console.log(this.state.listsToDelete);
   }
 
+  handleListNameChange = newName => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        name: newName
+      }
+    });
+  };
+
+  handleListDescriptionChange = newDescription => {
+    this.setState({
+      list: {
+        ...this.state.list,
+        description: newDescription
+      }
+    });
+  }
+
+  handleItemChange = (index, newName, newDescription) => {
+    let items = this.state.list.items;
+    items[index].name = newName;
+    items[index].description = newDescription;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    });
+  };
+
+  toggleDBChange = () => {
+    this.setState(state => {
+      return {
+        dbChange: !state.dbChange,
+      }
+    })
+  };
+
+  toggleCheckmark =  index => {
+    let items = this.state.list.items;
+    items[index].checked = items[index].checked == 1 ? 0 : 1;
+
+    this.setState({
+      list: {
+        ...this.state.list,
+        items: items
+      }
+    }, () => {
+      const params = new URLSearchParams();
+      params.append('checkmark', items[index].checked);
+      params.append('item_id', items[index].item_id);
+      axios.post('/api/updateItemCheckmark.php', params)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    });
+  };
+
   render(){
 
     if(!this.state.results){
@@ -147,14 +281,18 @@ class HomePage extends Component {
     return (
 
       <div className="App">
-        <Header />
+        <Header page="HomePage" />
 
         <div className="New-button-container-container">
 
           {!this.state.deletingLists?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style Fa-icon-color">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               closeOnDocumentClick
@@ -180,16 +318,30 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name" autoFocus
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 0},
+                          () => {this.addList()});
+                        this.setState({newWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -210,21 +362,42 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name" autoFocus
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Expiration date"/>
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                            this.setState({ newListDate: event.target.value}, () => {
+                              console.log(this.state.newListDate);
+                            })
+                          }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New surprise wishlist")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => {
+                        this.setState({typeOfList: 1}, 
+                          () => {this.addList()});
+                        this.setState({newSWishlistOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
                     </div>
                   </div>
@@ -245,21 +418,42 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="name" placeholder="Name" autoFocus
+                         onChange={(event) => {
+                          this.setState({ newListName: event.target.value }) 
+                          console.log(this.state.newListName)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"/>
+                        <input type="text" name="description" placeholder="Description"
+                         onChange={(event) => {
+                          this.setState({ newListDescription: event.target.value }) 
+                          console.log(this.state.newListDescription)
+                        }}
+                        />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="date" placeholder="Date"/>
+                        {/* Date: &nbsp; */}
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                          this.setState({ newListDate: event.target.value}, () => {
+                            console.log(this.state.newListDate);
+                          })
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("New to-do list")}/>
+                      <input className="Menu-button" type="button" value="Confirm" onClick={()=>{
+                        this.setState({typeOfList: 2},
+                          () => {this.addList()});
+                        this.setState({newTodoListOpen: false});
+                      }}/>
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
                     </div>
                   </div>
@@ -267,17 +461,23 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" onClick={() => this.setState({deletingLists: true})}>
-              trash
+            <div className="Fa-icon-style Fa-icon-color" onClick={() => this.setState({deletingLists: true})}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            <div className="New-list-button" onClick={() => console.log("Delete all selected lists")}>
+            {/* <div className="Confirm-delete-button" onClick={this.deleteLists}>
               Confirm Delete
             </div>
-            <div className="New-list-button" onClick={() => this.setState({deletingLists: false})}>
+            <div className="Confirm-delete-button" onClick={() => this.setState({deletingLists: false})}>
               Cancel
+            </div> */}
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteLists}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
+            </div>
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => this.setState({deletingLists: false})}>
+              <FontAwesomeIcon icon={faTimes} size="s" />
             </div>
           </div>
           } 
@@ -285,7 +485,11 @@ class HomePage extends Component {
           {Object.entries(this.state.list).length === 0 ? '' : !this.state.deletingItems ?
           <div className="New-button-container-thin">
             <Popup
-              trigger={<div className="New-list-button-thin">+</div>}
+              trigger={
+                <div className="Fa-icon-style Fa-icon-color">
+                  <FontAwesomeIcon icon={faPlus} size="s" />
+                </div>
+              }
               position="right top"
               on="click"
               open={this.state.newItemOpen}
@@ -299,8 +503,8 @@ class HomePage extends Component {
               <div className="Plain-menu">
                 <form className="Label-menu-item">
                   <label>
-                    New item
-                    <input type="text" name="name" placeholder="Name"
+                    New item <br />
+                    <input type="text" name="name" placeholder="Name" autoFocus
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)
@@ -325,15 +529,15 @@ class HomePage extends Component {
               </div>
             </Popup>
 
-            <div className="New-list-button-thin" 
+            <div className="Fa-icon-style Fa-icon-color" 
               onClick={() => {
-                this.setState({deletingItems: true})
-                this.setState({editingItems: false})
+                this.setState({deletingItems: true});
+                this.setState({editingItems: false});
               }}
             >
-              trash
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
-            <div className={this.state.editingItems?"Edit-button-selected":"New-list-button-thin"} 
+            <div className={this.state.editingItems?"Fa-icon-style Fa-icon-selected-color":"Fa-icon-style Fa-icon-color"} 
               onClick={() => {
                 if (this.state.editingItems) {
                   this.setState({editingItems: false})
@@ -342,24 +546,62 @@ class HomePage extends Component {
                 }
               }}
             >
-              edit
+              <FontAwesomeIcon icon={faPen} size="s" />
             </div>
+            <Popup
+              trigger={
+                <div className="Fa-icon-style Fa-icon-color">
+                  <FontAwesomeIcon icon={faShare} size="s" />
+                </div>
+              }
+              position="right top"
+              on="click"
+              open={this.state.listSharingOpen}
+              onOpen={() => this.setState({listSharingOpen: true})}
+              onClose={() => this.setState({listSharingOpen: false})}
+              closeOnDocumentClick
+              mouseLeaveDelay={300}
+              mouseEnterDelay={0}
+              contentStyle={{ padding: "0px", border: "none" }}
+              arrow={false}
+            > 
+              {this.state.list.url ? 
+                <div className="Plain-menu">
+                  <label className="Label-menu-item">
+                    Shareable URL is: <br />
+                    {this.state.list.url}
+                  </label>
+                </div>
+              :
+                <div className="Plain-menu"> 
+                  <label className="Label-menu-item">
+                    Generate shareable URL for this list?
+                  </label>
+                  <div className="Menu-button-container">
+                    <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Generate URL")} />
+                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({listSharingOpen: false})}/>
+                  </div>
+                </div>
+              }
+            </Popup>
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
-            <div className="New-list-button" 
-              onClick={this.deleteItems}
-            >
+            {/* <div className="Confirm-delete-button" onClick={this.deleteItems}>
               Confirm Delete
             </div>
-            <div className="New-list-button" onClick={() => this.setState({deletingItems: false})}>
+            <div className="Confirm-delete-button" onClick={() => this.setState({deletingItems: false})}>
               Cancel
+            </div> */}
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteItems}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
+            </div>
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => this.setState({deletingItems: false})}>
+              <FontAwesomeIcon icon={faTimes} size="s" />
             </div>
           </div>
           }
         </div>
-
-        {/* <AllLists allLists={this.state.results} /> */}
 
         <div className="New-Homepage-Layout">
           <ListNames 
@@ -377,6 +619,11 @@ class HomePage extends Component {
               handleItemsToDelete={this.handleItemsToDelete} 
               itemsToDelete={this.state.itemsToDelete}
               editingItems={this.state.editingItems}
+              handleListNameChange={this.handleListNameChange}
+              handleListDescriptionChange={this.handleListDescriptionChange}
+              handleItemChange={this.handleItemChange}
+              toggleDBChange={this.toggleDBChange}
+              toggleCheckmark={this.toggleCheckmark}
             /> : ''
           }
         </div>

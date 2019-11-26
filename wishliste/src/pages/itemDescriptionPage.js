@@ -2,14 +2,15 @@ import React, {useState, useEffect} from 'react';
 import Header from '../components/header';
 import Item from '../components/item';
 import { getList } from '../data/fakeList';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus, faPen, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import FullList from '../components/FullList';
 import '../assets/App.css';
 
 const ItemDescriptionPage = () => {
     const [list, setList] = useState(null);
+    const [signedIn, setSignedIn] = useState(true);
 
     useEffect(() => {
         axios.get('/api/getListItems.php', {
@@ -36,18 +37,24 @@ const ItemDescriptionPage = () => {
 
     return (
         <div>
-            <Header/>
-            {/* <div className="New-button-container">
-                <div className="New-list-button-thin" onClick={() => console.log("Go back to home screen")}>
-                    back
+            <Header page="ItemDescriptionPage" signedIn={signedIn} />
+
+            {signedIn ? 
+                <div className="Centered-button-container">
+                    <div className="Fa-icon-style Fa-icon-color" onClick={() => console.log("Go to home page")}>
+                        <FontAwesomeIcon icon={faArrowLeft} size="s" />
+                    </div>
+                    <div className="Fa-icon-style Fa-icon-color">
+                        <FontAwesomeIcon icon={faPlus} size="s" />
+                    </div>
+                    <div className="Fa-icon-style Fa-icon-color">
+                        <FontAwesomeIcon icon={faTrashAlt} size="s" />
+                    </div>
+                    <div className="Fa-icon-style Fa-icon-color">
+                        <FontAwesomeIcon icon={faPen} size="s" />
+                    </div>
                 </div>
-                <div className="New-list-button-thin" onClick={() => console.log("Add new item")}>
-                    +
-                </div>
-                <div className="New-list-button-thin" onClick={() => console.log("Delete item(s)")}>
-                    trash
-                </div>
-            </div> */}
+            : '' }
 
             <FullList listData={list} />
         </div>

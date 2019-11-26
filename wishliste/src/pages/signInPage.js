@@ -75,6 +75,7 @@ const signIn = (username, password) => {
   //check the db to see if account exists
   //if not, show error(?)
 
+
   var cookie = setCookie(username, username, 3)
 
   //localStorage.setItem('rememberMe', true);
@@ -84,6 +85,11 @@ const signIn = (username, password) => {
 const logMeOut = () => {
   //localStorage.clear();
   localStorage.removeItem('wishliste');
+
+//   //no auth for now
+//   localStorage.setItem('rememberMe', true);
+//   localStorage.setItem('username', true ? username : '');
+
 }
 
 const SignInPage = () => {
