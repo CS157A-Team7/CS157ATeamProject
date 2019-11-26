@@ -101,6 +101,7 @@ class HomePage extends Component {
     .then((response) => {
       if(response.data){
         this.toggleDBChange();
+        this.updateList();
       };
       console.log(response.data);
     })
@@ -147,6 +148,24 @@ class HomePage extends Component {
       console.log(this.state.itemsToDelete);
   }
 
+  updateList = () => {
+    axios.get('/api/getListItems.php', {
+      params: {
+        list_id: this.state.list.list_id
+      }
+    })
+    .then((response) => {
+      this.setState({
+        list: {
+          ...this.state.list,
+          items: response.data
+        }
+      });
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+  }
 
   handleGetList = list => {
     const selectedList = list;
