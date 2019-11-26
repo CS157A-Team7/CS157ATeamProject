@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -35,16 +36,61 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+const setDbChange = (username, password) => {
+  if(this.state.dbChange){
+    const params = new URLSearchParams();
+    params.append(username, password);
+    axios.post('/api/sign_in.php', params)
+    .then((response) => {
+      this.setState({ results:response.data });
+      console.log(this.state.results)
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+
+    this.setState({dbChange: false});
+  }
+}
+
+
+const setCookie = (cname, cvalue, exhours) => {
+  var d = new Date();
+  d.setTime(d.getTime() + (exhours*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  localStorage.setItem('wishliste', cname + "=" + cvalue + ";" + expires + ";path=/");
+}
+
+// const hashBrown = () => {
+// }
+
+//const getCookie = () => {
+  //var theCookie = localStorage.getItem('wishliste');
+  //console.log(username);
+//}
+
 const signIn = (username, password) => {
-  console.log("try to sign in w/ username " + username + " and password " + password);
+  //console.log("try to sign in w/ username " + username + " and password " + password);
   //check the db to see if account exists
   //if not, show error(?)
+
+  var cookie = setCookie(username, username, 3)
+
+  //localStorage.setItem('rememberMe', true);
+  //localStorage.setItem('username', true ? username : '');
+}
+
+const logMeOut = () => {
+  //localStorage.clear();
+  localStorage.removeItem('wishliste');
 }
 
 const SignInPage = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [dbChange, setDbChange] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -101,6 +147,29 @@ const SignInPage = () => {
           >
             Sign In
           </Button>
+
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => logMeOut()}
+          >
+           Log out
+          </Button>
+
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => console.log(username)}
+          >
+           print out the username in the console
+          </Button>
+
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2" onClick={() => console.log("Go to forgot password page")}>
