@@ -101,6 +101,7 @@ class HomePage extends Component {
     .then((response) => {
       if(response.data){
         this.toggleDBChange();
+        this.updateList();
       };
       console.log(response.data);
     })
@@ -121,6 +122,7 @@ class HomePage extends Component {
       console.log(response.data);
       this.setState({itemsToDelete: []});
       this.toggleDBChange();
+      this.updateList();
     })
     .catch(function(error){
         console.log(error);
@@ -147,6 +149,24 @@ class HomePage extends Component {
       console.log(this.state.itemsToDelete);
   }
 
+  updateList = () => {
+    axios.get('/api/getListItems.php', {
+      params: {
+        list_id: this.state.list.list_id
+      }
+    })
+    .then((response) => {
+      this.setState({
+        list: {
+          ...this.state.list,
+          items: response.data
+        }
+      });
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+  }
 
   handleGetList = list => {
     const selectedList = list;
@@ -363,7 +383,13 @@ class HomePage extends Component {
                     <form className="Label-menu-item">
                       <label>
                         {/* Date: &nbsp; */}
-                        <input type="date" name="date" />
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                            this.setState({ newListDate: event.target.value}, () => {
+                              console.log(this.state.newListDate);
+                            })
+                          }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">
@@ -413,7 +439,13 @@ class HomePage extends Component {
                     <form className="Label-menu-item">
                       <label>
                         {/* Date: &nbsp; */}
-                        <input type="date" name="date" placeholder="Date"/>
+                        <input type="date" name="date" 
+                          onChange={(event) => {
+                          this.setState({ newListDate: event.target.value}, () => {
+                            console.log(this.state.newListDate);
+                          })
+                        }}
+                        />
                       </label>
                     </form>
                     <div className="Menu-button-container">

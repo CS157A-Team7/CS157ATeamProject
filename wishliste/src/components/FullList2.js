@@ -276,8 +276,7 @@ class FullList2 extends Component {
       params.append('name', name);
       axios.post('/api/updateListName.php', params)
       .then((response) => {
-        this.setState({ results:response.data });
-        console.log(this.state.results)
+        this.props.toggleDBChange();
       })
       .catch(function(error){
           console.log(error);
@@ -289,8 +288,7 @@ class FullList2 extends Component {
       params.append('description', description);
       axios.post('/api/updateListDescription.php', params)
       .then((response) => {
-        this.setState({ results:response.data });
-        console.log(this.state.results)
+        this.props.toggleDBChange();
       })
       .catch(function(error){
           console.log(error);
@@ -302,14 +300,12 @@ class FullList2 extends Component {
       params.append('description', description);
       axios.post('/api/updateItem.php', params)
       .then((response) => {
-        this.setState({ results:response.data });
-        console.log(this.state.results)
+        this.props.toggleDBChange();
       })
       .catch(function(error){
           console.log(error);
       });
     }
-    this.props.toggleDBChange();
   }
 
   render() {
