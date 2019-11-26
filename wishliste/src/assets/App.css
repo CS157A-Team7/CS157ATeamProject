@@ -416,3 +416,11 @@ li.deleting-checked {
 .Fa-icon-selected-color:hover {
   color: #009bc2;
 }
+
+.Fa-icon-deleting-color {
+  color: #202833;
+}
+
+.Fa-icon-deleting-color:hover {
+  color: #ff0000;
+}
