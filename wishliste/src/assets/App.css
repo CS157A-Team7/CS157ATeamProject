@@ -49,71 +49,11 @@
   margin-right: 10%; 
 }
 
-.Item-Container{
-  width:100%;
-  margin-bottom: 1%;
-  float: left;
-  border-style: solid;
+.Header-icon-popup {
+  display: inline-block;
 }
 
-.Item-Checkbox{
-  float: left;
-  width:35%;
-  padding-top: 50px;
-}
-
-.Item-Title-Container{
-  float: left;
-  text-decoration: underline;
-  width: 65%;
-}
-
-.Item-Description-Container{
-  float: left;
-  width: 100%;
-  text-align: center;
-}
-
-.Title-Container{
-  float:left;
-  width: 100%;
-  clear: both;
-}
-
-.Back-Arrow-Container{
-  float:left;
-  width: 5%;
-  padding-top: 2vh;
-  margin-left: 4%;
-  margin-right: -2%;
-}
-
-.Back-Arrow{
-  background-color: white;
-  border: none;
-}
-
-.List-Title{
-  text-decoration: underline;
-}
-
-.List-Title-Container{
-  width: 60%;
-  float:left;
-}
-
-/* Button style originally used for new list buttons on home screen */
-.New-button-container {
-  background-color: white;
-  display: flex;
-  flex-direction: row;
-  font-size: calc(8px + 2vmin);
-  color: #65fbf1;
-  border-style: solid;
-  border-color: white;
-  margin-left: 4%;
-}
-
+/* Container for buttons on friends list/editable list pages */
 .Centered-button-container {
   background-color: white;
   display: flex;
@@ -127,55 +67,21 @@
   margin-bottom: -5vh;
 }
 
-.New-list-button {
-  background-color: #202833;
-  /* margin-left: 4%; */
-  /* margin-right: -2%; */
-  margin-right: 5vmin;
-  margin-bottom: 5vmin;
+/* 'Confirm Delete' and 'Cancel' */
+.Confirm-delete-button {
+  color: #202833;
+  margin-bottom: 3vmin;
+  margin-right: 4vmin;
   padding-top: 2vh;
   padding-bottom: 2vh;
-  /* width: 29.3%; */
-  /* max-width: 30vmin; */
-  width: 30vmin;
-  text-align: center;
+  text-align: left;
 }
 
-.New-list-button:hover {
-  background-color: #009bc2;
+.Confirm-delete-button:hover {
+  color: #ff0000;
 }
 
-.New-list-button-thin {
-  background-color: #202833;
-  margin-right: 5vmin;
-  margin-bottom: 5vmin;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  width: 10vmin;
-  text-align: center;
-  color: #65fbf1;
-}
-
-.New-list-button-thin:hover {
-  background-color: #009bc2;
-}
-
-.Edit-button-selected {
-  background-color: #46a29f;
-  margin-right: 5vmin;
-  margin-bottom: 5vmin;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  width: 10vmin;
-  text-align: center;
-  color: #65fbf1;
-}
-
-.Edit-button-selected:hover {
-  background-color: #009bc2;
-}
-
-/* Container for 4 lists on home screen*/
+/* Old List style used on home screen (the 4 per row) */
 .Row-of-lists {
   background-color: white;
   display: flex;
@@ -184,7 +90,6 @@
   color: #65fbf1;
 }
 
-/* List style used on home screen */
 .List-container {
   background-color: #202833;
   display: flex;
@@ -222,7 +127,7 @@
   flex-grow: 1;
 }
 
-/* Checked/unchecked bullet lists */
+/* Bullet styles */
 li.unchecked {
   list-style-image: url(checkbox15.png);
   list-style-position: inside;
@@ -297,13 +202,13 @@ li.deleting-checked {
   font-size: calc(4px + 2vmin);
 }
 
-/* Experimental home screen layout */
+/* Home screen layout */
 .New-Homepage-Layout {
   display: flex;
   flex-direction: row;
 }
 
-/* Names of lists (left column on experimental home screen) */
+/* Names of lists (left column on home screen) */
 .List-Names-container {
   display: flex;
   flex-direction: column;
@@ -314,7 +219,7 @@ li.deleting-checked {
   color: #65fbf1;
 }
 
-.List-Names-head {
+.List-Name {
   background-color: #202833;
   opacity: .9;
   padding-top: 2vh;
@@ -329,11 +234,11 @@ li.deleting-checked {
   border-color: white;
 }
 
-.List-Names-head:hover {
+.List-Name:hover {
   background-color: #009bc2;
 }
 
-.List-Names-head-selected {
+.List-Name-selected {
   background-color: #202833;
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -347,7 +252,7 @@ li.deleting-checked {
   border-color: white;
 }
 
-.List-Names-deleting {
+.List-Name-deleting {
   background-color: #202833;
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -361,7 +266,21 @@ li.deleting-checked {
   border-color: white;
 }
 
-/* List style used in right column of experimental home screen */
+.List-Name-deleting-selected {
+  background-color: #ff0000;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-style: solid;
+  border-color: white;
+}
+
+/* List style used in right column of home screen */
 .Full-List2-container {
   display: flex;
   flex-direction: column;
@@ -409,7 +328,7 @@ li.deleting-checked {
   font-size: calc(4px + 2vmin);
 }
 
-/* Popup menu style (originally used for new list button on home screen) */
+/* Popup menu styles */
 .Plain-menu {
   width: 200px;
   display: flex;
@@ -431,7 +350,6 @@ li.deleting-checked {
 .Label-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
-  /* padding: 5px; */
 }
 
 .Menu-button-container {
@@ -445,7 +363,7 @@ li.deleting-checked {
   margin-left: 4%; 
 }
 
-/* Button style (thin container) */
+/* Button container for home screen */
 .New-button-container-thin {
   background-color: white;
   display: flex;
@@ -463,6 +381,7 @@ li.deleting-checked {
   flex-direction: row;
 }
 
+/* Trash icon style when deleting lists (old) */
 .Delete-icon-deselected {
   float: left;
 }
@@ -470,4 +389,38 @@ li.deleting-checked {
 .Delete-icon-selected {
   float: left;
   color: #009bc2;
+}
+
+/* Font awesome icon style for home page */
+.Fa-icon-style {
+  margin-right: 3vmin;
+  margin-bottom: 3vmin;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  width: 5vmin;
+  text-align: center;
+}
+
+.Fa-icon-color {
+  color: #202833;
+}
+
+.Fa-icon-color:hover {
+  color: #009bc2;
+}
+
+.Fa-icon-selected-color {
+  color: #46a29f;
+}
+
+.Fa-icon-selected-color:hover {
+  color: #009bc2;
+}
+
+.Fa-icon-deleting-color {
+  color: #202833;
+}
+
+.Fa-icon-deleting-color:hover {
+  color: #ff0000;
 }
