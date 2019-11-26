@@ -6,7 +6,7 @@ import ListNames from '../components/ListNames';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPlus, faPen, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';
 
 class HomePage extends Component {
   state = {
@@ -435,11 +435,17 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            <div className="Confirm-delete-button" onClick={this.deleteLists}>
+            {/* <div className="Confirm-delete-button" onClick={this.deleteLists}>
               Confirm Delete
             </div>
             <div className="Confirm-delete-button" onClick={() => this.setState({deletingLists: false})}>
               Cancel
+            </div> */}
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteLists}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
+            </div>
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => this.setState({deletingLists: false})}>
+              <FontAwesomeIcon icon={faTimes} size="s" />
             </div>
           </div>
           } 
@@ -493,8 +499,8 @@ class HomePage extends Component {
 
             <div className="Fa-icon-style Fa-icon-color" 
               onClick={() => {
-                this.setState({deletingItems: true})
-                this.setState({editingItems: false})
+                this.setState({deletingItems: true});
+                this.setState({editingItems: false});
               }}
             >
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
@@ -510,16 +516,56 @@ class HomePage extends Component {
             >
               <FontAwesomeIcon icon={faPen} size="s" />
             </div>
+            <Popup
+              trigger={
+                <div className="Fa-icon-style Fa-icon-color">
+                  <FontAwesomeIcon icon={faShare} size="s" />
+                </div>
+              }
+              position="right top"
+              on="click"
+              open={this.state.listSharingOpen}
+              onOpen={() => this.setState({listSharingOpen: true})}
+              onClose={() => this.setState({listSharingOpen: false})}
+              closeOnDocumentClick
+              mouseLeaveDelay={300}
+              mouseEnterDelay={0}
+              contentStyle={{ padding: "0px", border: "none" }}
+              arrow={false}
+            > 
+              {this.state.list.url ? 
+                <div className="Plain-menu">
+                  <label className="Label-menu-item">
+                    Shareable URL is: <br />
+                    {this.state.list.url}
+                  </label>
+                </div>
+              :
+                <div className="Plain-menu"> 
+                  <label className="Label-menu-item">
+                    Generate shareable URL for this list?
+                  </label>
+                  <div className="Menu-button-container">
+                    <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Generate URL")} />
+                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({listSharingOpen: false})}/>
+                  </div>
+                </div>
+              }
+            </Popup>
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
-            <div className="Confirm-delete-button" 
-              onClick={this.deleteItems}
-            >
+            {/* <div className="Confirm-delete-button" onClick={this.deleteItems}>
               Confirm Delete
             </div>
             <div className="Confirm-delete-button" onClick={() => this.setState({deletingItems: false})}>
               Cancel
+            </div> */}
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteItems}>
+              <FontAwesomeIcon icon={faTrashAlt} size="s" />
+            </div>
+            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => this.setState({deletingItems: false})}>
+              <FontAwesomeIcon icon={faTimes} size="s" />
             </div>
           </div>
           }
