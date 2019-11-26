@@ -31,6 +31,7 @@ class HomePage extends Component {
     editingItems: false,
     deletingLists: false,
     listsToDelete: [],
+    nameError: false,
   };
 
   componentDidMount(){
@@ -64,52 +65,61 @@ class HomePage extends Component {
   }
   
   addList = () => {
-    axios.get('/api/addNewList.php', {
-      params: {
-        name: this.state.newListName,
-        description: this.state.newListDescription,
-        url: this.state.url,
-        owner: this.state.owner,
-        type: this.state.type,
-        expiration_date: this.state.newListDate,
-        date: this.state.newListDate,
-        username: 'ash_ketchum@hotmail.com',
-        listType: this.state.typeOfList
-      }
-    })
-    .then((response) => {
-      if(response.data){
-        this.toggleDBChange();
-      };
-      console.log(response.data);
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-    console.log("CreatedList");
+    if (this.state.newListName) {
+      axios.get('/api/addNewList.php', {
+        params: {
+          name: this.state.newListName,
+          description: this.state.newListDescription,
+          url: this.state.url,
+          owner: this.state.owner,
+          type: this.state.type,
+          expiration_date: this.state.newListDate,
+          date: this.state.newListDate,
+          username: 'ash_ketchum@hotmail.com',
+          listType: this.state.typeOfList
+        }
+      })
+      .then((response) => {
+        if(response.data){
+          this.toggleDBChange();
+        };
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      console.log("CreatedList");
+    } else {
+      console.log("Error: no name for the new list");
+      this.setState({nameError: true})
+    }
   }
 
   addItem = () => {
-    axios.get('/api/addItemToTable.php', {
-      params: {
-        name: this.state.newItemName,
-        description: this.state.newItemDescription,
-        checked: 0,
-        list_id: this.state.list.list_id
-      }
-    })
-    .then((response) => {
-      if(response.data){
-        this.toggleDBChange();
-        this.updateList();
-      };
-      console.log(response.data);
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-    this.setState({newItemOpen: false});
-    console.log(this.state.newItem);
+    if (this.state.newItemName) {
+      axios.get('/api/addItemToTable.php', {
+        params: {
+          name: this.state.newItemName,
+          description: this.state.newItemDescription,
+          checked: 0,
+          list_id: this.state.list.list_id
+        }
+      })
+      .then((response) => {
+        if(response.data){
+          this.toggleDBChange();
+          this.updateList();
+        };
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({newItemOpen: false});
+      console.log(this.state.newItem);
+    } else {
+      console.log("Error: no name for the new item");
+    }
   }
 
   deleteItems = () => { 
@@ -318,17 +328,23 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45" 
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
+                      {this.state.nameError?
+                        <label className="input-error-message">
+                          <br />Need to input name
+                        </label>
+                      :''}
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -362,7 +378,7 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
+                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
                          onChange={(event) => {
                           this.setState({ newListName: event.target.value }) 
                           console.log(this.state.newListName)
@@ -372,7 +388,7 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -418,7 +434,7 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
+                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
                          onChange={(event) => {
                           this.setState({ newListName: event.target.value }) 
                           console.log(this.state.newListName)
@@ -428,7 +444,7 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -504,7 +520,7 @@ class HomePage extends Component {
                 <form className="Label-menu-item">
                   <label>
                     New item <br />
-                    <input type="text" name="name" placeholder="Name" autoFocus
+                    <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)
@@ -514,7 +530,7 @@ class HomePage extends Component {
                 </form>
                 <form className="Label-menu-item">
                   <label>
-                    <input type="text" name="description" placeholder="Description"
+                    <input type="text" name="description" placeholder="Description" maxLength="245"
                       onChange={(event) => {
                         this.setState({ newItemDescription: event.target.value })
                         console.log(this.state.newItemDescription)

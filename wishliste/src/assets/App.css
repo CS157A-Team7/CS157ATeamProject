@@ -363,6 +363,15 @@ li.deleting-checked {
   margin-left: 4%; 
 }
 
+.input-error {
+  border: 1px solid #ff0000;
+}
+
+.input-error-message {
+  color: #ff0000;
+  font-size: calc(2px + 2vmin);
+}
+
 /* Button container for home screen */
 .New-button-container-thin {
   background-color: white;
