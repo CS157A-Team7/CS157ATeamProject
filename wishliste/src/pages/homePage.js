@@ -122,6 +122,7 @@ class HomePage extends Component {
       console.log(response.data);
       this.setState({itemsToDelete: []});
       this.toggleDBChange();
+      this.updateList();
     })
     .catch(function(error){
         console.log(error);
