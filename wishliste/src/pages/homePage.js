@@ -88,10 +88,14 @@ class HomePage extends Component {
       .catch(function(error){
           console.log(error);
       });
+      this.setState({newWishlistOpen: false});
+      this.setState({newSWishlistOpen: false});
+      this.setState({newTodoListOpen: false});
+      this.setState({nameError: false});
       console.log("CreatedList");
     } else {
+      this.setState({nameError: true});
       console.log("Error: no name for the new list");
-      this.setState({nameError: true})
     }
   }
 
@@ -116,8 +120,10 @@ class HomePage extends Component {
           console.log(error);
       });
       this.setState({newItemOpen: false});
+      this.setState({nameError: false});
       console.log(this.state.newItem);
     } else {
+      this.setState({nameError: true});
       console.log("Error: no name for the new item");
     }
   }
@@ -318,7 +324,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newWishlistOpen}
                   onOpen={() => this.setState({newWishlistOpen: true})}
-                  onClose={() => this.setState({newWishlistOpen: false})}
+                  onClose={() => {
+                    this.setState({newWishlistOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -328,7 +337,8 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45" 
+                        <input type="text" name="name" autoFocus maxLength="45" 
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
                           className={this.state.nameError?"input-error":""}
                           onChange={(event) => {
                             this.setState({ newListName: event.target.value }) 
@@ -336,11 +346,6 @@ class HomePage extends Component {
                           }}
                         />
                       </label>
-                      {this.state.nameError?
-                        <label className="input-error-message">
-                          <br />Need to input name
-                        </label>
-                      :''}
                     </form>
                     <form className="Label-menu-item">
                       <label>
@@ -356,9 +361,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => {
                         this.setState({typeOfList: 0},
                           () => {this.addList()});
-                        this.setState({newWishlistOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newWishlistOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -368,7 +375,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newSWishlistOpen}
                   onOpen={() => this.setState({newSWishlistOpen: true})}
-                  onClose={() => this.setState({newSWishlistOpen: false})}
+                  onClose={() => {
+                    this.setState({newSWishlistOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -378,11 +388,13 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" autoFocus maxLength="45"
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
                     </form>
@@ -398,7 +410,6 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        {/* Date: &nbsp; */}
                         <input type="date" name="date" 
                           onChange={(event) => {
                             this.setState({ newListDate: event.target.value}, () => {
@@ -412,9 +423,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => {
                         this.setState({typeOfList: 1}, 
                           () => {this.addList()});
-                        this.setState({newSWishlistOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newSWishlistOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -424,7 +437,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newTodoListOpen}
                   onOpen={() => this.setState({newTodoListOpen: true})}
-                  onClose={() => this.setState({newTodoListOpen: false})}
+                  onClose={() => {
+                    this.setState({newTodoListOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -434,11 +450,13 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" autoFocus maxLength="45"
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
                     </form>
@@ -454,7 +472,6 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        {/* Date: &nbsp; */}
                         <input type="date" name="date" 
                           onChange={(event) => {
                           this.setState({ newListDate: event.target.value}, () => {
@@ -468,9 +485,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={()=>{
                         this.setState({typeOfList: 2},
                           () => {this.addList()});
-                        this.setState({newTodoListOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newTodoListOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -483,12 +502,6 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            {/* <div className="Confirm-delete-button" onClick={this.deleteLists}>
-              Confirm Delete
-            </div>
-            <div className="Confirm-delete-button" onClick={() => this.setState({deletingLists: false})}>
-              Cancel
-            </div> */}
             <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteLists}>
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
@@ -510,6 +523,10 @@ class HomePage extends Component {
               on="click"
               open={this.state.newItemOpen}
               onOpen={() => this.setState({newItemOpen: true})}
+              onClose={() => {
+                this.setState({newItemOpen: false})
+                this.setState({nameError: false})
+              }}
               closeOnDocumentClick
               mouseLeaveDelay={300}
               mouseEnterDelay={0}
@@ -520,7 +537,9 @@ class HomePage extends Component {
                 <form className="Label-menu-item">
                   <label>
                     New item <br />
-                    <input type="text" name="name" placeholder="Name" autoFocus maxLength="45"
+                    <input type="text" name="name" autoFocus maxLength="45"
+                      placeholder={this.state.nameError?"Name (required)":"Name"}
+                      className={this.state.nameError?"input-error":""}
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)
@@ -540,7 +559,10 @@ class HomePage extends Component {
                 </form>
                 <div className="Menu-button-container">
                   <input className="Menu-button" type="button" value="Confirm" onClick={this.addItem} />
-                  <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newItemOpen: false})}/>
+                  <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                    this.setState({newItemOpen: false})
+                    this.setState({nameError: false})
+                  }}/>
                 </div>
               </div>
             </Popup>
@@ -603,12 +625,6 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
-            {/* <div className="Confirm-delete-button" onClick={this.deleteItems}>
-              Confirm Delete
-            </div>
-            <div className="Confirm-delete-button" onClick={() => this.setState({deletingItems: false})}>
-              Cancel
-            </div> */}
             <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteItems}>
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>

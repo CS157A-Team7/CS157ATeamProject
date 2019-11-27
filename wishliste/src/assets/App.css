@@ -367,9 +367,8 @@ li.deleting-checked {
   border: 1px solid #ff0000;
 }
 
-.input-error-message {
+.input-error::placeholder {
   color: #ff0000;
-  font-size: calc(2px + 2vmin);
 }
 
 /* Button container for home screen */
