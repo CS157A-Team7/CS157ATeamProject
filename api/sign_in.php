@@ -11,8 +11,11 @@
 
   //$query = "INSERT INTO account(username, password) VALUES ('$username', '$password')";
 
-    $username = mysqli_real_escape_string($db,$_POST['username']); //instead of santizing here use the function from master
-    $password = mysqli_real_escape_string($db,$_POST['password']);
+    //$username = mysqli_real_escape_string($db,$_POST['username']); //instead of sanitizing here use the function from api folder
+    //$password = mysqli_real_escape_string($db,$_POST['password']);
+
+    $username = sanitizeString($_GET['username']);
+    $password = sanitizeString($_GET['password']);
 
     $sql = "SELECT username FROM account WHERE username = '$username' and password = '$password'";
     $result = mysqli_query($db,$sql);
@@ -32,8 +35,8 @@
 
        //header("location: welcome.php");
     }else {
-       $error = "Your Login Name or Password is invalid";
        echo 0;
+       $error = "Your Login Name or Password is invalid";
     }
 
     $conn->close();

@@ -37,22 +37,59 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const setDbChange = (username, password) => {
-  if(this.state.dbChange){
-    const params = new URLSearchParams();
-    params.append(username, password);
-    axios.post('/api/sign_in.php', params)
-    .then((response) => {
-      this.setState({ results:response.data });
-      console.log(this.state.results)
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-
-    this.setState({dbChange: false});
-  }
+const validateInput = (username, password) => {
+  axios.get('/api/sign_in.php', {
+    params: {
+      username: username,
+      password: password
+    }
+  })
+  .then((response) => {
+    if (response.data === 1) {
+      signIn(username, password);
+    };
+    console.log(response.data);
+  })
+  .catch(function(error) {
+    //erase input fields & show error on frontend too
+    console.log(error);
+  });
+  console.log("done with validateInput function");
 }
+
+const wipeInputFields = (theUsername, thePassword) => {
+  theUsername = "";
+  thePassword = "";
+}
+
+// const setDbChange = (username, password) => {
+//   if(this.state.dbChange){
+//     params.append(username, password);
+//     axios.post('/api/sign_in.php', params)
+//     .then((response) => {
+//       if (response.data == 1) {
+//         this.setState({ results:response.data });
+//         console.log(this.state.results)
+//       }
+//
+//       // if(response.data == 1) {
+//       //   //allow the cookie setting
+//       //   //echo ("it worked yall");
+//       //   console.log("it worked Yall");
+//       // }
+//       // else {
+//       //   //do not allow cookie to be set & throw error message
+//       //   //echo ("it did not work yall");
+//       //   console.log("it workedn't Yall");
+//       //}
+//     })
+//     .catch(function(error){
+//         console.log(error);
+//     });
+//
+//     this.setState({dbChange: false});
+//   }
+// }
 
 
 const setCookie = (cname, cvalue, exhours) => {
@@ -149,7 +186,8 @@ const SignInPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => signIn(username, password)}
+            //onClick={() => signIn(username, password)}
+            onClick={() => validateInput(username, password)}
           >
             Sign In
           </Button>
@@ -174,6 +212,17 @@ const SignInPage = () => {
             onClick={() => console.log(username)}
           >
            print out the username in the console
+          </Button>
+
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => wipeInputFields()}
+          >
+           remove input in input fields
           </Button>
 
           <Grid container>
