@@ -38,10 +38,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const checkUsername = (username, setUsernameError) => {
+  const usernameSplit = username.split("@");
   if (username === "") {
     setUsernameError("empty");
     return false;
-  } else if (!username.includes("@")) {
+  } else if (!username.includes("@") || usernameSplit.length !== 2 || !usernameSplit[1].includes(".")) {
     setUsernameError("nonEmail");
     return false;
   }
@@ -53,12 +54,18 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
   if (password1 === "") {
     setPassword1Error("empty");
     p1_passed = false;
-  } 
+  } else if (password1.length < 8) {
+    setPassword1Error("unsafe");
+    p1_passed = false;
+  }
   if (password2 === "") {
     setPassword2Error("empty");
     return false;
   } else if (password2 !== password1) {
     setPassword2Error("notMatching");
+    return false;
+  } else if (password2.length < 8) {
+    setPassword2Error("unsafe");
     return false;
   }
   return p1_passed;
@@ -176,7 +183,11 @@ const SignUpPage = () => {
                   console.log(password1)
                 }}
                 error={password1Error!==""}
-                helperText={password1Error==="empty"?"Password is required":""}
+                helperText={
+                  password1Error==="empty"?"Password is required"
+                  :password1Error==="unsafe"?"Password must be at least 8 characters long"
+                  :""
+                }
               />
             </Grid>
             <Grid item xs={12}> 
@@ -197,6 +208,7 @@ const SignUpPage = () => {
                 helperText={
                   password2Error==="empty"?"Password is required"
                   :password2Error==="notMatching"?"Passwords don't match"
+                  :password2Error==="unsafe"?"Password must be at least 8 characters long"
                   :""
                 }
               />
