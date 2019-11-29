@@ -31,6 +31,7 @@ class HomePage extends Component {
     editingItems: false,
     deletingLists: false,
     listsToDelete: [],
+    nameError: false,
   };
 
   componentDidMount(){
@@ -64,52 +65,67 @@ class HomePage extends Component {
   }
   
   addList = () => {
-    axios.get('/api/addNewList.php', {
-      params: {
-        name: this.state.newListName,
-        description: this.state.newListDescription,
-        url: this.state.url,
-        owner: this.state.owner,
-        type: this.state.type,
-        expiration_date: this.state.newListDate,
-        date: this.state.newListDate,
-        username: 'ash_ketchum@hotmail.com',
-        listType: this.state.typeOfList
-      }
-    })
-    .then((response) => {
-      if(response.data){
-        this.toggleDBChange();
-      };
-      console.log(response.data);
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-    console.log("CreatedList");
+    if (this.state.newListName) {
+      axios.get('/api/addNewList.php', {
+        params: {
+          name: this.state.newListName,
+          description: this.state.newListDescription,
+          url: this.state.url,
+          owner: this.state.owner,
+          type: this.state.type,
+          expiration_date: this.state.newListDate,
+          date: this.state.newListDate,
+          username: 'ash_ketchum@hotmail.com',
+          listType: this.state.typeOfList
+        }
+      })
+      .then((response) => {
+        if(response.data){
+          this.toggleDBChange();
+        };
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({newWishlistOpen: false});
+      this.setState({newSWishlistOpen: false});
+      this.setState({newTodoListOpen: false});
+      this.setState({nameError: false});
+      console.log("CreatedList");
+    } else {
+      this.setState({nameError: true});
+      console.log("Error: no name for the new list");
+    }
   }
 
   addItem = () => {
-    axios.get('/api/addItemToTable.php', {
-      params: {
-        name: this.state.newItemName,
-        description: this.state.newItemDescription,
-        checked: 0,
-        list_id: this.state.list.list_id
-      }
-    })
-    .then((response) => {
-      if(response.data){
-        this.toggleDBChange();
-        this.updateList();
-      };
-      console.log(response.data);
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-    this.setState({newItemOpen: false});
-    console.log(this.state.newItem);
+    if (this.state.newItemName) {
+      axios.get('/api/addItemToTable.php', {
+        params: {
+          name: this.state.newItemName,
+          description: this.state.newItemDescription,
+          checked: 0,
+          list_id: this.state.list.list_id
+        }
+      })
+      .then((response) => {
+        if(response.data){
+          this.toggleDBChange();
+          this.updateList();
+        };
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+      this.setState({newItemOpen: false});
+      this.setState({nameError: false});
+      console.log(this.state.newItem);
+    } else {
+      this.setState({nameError: true});
+      console.log("Error: no name for the new item");
+    }
   }
 
   deleteItems = () => { 
@@ -308,7 +324,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newWishlistOpen}
                   onOpen={() => this.setState({newWishlistOpen: true})}
-                  onClose={() => this.setState({newWishlistOpen: false})}
+                  onClose={() => {
+                    this.setState({newWishlistOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -318,17 +337,19 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" autoFocus maxLength="45" 
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -340,9 +361,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => {
                         this.setState({typeOfList: 0},
                           () => {this.addList()});
-                        this.setState({newWishlistOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newWishlistOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newWishlistOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -352,7 +375,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newSWishlistOpen}
                   onOpen={() => this.setState({newSWishlistOpen: true})}
-                  onClose={() => this.setState({newSWishlistOpen: false})}
+                  onClose={() => {
+                    this.setState({newSWishlistOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -362,17 +388,19 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" autoFocus maxLength="45"
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -382,7 +410,6 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        {/* Date: &nbsp; */}
                         <input type="date" name="date" 
                           onChange={(event) => {
                             this.setState({ newListDate: event.target.value}, () => {
@@ -396,9 +423,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={() => {
                         this.setState({typeOfList: 1}, 
                           () => {this.addList()});
-                        this.setState({newSWishlistOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newSWishlistOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newSWishlistOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -408,7 +437,10 @@ class HomePage extends Component {
                   on="click"
                   open={this.state.newTodoListOpen}
                   onOpen={() => this.setState({newTodoListOpen: true})}
-                  onClose={() => this.setState({newTodoListOpen: false})}
+                  onClose={() => {
+                    this.setState({newTodoListOpen: false})
+                    this.setState({nameError: false})
+                  }}
                   closeOnDocumentClick
                   mouseLeaveDelay={300}
                   mouseEnterDelay={0}
@@ -418,17 +450,19 @@ class HomePage extends Component {
                   <div className="Plain-menu">
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="name" placeholder="Name" autoFocus
-                         onChange={(event) => {
-                          this.setState({ newListName: event.target.value }) 
-                          console.log(this.state.newListName)
-                        }}
+                        <input type="text" name="name" autoFocus maxLength="45"
+                          placeholder={this.state.nameError?"Name (required)":"Name"}
+                          className={this.state.nameError?"input-error":""}
+                          onChange={(event) => {
+                            this.setState({ newListName: event.target.value }) 
+                            console.log(this.state.newListName)
+                          }}
                         />
                       </label>
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        <input type="text" name="description" placeholder="Description"
+                        <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
                           console.log(this.state.newListDescription)
@@ -438,7 +472,6 @@ class HomePage extends Component {
                     </form>
                     <form className="Label-menu-item">
                       <label>
-                        {/* Date: &nbsp; */}
                         <input type="date" name="date" 
                           onChange={(event) => {
                           this.setState({ newListDate: event.target.value}, () => {
@@ -452,9 +485,11 @@ class HomePage extends Component {
                       <input className="Menu-button" type="button" value="Confirm" onClick={()=>{
                         this.setState({typeOfList: 2},
                           () => {this.addList()});
-                        this.setState({newTodoListOpen: false});
                       }}/>
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newTodoListOpen: false})}/>
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                        this.setState({newTodoListOpen: false})
+                        this.setState({nameError: false})
+                      }}/>
                     </div>
                   </div>
                 </Popup>
@@ -467,12 +502,6 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting lists...)
           <div className="New-button-container-thin">
-            {/* <div className="Confirm-delete-button" onClick={this.deleteLists}>
-              Confirm Delete
-            </div>
-            <div className="Confirm-delete-button" onClick={() => this.setState({deletingLists: false})}>
-              Cancel
-            </div> */}
             <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteLists}>
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>
@@ -494,6 +523,10 @@ class HomePage extends Component {
               on="click"
               open={this.state.newItemOpen}
               onOpen={() => this.setState({newItemOpen: true})}
+              onClose={() => {
+                this.setState({newItemOpen: false})
+                this.setState({nameError: false})
+              }}
               closeOnDocumentClick
               mouseLeaveDelay={300}
               mouseEnterDelay={0}
@@ -504,7 +537,9 @@ class HomePage extends Component {
                 <form className="Label-menu-item">
                   <label>
                     New item <br />
-                    <input type="text" name="name" placeholder="Name" autoFocus
+                    <input type="text" name="name" autoFocus maxLength="45"
+                      placeholder={this.state.nameError?"Name (required)":"Name"}
+                      className={this.state.nameError?"input-error":""}
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
                         console.log(this.state.newItemName)
@@ -514,7 +549,7 @@ class HomePage extends Component {
                 </form>
                 <form className="Label-menu-item">
                   <label>
-                    <input type="text" name="description" placeholder="Description"
+                    <input type="text" name="description" placeholder="Description" maxLength="245"
                       onChange={(event) => {
                         this.setState({ newItemDescription: event.target.value })
                         console.log(this.state.newItemDescription)
@@ -524,7 +559,10 @@ class HomePage extends Component {
                 </form>
                 <div className="Menu-button-container">
                   <input className="Menu-button" type="button" value="Confirm" onClick={this.addItem} />
-                  <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({newItemOpen: false})}/>
+                  <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                    this.setState({newItemOpen: false})
+                    this.setState({nameError: false})
+                  }}/>
                 </div>
               </div>
             </Popup>
@@ -587,12 +625,6 @@ class HomePage extends Component {
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
-            {/* <div className="Confirm-delete-button" onClick={this.deleteItems}>
-              Confirm Delete
-            </div>
-            <div className="Confirm-delete-button" onClick={() => this.setState({deletingItems: false})}>
-              Cancel
-            </div> */}
             <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteItems}>
               <FontAwesomeIcon icon={faTrashAlt} size="s" />
             </div>

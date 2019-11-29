@@ -363,6 +363,14 @@ li.deleting-checked {
   margin-left: 4%; 
 }
 
+.input-error {
+  border: 1px solid #ff0000;
+}
+
+.input-error::placeholder {
+  color: #ff0000;
+}
+
 /* Button container for home screen */
 .New-button-container-thin {
   background-color: white;
