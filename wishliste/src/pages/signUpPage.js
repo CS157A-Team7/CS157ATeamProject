@@ -37,8 +37,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const signUp = (email, password1, password2, setUsernameError, history) => {
-  if (password1 === password2) {
+const checkUsername = (username, setUsernameError) => {
+  const usernameSplit = username.split("@");
+  if (username === "") {
+    setUsernameError("empty");
+    return false;
+  } else if (!username.includes("@") || usernameSplit.length !== 2 || !usernameSplit[1].includes(".")) {
+    setUsernameError("nonEmail");
+    return false;
+  }
+  return true;
+}
+
+const checkPasswords = (password1, password2, setPassword1Error, setPassword2Error) => {
+  var p1_passed = true;
+  if (password1 === "") {
+    setPassword1Error("empty");
+    p1_passed = false;
+  } else if (password1.length < 8) {
+    setPassword1Error("unsafe");
+    p1_passed = false;
+  }
+  if (password2 === "") {
+    setPassword2Error("empty");
+    return false;
+  } else if (password2 !== password1) {
+    setPassword2Error("notMatching");
+    return false;
+  } else if (password2.length < 8) {
+    setPassword2Error("unsafe");
+    return false;
+  }
+  return p1_passed;
+} 
+
+const signUp = (email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history) => {
+  setUsernameError("");
+  setPassword1Error("");
+  setPassword2Error("");
+  const goodUsername = checkUsername(email, setUsernameError);
+  const goodPasswords = checkPasswords(password1, password2, setPassword1Error, setPassword2Error);
+
+  if (goodUsername && goodPasswords) {
     console.log("sign up w/ username " + email + " and password " + password1);
 
     const params = new URLSearchParams();
@@ -48,7 +88,7 @@ const signUp = (email, password1, password2, setUsernameError, history) => {
     .then((response) => {
       if (response.data === 0) {
         console.log("Username already taken");
-        setUsernameError(true);
+        setUsernameError("taken");
       } else {
         //redirect to home page
         history.push("/Home");
@@ -64,9 +104,11 @@ const signUp = (email, password1, password2, setUsernameError, history) => {
 const SignUpPage = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [usernameError, setUsernameError] = useState(false);
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [password1Error, setPassword1Error] = useState("");
+  const [password2Error, setPassword2Error] = useState("");
   let history = useHistory();
 
   return (
@@ -117,8 +159,13 @@ const SignUpPage = () => {
                   setEmail(event.target.value)
                   console.log(email)
                 }}
-                error={usernameError}
-                helperText={usernameError?"Username is taken":""}
+                error={usernameError!==""}
+                helperText={
+                  usernameError==="empty"?"Username is required"
+                  :usernameError==="nonEmail"?"Username must be an email address"
+                  :usernameError==="taken"?"Username is taken"
+                  :""
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -135,6 +182,12 @@ const SignUpPage = () => {
                   setPassword1(event.target.value)
                   console.log(password1)
                 }}
+                error={password1Error!==""}
+                helperText={
+                  password1Error==="empty"?"Password is required"
+                  :password1Error==="unsafe"?"Password must be at least 8 characters long"
+                  :""
+                }
               />
             </Grid>
             <Grid item xs={12}> 
@@ -151,8 +204,13 @@ const SignUpPage = () => {
                   setPassword2(event.target.value)
                   console.log(password2)
                 }}
-                error={password2!==""&&password1!==password2}
-                helperText={password2!==""&&password1!==password2?"Passwords don't match":""}
+                error={password2Error!==""}
+                helperText={
+                  password2Error==="empty"?"Password is required"
+                  :password2Error==="notMatching"?"Passwords don't match"
+                  :password2Error==="unsafe"?"Password must be at least 8 characters long"
+                  :""
+                }
               />
             </Grid>
 
@@ -163,7 +221,7 @@ const SignUpPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => signUp(email, password1, password2, setUsernameError, history)}
+            onClick={() => signUp(email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history)}
           >
             Sign Up
           </Button>
