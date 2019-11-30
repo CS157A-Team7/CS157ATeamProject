@@ -39,7 +39,11 @@ class HomePage extends Component {
     params.append('username', 'ash_ketchum@hotmail.com');
     axios.post('/api/getListswithItems.php', params)
     .then((response) => {
-      this.setState({ results:response.data });
+      if(response.data instanceof Array)
+      {
+        this.setState({ results:response.data });
+      }
+      console.log(response.data);
       console.log(this.state.results)
     })
     .catch(function(error){
