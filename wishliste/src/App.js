@@ -67,7 +67,14 @@ class App extends Component {
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
               <Route path="/List" component={ItemDescriptionPage} />
-              <Route path="/Friends" component={FriendsPage} />
+              <Route path="/Friends" render={() => 
+                this.state.loggedIn ? (
+                  <FriendsPage/>
+                ) : (
+                  <Redirect to="/" />  
+                )
+              }  
+              />
             </div>
           </Switch>
         </div>
