@@ -19,6 +19,18 @@ class App extends Component {
     loggedIn: false
   };
 
+  setUsername = name => {
+    this.setState({username: name});
+  }
+
+  toggleLogIn = () => {
+    this.setState(state => {
+      return {
+        loggedIn: !state.loggedIn,
+      }
+    })
+  }
+
   render(){
 
     return (
@@ -61,7 +73,12 @@ class App extends Component {
               } 
               />
               {/* <Route path="/SignUp" component={SignUp} /> */}
-              <Route path="/SignUp" component={SignUpPage} />
+              <Route path="/SignUp" render={() => (
+                <SignUpPage 
+                  setUsername={this.setUsername} 
+                  toggleLogIn={this.toggleLogIn} 
+                />)} 
+              />
               <Route exact path="/" component={SignInPage} />
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />

@@ -71,7 +71,7 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
   return p1_passed;
 } 
 
-const signUp = (email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history) => {
+const signUp = (email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history, props) => {
   setUsernameError("");
   setPassword1Error("");
   setPassword2Error("");
@@ -91,6 +91,8 @@ const signUp = (email, password1, password2, setUsernameError, setPassword1Error
         setUsernameError("taken");
       } else {
         //redirect to home page
+        props.toggleLogIn();
+        props.setUsername(email);
         history.push("/Home");
       }
       console.log(response.data);
@@ -101,7 +103,7 @@ const signUp = (email, password1, password2, setUsernameError, setPassword1Error
   }
 }
 
-const SignUpPage = () => {
+const SignUpPage = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
@@ -221,7 +223,7 @@ const SignUpPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => signUp(email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history)}
+            onClick={() => signUp(email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history, props)}
           >
             Sign Up
           </Button>
