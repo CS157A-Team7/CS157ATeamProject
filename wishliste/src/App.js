@@ -7,7 +7,7 @@ import SignInPage from './pages/signInPage';
 import HomePage from './pages/homePage';
 import ItemDescriptionPage from './pages/itemDescriptionPage';
 import FriendsPage from './pages/friendsPage';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Link, Redirect, BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 import ForgotPasswordPage from './pages/forgotPasswordPage';
 import EmailSentPage from './pages/emailSent';
@@ -15,7 +15,8 @@ import ResetPasswordPage from './pages/resetPasswordPage';
 
 class App extends Component {
   state = {
-    results: [],
+    username: '',
+    loggedIn: false
   };
 
   render(){
@@ -51,7 +52,14 @@ class App extends Component {
                   <Link to="/Friends">Friends</Link>
                 </li>
               </ul>
-              <Route path="/Home" component={HomePage} />
+              <Route path="/Home" render={() => 
+                this.state.loggedIn ? (
+                  <HomePage/>
+                ) : (
+                  <Redirect to="/" />  
+                )
+              } 
+              />
               {/* <Route path="/SignUp" component={SignUp} /> */}
               <Route path="/SignUp" component={SignUpPage} />
               <Route exact path="/" component={SignInPage} />
