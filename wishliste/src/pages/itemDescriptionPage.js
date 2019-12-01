@@ -22,7 +22,9 @@ const ItemDescriptionPage = (props) => {
             }
         })
         .then(function(response){
-            setList(response.data);
+            if(response.data instanceof Object){
+                setList(response.data);
+            }
             console.log(response.data);
         })
         .catch(function(error){
