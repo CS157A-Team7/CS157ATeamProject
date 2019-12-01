@@ -4,7 +4,7 @@ import '../assets/App.css';
 const CheckableFriends = props => {
   const items = props.friends.map((friend) => {
     return (
-      <li className={props.friendsSelected.includes(friend)?"checked":"unchecked"}
+      <li className={props.friendsSelected.includes(friend)?"friend-checked":"friend-unchecked"}
         onClick={() => props.handleFriendsSelected(friend)}
       >
         {friend.username}

@@ -146,6 +146,24 @@ li.checked {
   text-overflow: ellipsis;
 }
 
+li.friend-unchecked {
+  list-style-image: url(black-checkbox12.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+li.friend-checked {
+  list-style-image: url(black-checked12.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 li.not-deleting {
   list-style-position: outside;
   list-style-type: none;
