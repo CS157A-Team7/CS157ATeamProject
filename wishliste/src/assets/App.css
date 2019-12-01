@@ -336,6 +336,13 @@ li.deleting-checked {
   text-align: center;
 }
 
+.Wide-menu {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 .Plain-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
@@ -350,6 +357,12 @@ li.deleting-checked {
 .Label-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
+}
+
+.List-menu-item {
+  color: #202833;
+  font-size: calc(4px + 2vmin);
+  text-align: left;
 }
 
 .Menu-button-container {

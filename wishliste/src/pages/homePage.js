@@ -7,6 +7,7 @@ import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPlus, faPen, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';
+import CheckableFriends from '../components/CheckableFriends';
 
 class HomePage extends Component {
   state = {
@@ -32,6 +33,14 @@ class HomePage extends Component {
     deletingLists: false,
     listsToDelete: [],
     nameError: false,
+    listSharingOpen: false,
+    surpriseSharingOpen: false,
+    friends: [
+      { username: "ching-seh.wu@sjsu.edu" },
+      { username: "bill@aol.com" },
+      { username: "sam@aol.com" }
+    ],
+    friendsSelected: [],
   };
 
   componentDidMount(){
@@ -287,6 +296,22 @@ class HomePage extends Component {
       });
     });
   };
+
+  handleFriendsSelected = friend => {
+    if(this.state.friendsSelected.includes(friend))
+    {
+      const filteredFriends = this.state.friendsSelected.filter(i => i.username !== friend.username);
+      this.setState({
+        friendsSelected: filteredFriends
+      });
+    }
+    else{
+      this.setState({
+        friendsSelected: [...this.state.friendsSelected, friend]
+      });
+    }
+    console.log(this.state.friendsSelected);
+  }
 
   render(){
 
@@ -590,42 +615,80 @@ class HomePage extends Component {
             >
               <FontAwesomeIcon icon={faPen} size="s" />
             </div>
-            <Popup
-              trigger={
-                <div className="Fa-icon-style Fa-icon-color">
-                  <FontAwesomeIcon icon={faShare} size="s" />
-                </div>
-              }
-              position="right top"
-              on="click"
-              open={this.state.listSharingOpen}
-              onOpen={() => this.setState({listSharingOpen: true})}
-              onClose={() => this.setState({listSharingOpen: false})}
-              closeOnDocumentClick
-              mouseLeaveDelay={300}
-              mouseEnterDelay={0}
-              contentStyle={{ padding: "0px", border: "none" }}
-              arrow={false}
-            > 
-              {this.state.list.url ? 
-                <div className="Plain-menu">
+            {this.state.list.type==="wish"?
+              <Popup
+                trigger={
+                  <div className="Fa-icon-style Fa-icon-color">
+                    <FontAwesomeIcon icon={faShare} size="s" />
+                  </div>
+                }
+                position="right top"
+                on="click"
+                open={this.state.listSharingOpen}
+                onOpen={() => this.setState({listSharingOpen: true})}
+                onClose={() => this.setState({listSharingOpen: false})}
+                closeOnDocumentClick
+                mouseLeaveDelay={300}
+                mouseEnterDelay={0}
+                contentStyle={{ padding: "0px", border: "none" }}
+                arrow={false}
+              > 
+                {this.state.list.url ? 
+                  <div className="Plain-menu">
+                    <label className="Label-menu-item">
+                      Shareable URL is: <br />
+                      {this.state.list.url}
+                    </label>
+                  </div>
+                :
+                  <div className="Plain-menu"> 
+                    <label className="Label-menu-item">
+                      Generate shareable URL for this list?
+                    </label>
+                    <div className="Menu-button-container">
+                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Generate URL")} />
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({listSharingOpen: false})}/>
+                    </div>
+                  </div>
+                }
+              </Popup>
+            :this.state.list.type==="surprise"?
+              <Popup
+                trigger={
+                  <div className="Fa-icon-style Fa-icon-color">
+                    <FontAwesomeIcon icon={faShare} size="s" />
+                  </div>
+                }
+                position="left top"
+                on="click"
+                open={this.state.surpriseSharingOpen}
+                onOpen={() => this.setState({surpriseSharingOpen: true})}
+                onClose={() => this.setState({surpriseSharingOpen: false})}
+                closeOnDocumentClick
+                mouseLeaveDelay={300}
+                mouseEnterDelay={0}
+                contentStyle={{ padding: "0px", border: "none", width:"400px" }}
+                arrow={false}
+              >
+                <div className="Wide-menu"> 
                   <label className="Label-menu-item">
-                    Shareable URL is: <br />
-                    {this.state.list.url}
+                    Select collaborators for '{this.state.list.name}' 
                   </label>
-                </div>
-              :
-                <div className="Plain-menu"> 
+                  <CheckableFriends 
+                    friends={this.state.friends}
+                    friendsSelected={this.state.friendsSelected} 
+                    handleFriendsSelected={this.handleFriendsSelected}
+                  />
                   <label className="Label-menu-item">
-                    Generate shareable URL for this list?
+                    Note: you can't make any changes to the list once it's sent to collaborators
                   </label>
                   <div className="Menu-button-container">
-                    <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Generate URL")} />
-                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({listSharingOpen: false})}/>
+                    <input className="Menu-button" type="button" value="Send" onClick={() => console.log("Send surprise list")} />
+                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
                   </div>
                 </div>
-              }
-            </Popup>
+              </Popup>
+            :"" /*no share button for todo lists*/}
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
