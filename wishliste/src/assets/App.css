@@ -187,6 +187,14 @@ li.deleting-checked {
   text-overflow: ellipsis;
 }
 
+.Full-List-list-description {
+  font-size: calc(4px + 2vmin);
+  padding-left: 4vh;
+  padding-right: 2vh;
+  margin-top: 2vh;
+  margin-bottom: -2vh;
+}
+
 .Full-List-items {
   background-color: #46a29f;
   padding-left: 0vh;
@@ -195,7 +203,7 @@ li.deleting-checked {
   font-size: calc(8px + 2vmin);
 }
 
-.Full-List-description {
+.Full-List-item-description {
   padding-left: 4vh;
   padding-right: 2vh;
   text-align: left;

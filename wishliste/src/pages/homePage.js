@@ -660,6 +660,7 @@ class HomePage extends Component {
               handleItemChange={this.handleItemChange}
               toggleDBChange={this.toggleDBChange}
               toggleCheckmark={this.toggleCheckmark}
+              currentPage="home"
             /> : ''
           }
         </div>

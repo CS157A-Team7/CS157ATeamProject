@@ -11,7 +11,7 @@ const ListHead = props => {
     return (
       <Popup
         trigger={
-          <div className="Full-List2-head">
+          <div className={props.currentPage==="home"?"Full-List2-head":"Full-List-head"}>
             {props.listData.name}
           </div>
         }
@@ -63,7 +63,7 @@ const ListHead = props => {
     )
   } else {
     return (
-      <div className="Full-List2-head">
+      <div className={props.currentPage==="home"?"Full-List2-head":"Full-List-head"}>
         {props.listData.name}
       </div>
     )
@@ -75,7 +75,9 @@ const ListItem = props => {
   return (
     <li className={!props.deletingItems?'not-deleting':props.itemsToDelete.includes(props.item)?'deleting-checked':'deleting-unchecked'}
       onClick={() => {
-        if (props.deletingItems) {
+        if (props.currentPage === "singleList" && !props.signedIn) {
+          console.log("Can't check/uncheck while anonymously viewing list");
+        } else if (props.deletingItems) {
           console.log("Select/deselect "+props.item.name+" to be deleted");
           props.handleItemsToDelete(props.item);
         } else {
@@ -87,7 +89,7 @@ const ListItem = props => {
       <li className={props.item.checked==1?'checked':'unchecked'}>
         {props.item.name}
       </li>
-      <div className="Full-List2-item-description">
+      <div className={props.currentPage==="home"?"Full-List2-item-description":"Full-List-item-description"}>
         {props.item.description} 
       </div>
     </li>
@@ -109,7 +111,7 @@ const ListBody = props => {
               <li className={item.checked==1?'checked':'unchecked'}>
                 {item.name}
               </li>
-              <div className="Full-List2-item-description">
+              <div className={props.currentPage==="home"?"Full-List2-item-description":"Full-List-item-description"}>
                 {item.description} 
               </div>
             </li>
@@ -182,17 +184,19 @@ const ListBody = props => {
           item={item}
           index={index}
           toggleCheckmark={props.toggleCheckmark} 
+          currentPage={props.currentPage}
+          signedIn={props.signedIn}
         />
       )
     }
   })
 
   return (
-    <div className="Full-List2-items">
+    <div className={props.currentPage==="home"?"Full-List2-items":"Full-List-items"}>
       {props.editingItems?
         <Popup
           trigger={
-            <div className="Full-List2-list-description">
+            <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
               {props.listData.description}
             </div>
           }
@@ -241,7 +245,7 @@ const ListBody = props => {
           </div>
         </Popup>
       :
-        <div className="Full-List2-list-description">
+        <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
           {props.listData.description}
         </div>
       }
@@ -318,7 +322,9 @@ class FullList2 extends Component {
       handleListNameChange, 
       handleListDescriptionChange,
       handleItemChange,
-      toggleCheckmark } = this.props
+      toggleCheckmark,
+      currentPage,
+      signedIn } = this.props
 
     if (!listData) {
       return (
@@ -329,7 +335,7 @@ class FullList2 extends Component {
     };
 
     return (
-      <div className="Full-List2-container">
+      <div className={currentPage==="home"?"Full-List2-container":"Full-List-container"}>
         <ListHead 
           listData={listData} 
           editingItems={editingItems} 
@@ -338,6 +344,7 @@ class FullList2 extends Component {
           closeEditMenu={this.closeEditMenu}
           updateDB = {this.updateDB}
           handleListNameChange = {handleListNameChange}
+          currentPage = {currentPage}
         />
         <ListBody 
           listData={listData} 
@@ -352,6 +359,8 @@ class FullList2 extends Component {
           handleItemChange = {handleItemChange}
           handleListDescriptionChange = {handleListDescriptionChange}
           toggleCheckmark = {toggleCheckmark}
+          currentPage = {currentPage}
+          signedIn = {signedIn}
         />
       </div>
     )
