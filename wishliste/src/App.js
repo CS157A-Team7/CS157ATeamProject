@@ -66,7 +66,7 @@ class App extends Component {
               </ul>
               <Route path="/Home" render={() => 
                 this.state.loggedIn ? (
-                  <HomePage/>
+                  <HomePage username={this.state.username}/>
                 ) : (
                   <Redirect to="/" />  
                 )
