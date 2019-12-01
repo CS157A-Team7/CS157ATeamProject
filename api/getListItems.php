@@ -4,8 +4,21 @@
     if($conn->connect_error) die($conn->connect_error);
 
     $list_id = $_GET['list_id'];
+	$url = "wishliste.com/list/$list_id";
+	
+	$exist_query = "SELECT list_id FROM wishlist WHERE list_id = $list_id";
+	$exist_result = $conn->query($exist_query);
+	if(!$exist_result) die ("Database access failed: " . $conn->error);
+	$exist_row = $exist_result->num_rows;
+	if($exist_row === 0) die ("This is not a shareable list");
+	
+	$url_query = "SELECT list_id FROM wishlist WHERE url = '$url'";
+	$url_result = $conn->query($url_query);
+	if(!$url_result) die ("Database access failed: " . $conn->error);
+	$url_row = $url_result->num_rows;
+	if($url_row === 0) die ("This list has not been set as shareable");
 
-	$list_query = "SELECT list_id,name,description FROM list NATURAL JOIN wishlist WHERE list_id ='$list_id'";
+	$list_query = "SELECT list_id,name,description FROM list WHERE list_id ='$list_id'";
 	$list_result = $conn->query($list_query);
 	if(!$list_result) die ("Database access failed: " . $conn->error);
 
