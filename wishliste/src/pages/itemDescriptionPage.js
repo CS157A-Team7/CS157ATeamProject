@@ -7,18 +7,18 @@ import { faTrashAlt, faPlus, faPen, faArrowLeft } from '@fortawesome/free-solid-
 import axios from 'axios';
 import FullList from '../components/FullList';
 import '../assets/App.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-const ItemDescriptionPage = () => {
+const ItemDescriptionPage = (props) => {
     const [list, setList] = useState(null);
     const [signedIn, setSignedIn] = useState(true);
     let history = useHistory();
-
+    let {id} = useParams();
 
     useEffect(() => {
         axios.get('/api/getListItems.php', {
             params: {
-                list_id: 27
+                list_id: id
             }
         })
         .then(function(response){
