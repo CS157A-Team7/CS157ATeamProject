@@ -28,7 +28,7 @@ const ItemDescriptionPage = () => {
         .catch(function(error){
             console.log(error);
         });
-    });
+    },[]);
 
     if(!list){
         return (
