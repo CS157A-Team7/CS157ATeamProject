@@ -4,15 +4,14 @@ import '../assets/App.css';
 const ListHead = props => {
   return (
     <div className="Full-List-head">
-      {/* {props.listData.name} */}
-      Art Supplies
+      {props.listData.name} 
     </div>
   )
 }
 
 const ListBody = props => {
   // const items = props.listData.items.map((item) => {
-  const items = props.listData.map((item) => {
+  const items = props.listData.items.map((item) => {
     return (
       <div onClick={() => console.log("clicked on " + item.name)}>
         <li className={item.checked==1?'checked':'unchecked'}>

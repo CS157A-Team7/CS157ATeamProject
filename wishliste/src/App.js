@@ -83,7 +83,7 @@ class App extends Component {
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
-              <Route path="/List" component={ItemDescriptionPage} />
+              <Route path="/List/:id" component={ItemDescriptionPage} />
               <Route path="/Friends" render={() => 
                 this.state.loggedIn ? (
                   <FriendsPage/>
