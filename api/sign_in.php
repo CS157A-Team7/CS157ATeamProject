@@ -7,6 +7,7 @@
   // }
 
   require_once 'login.php';
+  require_once 'sanitize.php';
 
 
   //$query = "INSERT INTO account(username, password) VALUES ('$username', '$password')";

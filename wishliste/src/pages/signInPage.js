@@ -53,14 +53,20 @@ const validateInput = (username, password) => {
   .catch(function(error) {
     //erase input fields & show error on frontend too
     console.log(error);
+    document.getElementById('myForm').reset();
+    alert('Incorrect login details. Please check your username/password and try again.');
   });
   console.log("done with validateInput function");
 }
 
-const wipeInputFields = (theUsername, thePassword) => {
-  theUsername = "";
-  thePassword = "";
-}
+// const wipeInputFields = () => {
+//   //username = x;
+//   //setPassword(y);
+//   //this.refs.wipeMe.$username = x;
+//   //document.getElementById('wipeMe').innerHTML = 'rubberduck';
+//   document.getElementById('myForm').reset(); //WORKS
+//
+// }
 
 // const setDbChange = (username, password) => {
 //   if(this.state.dbChange){
@@ -135,6 +141,9 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const [dbChange, setDbChange] = useState("");
 
+  const [inpUser, setInpUser] = useState("");
+  const [inpPass, setInpPass] = useState("");
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -145,7 +154,7 @@ const SignInPage = () => {
         <Typography component="h1" variant="h5">
           Sign in to WishListé
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate id='myForm'>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -160,6 +169,7 @@ const SignInPage = () => {
                   setUsername(event.target.value)
                   console.log(username)
                 }}
+                //onChange={(e)=>{this.setInpUser({text1: e.target.value})}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -212,17 +222,6 @@ const SignInPage = () => {
             onClick={() => console.log(username)}
           >
            print out the username in the console
-          </Button>
-
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => wipeInputFields()}
-          >
-           remove input in input fields
           </Button>
 
           <Grid container>
