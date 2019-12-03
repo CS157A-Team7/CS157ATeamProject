@@ -313,6 +313,25 @@ class HomePage extends Component {
     console.log(this.state.friendsSelected);
   }
 
+  generateUrl = () => {
+    const params = new URLSearchParams();
+    params.append('list_id', this.state.list.list_id);
+    axios.post('/api/updateUrl.php', params)
+    .then((response) => {
+      this.toggleDBChange();
+      this.setState({
+        list: {
+          ...this.state.list,
+          url: response.data
+        }
+      });
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+  }
+
   render(){
 
     if(!this.state.results){
@@ -646,7 +665,7 @@ class HomePage extends Component {
                       Generate shareable URL for this list?
                     </label>
                     <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Generate URL")} />
+                      <input className="Menu-button" type="button" value="Confirm" onClick={this.generateUrl} />
                       <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({listSharingOpen: false})}/>
                     </div>
                   </div>

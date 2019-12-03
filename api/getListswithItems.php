@@ -40,6 +40,18 @@
 		}
 		else{
 			$row['type'] = 'wish';
+			
+			$url_query = "SELECT url from wishlist WHERE list_id = '$list_id'";
+			$url_result = $conn->query($url_query);
+			if(!$url_result) die ("Database access failed: " . $conn->error);
+			
+			$url_row = $url_result->num_rows;
+			if($url_row === 1){
+				$url_result->data_seek(0);
+				$url = $url_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['url'] = $url['url'];
+			}
 		}
 		
 		
