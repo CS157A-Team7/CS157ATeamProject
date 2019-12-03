@@ -79,7 +79,12 @@ class App extends Component {
                   toggleLogIn={this.toggleLogIn} 
                 />)} 
               />
-              <Route exact path="/" component={SignInPage} />
+              <Route exact path="/" render={() => (
+                <SignInPage 
+                  setUsername={this.setUsername} 
+                  toggleLogIn={this.toggleLogIn} 
+                />)}  
+              />
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
