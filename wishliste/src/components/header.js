@@ -6,6 +6,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
+const logMeOut = (props, history) => {
+    localStorage.removeItem('wishliste');
+    props.toggleLogIn();
+    props.setUsername('');
+    history.push("/");
+}
+
 const Header = (props) => {
     let history = useHistory();
     return (
@@ -31,7 +38,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Friends')}>
                                 Manage Friends
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>
@@ -40,7 +47,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>    
@@ -52,7 +59,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>

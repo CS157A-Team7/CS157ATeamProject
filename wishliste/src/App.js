@@ -66,7 +66,11 @@ class App extends Component {
               </ul>
               <Route path="/Home" render={() => 
                 this.state.loggedIn ? (
-                  <HomePage username={this.state.username}/>
+                  <HomePage 
+                    username={this.state.username}
+                    setUsername={this.setUsername}
+                    toggleLogIn={this.toggleLogIn}
+                  />
                 ) : (
                   <Redirect to="/" />  
                 )
@@ -88,10 +92,18 @@ class App extends Component {
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
-              <Route path="/List/:id" component={ItemDescriptionPage} />
+              <Route path="/List/:id" render={() => (
+                <ItemDescriptionPage 
+                  setUsername={this.setUsername}
+                  toggleLogIn={this.toggleLogIn}
+                />)}
+              />
               <Route path="/Friends" render={() => 
                 this.state.loggedIn ? (
-                  <FriendsPage/>
+                  <FriendsPage
+                    setUsername={this.setUsername}
+                    toggleLogIn={this.toggleLogIn}
+                  />
                 ) : (
                   <Redirect to="/" />  
                 )
