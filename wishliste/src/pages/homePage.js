@@ -45,7 +45,7 @@ class HomePage extends Component {
 
   componentDidMount(){
     const params = new URLSearchParams();
-    params.append('username', 'ash_ketchum@hotmail.com');
+    params.append('username', this.props.username);
     axios.post('/api/getListswithItems.php', params)
     .then((response) => {
       if(response.data instanceof Array)
@@ -63,7 +63,7 @@ class HomePage extends Component {
   componentDidUpdate(){
     if(this.state.dbChange){
       const params = new URLSearchParams();
-      params.append('username', 'ash_ketchum@hotmail.com');
+      params.append('username', this.props.username);
       axios.post('/api/getListswithItems.php', params)
       .then((response) => {
         this.setState({ results:response.data });
@@ -88,7 +88,7 @@ class HomePage extends Component {
           type: this.state.type,
           expiration_date: this.state.newListDate,
           date: this.state.newListDate,
-          username: 'ash_ketchum@hotmail.com',
+          username: this.props.username,
           listType: this.state.typeOfList
         }
       })

@@ -6,37 +6,41 @@ import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPlus, faPen, faTimes, faShare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-const ItemDescriptionPage = () => {
-  const [list, setList] = useState([]);
-  const [itemsToDelete, setItemsToDelete] = useState([]);
-  const [newItemOpen, setNewItemOpen] = useState(false);
-  const [newItemName, setNewItemName] = useState("");
-  const [newItemDescription, setNewItemDescription] = useState("");
-  const [dbChange, setDbChange] = useState(false);
-  const [deletingItems, setDeletingItems] = useState(false);
-  const [editingItems, setEditingItems] = useState(false);
-  const [listSharingOpen, setListSharingOpen] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [signedIn, setSignedIn] = useState(true);
-  let history = useHistory();
+const ItemDescriptionPage = (props) => {
+    const [list, setList] = useState([]);
+    const [signedIn, setSignedIn] = useState(true);
+    const [itemsToDelete, setItemsToDelete] = useState([]);
+    const [newItemOpen, setNewItemOpen] = useState(false);
+    const [newItemName, setNewItemName] = useState("");
+    const [newItemDescription, setNewItemDescription] = useState("");
+    const [dbChange, setDbChange] = useState(false);
+    const [deletingItems, setDeletingItems] = useState(false);
+    const [editingItems, setEditingItems] = useState(false);
+    const [listSharingOpen, setListSharingOpen] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    // const [signedIn, setSignedIn] = useState(true);
+    let history = useHistory();
+    let {id} = useParams();
 
-  useEffect(() => {
-    axios.get('/api/getListItems.php', {
-      params: {
-        list_id: 27
-      }
-    })
-    .then(function(response){
-      setList(response.data);
-      console.log(response.data);
-    }) 
-    .catch(function(error){
-      console.log(error);
-    });
-  },[]);
-
+    useEffect(() => {
+        axios.get('/api/getItems.php', {
+            params: {
+                list_id: id
+            }
+        })
+        .then(function(response){
+            if(response.data instanceof Object){
+                setList(response.data);
+            }
+            console.log(response.data);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    },[]);
+  
   const addItem = () => {
     if (newItemName) {
       axios.get('/api/addItemToTable.php', {
