@@ -9,7 +9,9 @@
   require_once 'login.php';
   require_once 'sanitize.php';
 
-
+    $conn = new mysqli($host, $user, $password, $dbname);
+    if($conn->connect_error) die($conn->connect_error);
+	
   //$query = "INSERT INTO account(username, password) VALUES ('$username', '$password')";
 
     //$username = mysqli_real_escape_string($db,$_POST['username']); //instead of sanitizing here use the function from api folder
@@ -19,15 +21,17 @@
     $password = sanitizeString($_GET['password']);
 
     $sql = "SELECT username FROM account WHERE username = '$username' and password = '$password'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $active = $row['active'];
+    //$result = mysqli_query($db,$sql);
+	$result = $conn->query($sql);
+    //$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+	$rows = $result->num_rows;
+    //$active = $row['active'];
 
-    $count = mysqli_num_rows($result);
+    //$count = mysqli_num_rows($result);
 
     // If result matched $myusername and $mypassword, table row must be 1 row
 
-    if($count == 1) {
+    if($rows === 1) {
       //logged in!
 
       echo 1; //1 or 0 for t/f
