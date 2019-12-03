@@ -9,15 +9,28 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
 class FriendsPage extends Component {
   state = {
-    username: "ash_ketchum@hotmail.com",
-    friends: [
-      { username: "ching-seh.wu@sjsu.edu" },
-      { username: "bill@aol.com" },
-      { username: "sam@aol.com" }
-    ],
+    // username: "ash_ketchum@hotmail.com",
+    friends: [],
     addingFriend: false,
   }
   
+  componentDidMount(){
+    const params = new URLSearchParams();
+    params.append('username', this.props.username);
+    axios.post('/api/getFriends.php', params)
+    .then((response) => {
+      if(response.data instanceof Array)
+      {
+        this.setState({ friends:response.data });
+      }
+      console.log(response.data);
+      // console.log(this.state.results)
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+  };
+
   render() {
     return (
       <div className="App">
