@@ -35,16 +35,12 @@ class HomePage extends Component {
     nameError: false,
     listSharingOpen: false,
     surpriseSharingOpen: false,
-    friends: [
-      { username: "ching-seh.wu@sjsu.edu" },
-      { username: "bill@aol.com" },
-      { username: "sam@aol.com" }
-    ],
+    friends: [],
     friendsSelected: [],
   };
 
   componentDidMount(){
-    const params = new URLSearchParams();
+    var params = new URLSearchParams();
     params.append('username', 'ash_ketchum@hotmail.com');
     axios.post('/api/getListswithItems.php', params)
     .then((response) => {
@@ -54,6 +50,19 @@ class HomePage extends Component {
       }
       console.log(response.data);
       console.log(this.state.results)
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+
+    axios.post('/api/getFriends.php', params)
+    .then((response) => {
+      if(response.data instanceof Array)
+      {
+        this.setState({ friends:response.data });
+      }
+      console.log(response.data);
+      console.log(this.state.friends)
     })
     .catch(function(error){
         console.log(error);

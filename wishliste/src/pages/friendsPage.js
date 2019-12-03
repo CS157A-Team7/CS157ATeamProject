@@ -24,7 +24,6 @@ class FriendsPage extends Component {
         this.setState({ friends:response.data });
       }
       console.log(response.data);
-      // console.log(this.state.results)
     })
     .catch(function(error){
         console.log(error);
@@ -63,7 +62,7 @@ class FriendsPage extends Component {
               </form>
             </div>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={console.log("Add friend or get error b/c user doesn't exist")} />
+              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Add friend or get error b/c user doesn't exist")} />
               <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({addingFriend: false})}/>
             </div>
           </Popup>
