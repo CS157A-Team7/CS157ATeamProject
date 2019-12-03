@@ -177,10 +177,7 @@ const SignInPage = () => {
                   setUsername(event.target.value)
                   console.log(username)
                 }}
-                //onChange={(e)=>{this.set
-
-
-({text1: e.target.value})}}
+                //onChange={(e)=>{this.set({text1: e.target.value})}}
               />
             </Grid>
             <Grid item xs={12}>
