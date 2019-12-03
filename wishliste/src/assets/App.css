@@ -146,6 +146,24 @@ li.checked {
   text-overflow: ellipsis;
 }
 
+li.friend-unchecked {
+  list-style-image: url(black-checkbox12.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+li.friend-checked {
+  list-style-image: url(black-checked12.png);
+  list-style-position: inside;
+  margin-left: -2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 li.not-deleting {
   list-style-position: outside;
   list-style-type: none;
@@ -187,6 +205,14 @@ li.deleting-checked {
   text-overflow: ellipsis;
 }
 
+.Full-List-list-description {
+  font-size: calc(4px + 2vmin);
+  padding-left: 4vh;
+  padding-right: 2vh;
+  margin-top: 2vh;
+  margin-bottom: -2vh;
+}
+
 .Full-List-items {
   background-color: #46a29f;
   padding-left: 0vh;
@@ -195,7 +221,7 @@ li.deleting-checked {
   font-size: calc(8px + 2vmin);
 }
 
-.Full-List-description {
+.Full-List-item-description {
   padding-left: 4vh;
   padding-right: 2vh;
   text-align: left;
@@ -336,6 +362,13 @@ li.deleting-checked {
   text-align: center;
 }
 
+.Wide-menu {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 .Plain-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
@@ -350,6 +383,12 @@ li.deleting-checked {
 .Label-menu-item {
   color: #202833;
   font-size: calc(4px + 2vmin);
+}
+
+.List-menu-item {
+  color: #202833;
+  font-size: calc(4px + 2vmin);
+  text-align: left;
 }
 
 .Menu-button-container {
