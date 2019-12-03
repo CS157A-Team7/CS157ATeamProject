@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../assets/App.css';
 import axios from 'axios';
 import Header from '../components/header';
@@ -8,356 +8,300 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPlus, faPen, faTimes, faShare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
-class ItemDescriptionPage extends Component {
-  state = {
-    results: [],
-    list: {},
-    itemsToDelete: [], 
-    newItemOpen: false,
-    newItemName: "",
-    newItemDescription: "",
-    dbChange: false,
-    deletingItems: false,
-    editingItems: false,
-    nameError: false,
-    signedIn: true,
-  };
+const ItemDescriptionPage = () => {
+  const [list, setList] = useState([]);
+  const [itemsToDelete, setItemsToDelete] = useState([]);
+  const [newItemOpen, setNewItemOpen] = useState(false);
+  const [newItemName, setNewItemName] = useState("");
+  const [newItemDescription, setNewItemDescription] = useState("");
+  const [dbChange, setDbChange] = useState(false);
+  const [deletingItems, setDeletingItems] = useState(false);
+  const [editingItems, setEditingItems] = useState(false);
+  const [listSharingOpen, setListSharingOpen] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
+  let history = useHistory();
 
-  componentDidMount(){
-    const params = new URLSearchParams();
-    params.append('username', 'ash_ketchum@hotmail.com');
-    axios.post('/api/getListswithItems.php', params)
-    .then((response) => {
-      if(response.data instanceof Array)
-      {
-        this.setState({ results:response.data });
-        this.setState({ list: this.state.results[0] });
+  useEffect(() => {
+    axios.get('/api/getListItems.php', {
+      params: {
+        list_id: 27
       }
-      console.log(response.data);
-      console.log(this.state.results)
     })
+    .then(function(response){
+      setList(response.data);
+      console.log(response.data);
+    }) 
     .catch(function(error){
-        console.log(error);
+      console.log(error);
     });
-  };
+  },[]);
 
-  componentDidUpdate(){
-    if(this.state.dbChange){
-      const params = new URLSearchParams();
-      params.append('username', 'ash_ketchum@hotmail.com');
-      axios.post('/api/getListswithItems.php', params)
-      .then((response) => {
-        this.setState({ results:response.data });
-        console.log(this.state.results)
-      })
-      .catch(function(error){
-          console.log(error);
-      });
-
-      this.toggleDBChange();
-    }
-  }
-
-  addItem = () => {
-    if (this.state.newItemName) {
+  const addItem = () => {
+    if (newItemName) {
       axios.get('/api/addItemToTable.php', {
         params: {
-          name: this.state.newItemName,
-          description: this.state.newItemDescription,
+          name: newItemName,
+          description: newItemDescription,
           checked: 0,
-          list_id: this.state.list.list_id
+          list_id: list.list_id
         }
       })
       .then((response) => {
         if(response.data){
-          this.toggleDBChange();
-          this.updateList();
+          toggleDBChange();
+          updateList();
         };
         console.log(response.data);
       })
       .catch(function(error){
           console.log(error);
       });
-      this.setState({newItemOpen: false});
-      this.setState({nameError: false});
-      console.log(this.state.newItem);
+      setNewItemOpen(false);
+      setNameError(false);
     } else {
-      this.setState({nameError: true});
+      setNameError(true);
       console.log("Error: no name for the new item");
     }
   }
 
-  deleteItems = () => { 
+  const deleteItems = () => { 
     axios({
     url: '/api/deleteItemsFromTable.php',
     method: 'post',
-    data: this.state.itemsToDelete  
+    data: itemsToDelete  
     })
     .then((response) => {
       console.log(response.data);
-      this.setState({itemsToDelete: []});
-      this.toggleDBChange();
-      this.updateList();
+      setItemsToDelete([]);
+      toggleDBChange();
+      updateList();
     })
     .catch(function(error){
         console.log(error);
     });
-    this.setState({deletingItems: false})
-    console.log(this.state.itemsToDelete);
+    setDeletingItems(false);
   }
 
-  updateList = () => {
+  const updateList = () => {
     axios.get('/api/getListItems.php', {
       params: {
-        list_id: this.state.list.list_id
+        list_id: list.list_id
       }
     })
     .then((response) => {
-      this.setState({
-        list: {
-          ...this.state.list,
-          items: response.data
-        }
-      });
+      setList(response.data)
     })
     .catch(function(error){
       console.log(error);
     });
   }
 
-  handleItemsToDelete = item => {
-    if(this.state.itemsToDelete.includes(item))
+  const handleItemsToDelete = item => {
+    if(itemsToDelete.includes(item))
     {
-      const filteredItems = this.state.itemsToDelete.filter(i => i.item_id !== item.item_id);
-      this.setState({
-        itemsToDelete: filteredItems
-      });
+      const filteredItems = itemsToDelete.filter(i => i.item_id !== item.item_id);
+      setItemsToDelete(filteredItems);
     }
     else{
-      this.setState({
-        itemsToDelete: [...this.state.itemsToDelete, item]
-      });
+      setItemsToDelete([...itemsToDelete, item]);
     }
-    console.log(this.state.itemsToDelete);
-  }
-
-  handleListNameChange = newName => {
-    this.setState({
-      list: {
-        ...this.state.list,
-        name: newName
-      }
-    });
   };
-
-  handleListDescriptionChange = newDescription => {
-    this.setState({
-      list: {
-        ...this.state.list,
-        description: newDescription
-      }
-    });
-  }
-
-  handleItemChange = (index, newName, newDescription) => {
-    let items = this.state.list.items;
+  
+  const handleListNameChange = newName => {
+    setList({...list, name: newName});
+  };
+  
+  const handleListDescriptionChange = newDescription => {
+    setList({...list, description: newDescription});
+  };
+  
+  const handleItemChange = (index, newName, newDescription) => {
+    let items = list.items;
     items[index].name = newName;
     items[index].description = newDescription;
-
-    this.setState({
-      list: {
-        ...this.state.list,
-        items: items
-      }
-    });
+  
+    setList({...list, items: items});
   };
 
-  toggleDBChange = () => {
-    this.setState(state => {
-      return {
-        dbChange: !state.dbChange,
-      }
-    })
-  };
-
-  toggleCheckmark =  index => {
-    let items = this.state.list.items;
+  const toggleDBChange = () => {
+    if (dbChange) {
+      setDbChange(false)
+    } else {
+      setDbChange(true)
+    }
+  }
+  
+  const toggleCheckmark = index => {
+    let items = list.items;
     items[index].checked = items[index].checked == 1 ? 0 : 1;
-
-    this.setState({
-      list: {
-        ...this.state.list,
-        items: items
-      }
-    }, () => {
-      const params = new URLSearchParams();
-      params.append('checkmark', items[index].checked);
-      params.append('item_id', items[index].item_id);
-      axios.post('/api/updateItemCheckmark.php', params)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch(function(error){
-          console.log(error);
-      });
+    setList({...list, items: items});
+  
+    const params = new URLSearchParams();
+    params.append('checkmark', items[index].checked);
+    params.append('item_id', items[index].item_id);
+    axios.post('/api/updateItemCheckmark.php', params)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
     });
   };
 
-  render(){
-
-    if(!this.state.results){
-      return(
-        <div>
-          <hr/>
-        </div>
-      )
-    };
-
+  if(!list){
     return (
-
-      <div className="App">
-        <Header page="ItemDescriptionPage" signedIn={this.state.signedIn}/>
-
-        {!this.state.signedIn ? '' : !this.state.deletingItems ?
-          <div className="Centered-button-container">
-            <div className="Fa-icon-style Fa-icon-color" onClick={() => {
-              //note: this doesn't work.
-              let history = useHistory()
-              history.push('/Home')
-            }}>
-              <FontAwesomeIcon icon={faArrowLeft} size="s" />
-            </div>
-            <Popup
-              trigger={
-                <div className="Fa-icon-style Fa-icon-color">
-                  <FontAwesomeIcon icon={faPlus} size="s" />
-                </div>
-              }
-              position="right top"
-              on="click"
-              open={this.state.newItemOpen}
-              onOpen={() => this.setState({newItemOpen: true})}
-              onClose={() => {
-                this.setState({newItemOpen: false})
-                this.setState({nameError: false})
-              }}
-              closeOnDocumentClick
-              mouseLeaveDelay={300}
-              mouseEnterDelay={0}
-              contentStyle={{ padding: "0px", border: "none" }}
-              arrow={false}
-            >
-              <div className="Plain-menu">
-                <form className="Label-menu-item">
-                  <label>
-                    New item <br />
-                    <input type="text" name="name" autoFocus maxLength="45"
-                      placeholder={this.state.nameError?"Name (required)":"Name"}
-                      className={this.state.nameError?"input-error":""}
-                      onChange={(event) => {
-                        this.setState({ newItemName: event.target.value }) 
-                        console.log(this.state.newItemName)
-                      }}
-                    />
-                  </label>
-                </form>
-                <form className="Label-menu-item">
-                  <label>
-                    <input type="text" name="description" placeholder="Description" maxLength="245"
-                      onChange={(event) => {
-                        this.setState({ newItemDescription: event.target.value })
-                        console.log(this.state.newItemDescription)
-                      }}
-                    />
-                  </label>
-                </form>
-                <div className="Menu-button-container">
-                  <input className="Menu-button" type="button" value="Confirm" onClick={this.addItem} />
-                  <input className="Menu-button" type="button" value="Cancel" onClick={() => {
-                    this.setState({newItemOpen: false})
-                    this.setState({nameError: false})
-                  }}/>
-                </div>
-              </div>
-            </Popup>
-
-            <div className="Fa-icon-style Fa-icon-color" 
-              onClick={() => {
-                this.setState({deletingItems: true});
-                this.setState({editingItems: false});
-              }}
-            >
-              <FontAwesomeIcon icon={faTrashAlt} size="s" />
-            </div>
-            <div className={this.state.editingItems?"Fa-icon-style Fa-icon-selected-color":"Fa-icon-style Fa-icon-color"} 
-              onClick={() => {
-                if (this.state.editingItems) {
-                  this.setState({editingItems: false})
-                } else {
-                  this.setState({editingItems: true})
-                }
-              }}
-            >
-              <FontAwesomeIcon icon={faPen} size="s" />
-            </div>
-            <Popup
-              trigger={
-                <div className="Fa-icon-style Fa-icon-color">
-                  <FontAwesomeIcon icon={faShare} size="s" />
-                </div>
-              }
-              position="right top"
-              on="click"
-              open={this.state.listSharingOpen}
-              onOpen={() => this.setState({listSharingOpen: true})}
-              onClose={() => this.setState({listSharingOpen: false})}
-              closeOnDocumentClick
-              mouseLeaveDelay={300}
-              mouseEnterDelay={0}
-              contentStyle={{ padding: "0px", border: "none" }}
-              arrow={false}
-            > 
-              <div className="Plain-menu">
-                <label className="Label-menu-item">
-                  Shareable URL is: <br />
-                  {this.state.list.url}
-                </label>
-              </div>
-            </Popup>
-          </div>
-          : //else (if user is deleting items)...
-          <div className="Centered-button-container">
-            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={this.deleteItems}>
-              <FontAwesomeIcon icon={faTrashAlt} size="s" />
-            </div>
-            <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => this.setState({deletingItems: false})}>
-              <FontAwesomeIcon icon={faTimes} size="s" />
-            </div>
-          </div>
-        }
-
-        <div className="New-Homepage-Layout">
-          {Object.entries(this.state.list).length !== 0 ? 
-            <FullList2 
-              listData={this.state.list} 
-              deletingItems={this.state.deletingItems} 
-              handleItemsToDelete={this.handleItemsToDelete} 
-              itemsToDelete={this.state.itemsToDelete}
-              editingItems={this.state.editingItems}
-              handleListNameChange={this.handleListNameChange}
-              handleListDescriptionChange={this.handleListDescriptionChange}
-              handleItemChange={this.handleItemChange}
-              toggleDBChange={this.toggleDBChange}
-              toggleCheckmark={this.toggleCheckmark}
-              currentPage="singleList"
-              signedIn={this.state.signedIn}
-            /> : '' 
-          }
-        </div>
-        
+      <div>
+        <h1>Empty List</h1>
       </div>
     );
   }
-}
+
+  return (
+
+    <div className="App">
+      <Header page="ItemDescriptionPage" signedIn={signedIn}/>
+
+      {!signedIn ? '' : !deletingItems ?
+        <div className="Centered-button-container">
+          <div className="Fa-icon-style Fa-icon-color" onClick={() => {
+            history.push('/Home')
+          }}>
+            <FontAwesomeIcon icon={faArrowLeft} size="s" />
+          </div>
+          <Popup
+            trigger={
+              <div className="Fa-icon-style Fa-icon-color">
+                <FontAwesomeIcon icon={faPlus} size="s" />
+              </div>
+            }
+            position="right top"
+            on="click"
+            open={newItemOpen}
+            onOpen={() => setNewItemOpen(true)}
+            onClose={() => {
+              setNewItemOpen(false)
+              setNameError(false)
+            }}
+            closeOnDocumentClick
+            mouseLeaveDelay={300}
+            mouseEnterDelay={0}
+            contentStyle={{ padding: "0px", border: "none" }}
+            arrow={false}
+          >
+            <div className="Plain-menu">
+              <form className="Label-menu-item">
+                <label>
+                  New item <br />
+                  <input type="text" name="name" autoFocus maxLength="45"
+                    placeholder={nameError?"Name (required)":"Name"}
+                    className={nameError?"input-error":""}
+                    onChange={(event) => {
+                      setNewItemName(event.target.value)
+                      console.log(newItemName)
+                    }}
+                  />
+                </label>
+              </form>
+              <form className="Label-menu-item">
+                <label>
+                  <input type="text" name="description" placeholder="Description" maxLength="245"
+                    onChange={(event) => {
+                      setNewItemDescription(event.target.value)
+                      console.log(newItemDescription)
+                    }}
+                  />
+                </label>
+              </form>
+              <div className="Menu-button-container">
+                <input className="Menu-button" type="button" value="Confirm" onClick={() => addItem()} 
+                />
+                <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                  setNewItemOpen(false)
+                  setNameError(false)
+                }}/>
+              </div>
+            </div>
+          </Popup>
+
+          <div className="Fa-icon-style Fa-icon-color" 
+            onClick={() => {
+              setDeletingItems(true)
+              setEditingItems(false)
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} size="s" />
+          </div>
+          <div className={editingItems?"Fa-icon-style Fa-icon-selected-color":"Fa-icon-style Fa-icon-color"} 
+            onClick={() => {
+              if (editingItems) {
+                setEditingItems(false)
+              } else {
+                setEditingItems(true)
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faPen} size="s" />
+          </div>
+          <Popup
+            trigger={
+              <div className="Fa-icon-style Fa-icon-color">
+                <FontAwesomeIcon icon={faShare} size="s" />
+              </div>
+            }
+            position="right top"
+            on="click"
+            open={listSharingOpen}
+            onOpen={() => setListSharingOpen(true)}
+            onClose={() => setListSharingOpen(false)}
+            closeOnDocumentClick
+            mouseLeaveDelay={300}
+            mouseEnterDelay={0}
+            contentStyle={{ padding: "0px", border: "none" }}
+            arrow={false}
+          > 
+            <div className="Plain-menu">
+              <label className="Label-menu-item">
+                Shareable URL is: <br />
+                {list.url}
+              </label>
+            </div>
+          </Popup>
+        </div>
+        : //else (if user is deleting items)...
+        <div className="Centered-button-container">
+          <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => deleteItems()}>
+            <FontAwesomeIcon icon={faTrashAlt} size="s" />
+          </div>
+          <div className="Fa-icon-style Fa-icon-deleting-color" onClick={() => setDeletingItems(false)}>
+            <FontAwesomeIcon icon={faTimes} size="s" />
+          </div>
+        </div>
+      }
+
+      <div className="New-Homepage-Layout">
+        {list && list.items ? 
+          <FullList2 
+            listData={list} 
+            deletingItems={deletingItems} 
+            handleItemsToDelete={handleItemsToDelete} 
+            itemsToDelete={itemsToDelete}
+            editingItems={editingItems}
+            handleListNameChange={handleListNameChange}
+            handleListDescriptionChange={handleListDescriptionChange}
+            handleItemChange={handleItemChange}
+            toggleDBChange={toggleDBChange}
+            toggleCheckmark={toggleCheckmark}
+            currentPage="singleList"
+            signedIn={signedIn}
+          /> 
+          : '' 
+        }
+      </div>
+      
+    </div>
+  );
+  
+};
 
 export default ItemDescriptionPage;
