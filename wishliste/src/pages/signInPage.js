@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const validateInput = (username, password) => {
+const validateInput = (username, password, props, history) => {
   axios.get('/api/sign_in.php', {
     params: {
       username: username,
@@ -51,6 +51,10 @@ const validateInput = (username, password) => {
   .then((response) => {
     if (response.data === 1) {
       signIn(username, password);
+      //redirect to home page
+      props.toggleLogIn();
+      props.setUsername(username);
+      history.push("/Home");
     };
     console.log(response.data);
   })
@@ -129,9 +133,12 @@ const signIn = (username, password) => {
   //localStorage.setItem('username', true ? username : '');
 }
 
-const logMeOut = () => {
+const logMeOut = (props, history) => {
   //localStorage.clear();
   localStorage.removeItem('wishliste');
+  props.toggleLogIn();
+  props.setUsername('');
+  history.push("/");
 
 //   //no auth for now
 //   localStorage.setItem('rememberMe', true);
@@ -139,7 +146,7 @@ const logMeOut = () => {
 
 }
 
-const SignInPage = () => {
+const SignInPage = props => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -205,7 +212,7 @@ const SignInPage = () => {
             color="primary"
             className={classes.submit}
             //onClick={() => signIn(username, password)}
-            onClick={() => validateInput(username, password)}
+            onClick={() => validateInput(username, password, props, history)}
           >
             Sign In
           </Button>
@@ -216,7 +223,7 @@ const SignInPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => logMeOut()}
+            onClick={() => logMeOut(props, history)}
           >
            Log out
           </Button>
