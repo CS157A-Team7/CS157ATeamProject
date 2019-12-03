@@ -40,7 +40,7 @@ class HomePage extends Component {
   };
 
   componentDidMount(){
-    var params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.append('username', 'ash_ketchum@hotmail.com');
     axios.post('/api/getListswithItems.php', params)
     .then((response) => {
