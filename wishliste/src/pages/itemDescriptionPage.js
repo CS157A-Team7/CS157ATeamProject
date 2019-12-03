@@ -25,7 +25,7 @@ const ItemDescriptionPage = (props) => {
     let {id} = useParams();
 
     useEffect(() => {
-        axios.get('/api/getListItems.php', {
+        axios.get('/api/getItems.php', {
             params: {
                 list_id: id
             }
