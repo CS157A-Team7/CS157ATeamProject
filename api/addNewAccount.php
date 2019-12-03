@@ -1,10 +1,15 @@
 <?php
 	require_once 'login.php';
+	require_once 'sanitize.php';
+	require_once 'encrypt.php';
+	
     $conn = new mysqli($host, $user, $password, $dbname);
     if($conn->connect_error) die($conn->connect_error);
 	
-	$username = $_POST['username'];
-	$user_password = $_POST['password'];
+	$username = sanitizeMySQL($conn,$_POST['username']);
+	$user_password = sanitizeMySQL($conn,$_POST['password']);
+	
+	$user_password = encrypt($user_password);
 	
 	$query = "SELECT username, password FROM account WHERE username='$username'";
 	$result = $conn->query($query);

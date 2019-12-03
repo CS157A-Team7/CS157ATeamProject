@@ -9,7 +9,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 import axios from 'axios';
+
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -139,10 +143,14 @@ const SignInPage = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const [dbChange, setDbChange] = useState("");
 
-  const [inpUser, setInpUser] = useState("");
-  const [inpPass, setInpPass] = useState("");
+  //const [inpUser, setInpUser] = useState("");
+  //const [inpPass, setInpPass] = useState("");
+
+  let history = useHistory();
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -169,7 +177,10 @@ const SignInPage = () => {
                   setUsername(event.target.value)
                   console.log(username)
                 }}
-                //onChange={(e)=>{this.setInpUser({text1: e.target.value})}}
+                //onChange={(e)=>{this.set
+
+
+({text1: e.target.value})}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -226,12 +237,12 @@ const SignInPage = () => {
 
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to forgot password page")}>
+              <Link variant="body2" onClick={() => history.push('/ForgotPassword')}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2" onClick={() => console.log("Go to sign up page")}>
+              <Link variant="body2" onClick={() => history.push('/SignUp')}>
                 Don't have an account? Sign up
               </Link>
             </Grid>

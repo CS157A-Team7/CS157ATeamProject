@@ -3,19 +3,15 @@ import React from 'react';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTwitter} from '@fortawesome/free-brands-svg-icons';
-import {faFacebookF} from '@fortawesome/free-brands-svg-icons';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
-import {faAt} from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 const Header = (props) => {
+    let history = useHistory();
     return (
         <div className="Header-bar">
             <div className="Header-text">WishListé</div>
             <div className="Header-icons">
-                <FontAwesomeIcon icon={faAt} className="Header-icon fa-lg"/>
-                <FontAwesomeIcon icon={faTwitter} className="Header-icon fa-lg" />
-                <FontAwesomeIcon icon={faFacebookF} className="Header-icon fa-lg"/>
                 <Popup
                     trigger={
                         <div className="Header-icon-popup">
@@ -32,37 +28,37 @@ const Header = (props) => {
                 >
                     {props.page === "HomePage" ?
                         <div className="Plain-menu">
-                            <div className="Plain-menu-item" onClick={() => console.log("Go to friends page")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/Friends')}>
                                 Manage Friends
                             </div>
-                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
                                 Logout
                             </div>
                         </div>
                     : props.page === "FriendsPage" ?
                         <div className="Plain-menu">
-                            <div className="Plain-menu-item" onClick={() => console.log("Go to home page")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
                                 Logout
                             </div>
                         </div>    
                     : props.signedIn ? //Item Description page signed in
                         <div className="Plain-menu">
-                            <div className="Plain-menu-item" onClick={() => console.log("Go to friends page")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/Friends')}>
                                 Manage Friends
                             </div>
-                            <div className="Plain-menu-item" onClick={() => console.log("Go to home page")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => console.log("Log out")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
                                 Logout
                             </div>
                         </div>
                     : //Item Description page not signed in
                         <div className="Plain-menu">
-                            <div className="Plain-menu-item" onClick={() => console.log("Go to sign in page")}>
+                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
                                 Sign in
                             </div>
                         </div>

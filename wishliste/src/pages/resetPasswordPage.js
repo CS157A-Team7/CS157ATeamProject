@@ -8,6 +8,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -42,6 +43,7 @@ const setNewPassword = (password1, password2) => {
 }
 
 const ResetPasswordPage = () => {
+  let history = useHistory();
   const classes = useStyles();
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -99,7 +101,12 @@ const ResetPasswordPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => setNewPassword(password1, password2)}
+            onClick={() => 
+              {
+                setNewPassword(password1, password2);
+                history.push('/');
+              }
+            }
           >
             Set new password
           </Button>
