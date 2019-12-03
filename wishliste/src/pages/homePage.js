@@ -88,7 +88,7 @@ class HomePage extends Component {
           type: this.state.type,
           expiration_date: this.state.newListDate,
           date: this.state.newListDate,
-          username: 'ash_ketchum@hotmail.com',
+          username: this.props.username,
           listType: this.state.typeOfList
         }
       })

@@ -20,7 +20,7 @@ const ItemDescriptionPage = (props) => {
     const [editingItems, setEditingItems] = useState(false);
     const [listSharingOpen, setListSharingOpen] = useState(false);
     const [nameError, setNameError] = useState(false);
-    const [signedIn, setSignedIn] = useState(true);
+    // const [signedIn, setSignedIn] = useState(true);
     let history = useHistory();
     let {id} = useParams();
 
