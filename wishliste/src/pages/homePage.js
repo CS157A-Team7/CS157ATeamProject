@@ -23,7 +23,7 @@ class HomePage extends Component {
     url: "",
     owner: "",
     typeOfList: 0,
-    type: 0,
+    type: "",
     dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
@@ -195,6 +195,23 @@ class HomePage extends Component {
     .catch(function(error){
       console.log(error);
     });
+  }
+
+  sendSupriseList = () => {
+    axios({
+      url: '/api/sendSurpriseList.php',
+      method: 'post',
+      data: {
+        list_id: this.state.list.list_id,
+        selected_friends: this.state.friendsSelected
+      }
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
   }
 
   handleGetList = list => {
@@ -702,7 +719,7 @@ class HomePage extends Component {
                     Note: you can't make any changes to the list once it's sent to collaborators
                   </label>
                   <div className="Menu-button-container">
-                    <input className="Menu-button" type="button" value="Send" onClick={() => console.log("Send surprise list")} />
+                    <input className="Menu-button" type="button" value="Send" onClick={this.sendSupriseList} />
                     <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
                   </div>
                 </div>
