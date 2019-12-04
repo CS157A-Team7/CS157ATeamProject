@@ -713,7 +713,7 @@ class HomePage extends Component {
                   </div>
                 }
               </Popup>
-            :this.state.list.list_type==="surprise"?
+            :this.state.list.list_type==="surprise" && this.state.list.type!=="1"?
               <Popup
                 trigger={
                   <div className="Fa-icon-style Fa-icon-color">
@@ -731,25 +731,33 @@ class HomePage extends Component {
                 contentStyle={{ padding: "0px", border: "none", width:"400px" }}
                 arrow={false}
               >
-                <div className="Wide-menu"> 
-                  <label className="Label-menu-item">
-                    Select collaborators for '{this.state.list.name}' 
-                  </label>
-                  <CheckableFriends 
-                    friends={this.state.friends}
-                    friendsSelected={this.state.friendsSelected} 
-                    handleFriendsSelected={this.handleFriendsSelected}
-                  />
-                  <label className="Label-menu-item">
-                    Note: you can't make any changes to the list once it's sent to collaborators
-                  </label>
-                  <div className="Menu-button-container">
-                    <input className="Menu-button" type="button" value="Send" onClick={this.sendSupriseList} />
-                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
+                {this.state.list.type==="" ? //original, hasn't been shared yet
+                  <div className="Wide-menu"> 
+                    <label className="Label-menu-item">
+                      Select collaborators for '{this.state.list.name}' 
+                    </label>
+                    <CheckableFriends 
+                      friends={this.state.friends}
+                      friendsSelected={this.state.friendsSelected} 
+                      handleFriendsSelected={this.handleFriendsSelected}
+                    />
+                    <label className="Label-menu-item">
+                      Note: you can't make any changes to the list once it's sent to collaborators
+                    </label>
+                    <div className="Menu-button-container">
+                      <input className="Menu-button" type="button" value="Send" onClick={this.sendSupriseList} />
+                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
+                    </div>
                   </div>
-                </div>
+                : //original, already been shared 
+                  <div className="Wide-menu">
+                    <label className="Label-menu-item">
+                      {this.state.list.name} has been shared!
+                    </label>
+                  </div>
+                }
               </Popup>
-            :"" /*no share button for todo lists*/}
+            :"" /*no share button for todo lists or surprise wishlist (copy)*/}
           </div>
           : //else (if user is deleting items)...
           <div className="New-button-container-thin">
