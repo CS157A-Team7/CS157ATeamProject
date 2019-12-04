@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 // import logo from './logo.svg';
 import './assets/App.css';
 // import SignUp from './SignUp.js';
@@ -17,6 +18,21 @@ class App extends Component {
   state = {
     username: '',
     loggedIn: false
+  };
+
+  componentDidMount(){
+    axios.get('/api/getCookie.php')
+    .then((response) => {
+      if(response.data){
+        console.log(response.data);
+        this.setState({username: response.data});
+        this.setState({loggedIn: true});
+
+      }
+    })
+    .catch(function(error){
+        console.log(error);
+    });
   };
 
   setUsername = name => {
@@ -96,6 +112,7 @@ class App extends Component {
                 <ItemDescriptionPage 
                   setUsername={this.setUsername}
                   toggleLogIn={this.toggleLogIn}
+                  loggedIn={this.state.loggedIn}
                 />)}
               />
               <Route path="/Friends" render={() => 
