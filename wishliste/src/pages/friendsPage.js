@@ -21,7 +21,12 @@ class FriendsPage extends Component {
   render() {
     return (
       <div className="App">
-        <Header page="FriendsPage" toggleLogIn={this.props.toggleLogIn} setUsername={this.props.setUsername} />
+        <Header 
+          page="FriendsPage" 
+          toggleLogIn={this.props.toggleLogIn} 
+          setUsername={this.props.setUsername}
+          username={this.props.username} 
+        />
 
         <div className="Centered-button-container">
           <Popup

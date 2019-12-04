@@ -1,5 +1,5 @@
 import React from 'react';
-
+import axios from 'axios';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,10 +7,20 @@ import {faUser} from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
 const logMeOut = (props, history) => {
-    localStorage.removeItem('wishliste');
-    props.toggleLogIn();
-    props.setUsername('');
-    history.push("/");
+    axios.get('/api/deleteCookie.php', {
+        params: {
+            username: props.username
+        }
+    })
+    .then((response) => {
+        localStorage.removeItem('wishliste');
+        props.toggleLogIn();
+        props.setUsername('');
+        history.push("/");
+    })
+    .catch(function(error){
+        console.log(error);
+    });
 }
 
 const Header = (props) => {

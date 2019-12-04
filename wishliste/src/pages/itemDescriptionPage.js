@@ -162,7 +162,7 @@ const ItemDescriptionPage = (props) => {
   return (
 
     <div className="App">
-      <Header page="ItemDescriptionPage" signedIn={props.loggedIn} toggleLogIn={props.toggleLogIn} setUsername={props.setUsername}/>
+      <Header page="ItemDescriptionPage" signedIn={props.loggedIn} toggleLogIn={props.toggleLogIn} setUsername={props.setUsername} username={props.username}/>
 
       {!props.loggedIn ? '' : !deletingItems ?
         <div className="Centered-button-container">

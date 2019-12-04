@@ -113,6 +113,7 @@ class App extends Component {
                   setUsername={this.setUsername}
                   toggleLogIn={this.toggleLogIn}
                   loggedIn={this.state.loggedIn}
+                  username={this.state.username}
                 />)}
               />
               <Route path="/Friends" render={() => 
@@ -120,6 +121,7 @@ class App extends Component {
                   <FriendsPage
                     setUsername={this.setUsername}
                     toggleLogIn={this.toggleLogIn}
+                    username={this.state.username}
                   />
                 ) : (
                   <Redirect to="/" />  
