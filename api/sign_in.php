@@ -39,6 +39,7 @@
        //$_SESSION['login_user'] = $username;
 
        //header("location: welcome.php");
+	   setcookie('username', $username, time() + 60 * 60 * 24, '/');
     }else {
        echo 0;
        $error = "Your Login Name or Password is invalid";

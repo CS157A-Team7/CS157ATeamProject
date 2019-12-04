@@ -10,7 +10,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 const ItemDescriptionPage = (props) => {
     const [list, setList] = useState([]);
-    const [signedIn, setSignedIn] = useState(true);
     const [itemsToDelete, setItemsToDelete] = useState([]);
     const [newItemOpen, setNewItemOpen] = useState(false);
     const [newItemName, setNewItemName] = useState("");
@@ -20,6 +19,7 @@ const ItemDescriptionPage = (props) => {
     const [editingItems, setEditingItems] = useState(false);
     const [nameError, setNameError] = useState(false);
     const [shareError, setShareError] = useState("");
+
     let history = useHistory();
     let {id} = useParams();
 
@@ -168,13 +168,13 @@ const ItemDescriptionPage = (props) => {
   return (
 
     <div className="App">
-      <Header page="ItemDescriptionPage" signedIn={signedIn}/>
+      <Header page="ItemDescriptionPage" signedIn={props.loggedIn} toggleLogIn={props.toggleLogIn} setUsername={props.setUsername} username={props.username}/>
 
       {shareError !== "" ? 
         <div className="List-Unaccessable-Error">
           Error: {shareError}
         </div>
-      : !signedIn ? '' : !deletingItems ?
+      : !props.loggedIn ? '' : !deletingItems ?
         <div className="Centered-button-container">
           <div className="Fa-icon-style Fa-icon-color" onClick={() => {
             history.push('/Home')
@@ -281,7 +281,7 @@ const ItemDescriptionPage = (props) => {
             toggleDBChange={toggleDBChange}
             toggleCheckmark={toggleCheckmark}
             currentPage="singleList"
-            signedIn={signedIn}
+            signedIn={props.loggedIn}
           /> 
           : '' 
         }

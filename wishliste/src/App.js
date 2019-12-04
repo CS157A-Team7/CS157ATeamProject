@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 // import logo from './logo.svg';
 import './assets/App.css';
 // import SignUp from './SignUp.js';
@@ -17,6 +18,21 @@ class App extends Component {
   state = {
     username: '',
     loggedIn: false
+  };
+
+  componentDidMount(){
+    axios.get('/api/getCookie.php')
+    .then((response) => {
+      if(response.data){
+        console.log(response.data);
+        this.setState({username: response.data});
+        this.setState({loggedIn: true});
+
+      }
+    })
+    .catch(function(error){
+        console.log(error);
+    });
   };
 
   setUsername = name => {
@@ -66,7 +82,11 @@ class App extends Component {
               </ul>
               <Route path="/Home" render={() => 
                 this.state.loggedIn ? (
-                  <HomePage username={this.state.username}/>
+                  <HomePage 
+                    username={this.state.username}
+                    setUsername={this.setUsername}
+                    toggleLogIn={this.toggleLogIn}
+                  />
                 ) : (
                   <Redirect to="/" />  
                 )
@@ -88,10 +108,21 @@ class App extends Component {
               <Route path="/ForgotPassword" component={ForgotPasswordPage} />
               <Route path="/EmailSent" component={EmailSentPage} />
               <Route path="/ResetPassword" component={ResetPasswordPage} />
-              <Route path="/List/:id" component={ItemDescriptionPage} />
+              <Route path="/List/:id" render={() => (
+                <ItemDescriptionPage 
+                  setUsername={this.setUsername}
+                  toggleLogIn={this.toggleLogIn}
+                  loggedIn={this.state.loggedIn}
+                  username={this.state.username}
+                />)}
+              />
               <Route path="/Friends" render={() => 
                 this.state.loggedIn ? (
-                  <FriendsPage/>
+                  <FriendsPage
+                    setUsername={this.setUsername}
+                    toggleLogIn={this.toggleLogIn}
+                    username={this.state.username}
+                  />
                 ) : (
                   <Redirect to="/" />  
                 )

@@ -1,10 +1,27 @@
 import React from 'react';
-
+import axios from 'axios';
 import '../assets/App.css';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
+
+const logMeOut = (props, history) => {
+    axios.get('/api/deleteCookie.php', {
+        params: {
+            username: props.username
+        }
+    })
+    .then((response) => {
+        localStorage.removeItem('wishliste');
+        props.toggleLogIn();
+        props.setUsername('');
+        history.push("/");
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+}
 
 const Header = (props) => {
     let history = useHistory();
@@ -31,7 +48,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Friends')}>
                                 Manage Friends
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>
@@ -40,7 +57,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>    
@@ -52,7 +69,7 @@ const Header = (props) => {
                             <div className="Plain-menu-item" onClick={() => history.push('/Home')}>
                                 View Lists
                             </div>
-                            <div className="Plain-menu-item" onClick={() => history.push('/')}>
+                            <div className="Plain-menu-item" onClick={() => logMeOut(props, history)}>
                                 Logout
                             </div>
                         </div>

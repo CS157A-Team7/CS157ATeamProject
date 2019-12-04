@@ -382,7 +382,12 @@ class HomePage extends Component {
     return (
 
       <div className="App">
-        <Header page="HomePage" />
+        <Header 
+          page="HomePage" 
+          toggleLogIn={this.props.toggleLogIn} 
+          setUsername={this.props.setUsername}
+          username={this.props.username} 
+        />
 
         <div className="New-button-container-container">
 
