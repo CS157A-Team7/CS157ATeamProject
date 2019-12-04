@@ -471,3 +471,11 @@ li.deleting-checked {
 .Fa-icon-deleting-color:hover {
   color: #ff0000;
 }
+
+.List-Unaccessable-Error {
+  color: #202833;
+  font-size: calc(8px + 2vmin);
+  text-align: center;
+  width: 50%;
+  margin-left: 25%;
+}
