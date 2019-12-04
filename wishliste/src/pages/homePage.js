@@ -201,6 +201,12 @@ class HomePage extends Component {
   }
 
   sendSupriseList = () => {
+  this.setState({
+    list: {
+      ...this.state.list,
+      type: 0
+    }
+  }, () => {
     axios({
       url: '/api/sendSurpriseList.php',
       method: 'post',
@@ -210,11 +216,13 @@ class HomePage extends Component {
       }
       })
       .then((response) => {
+        this.toggleDBChange();
         console.log(response.data);
       })
       .catch(function(error){
           console.log(error);
       });
+    });
   }
 
   handleGetList = list => {
