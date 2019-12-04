@@ -35,6 +35,8 @@ const ListHead = props => {
                 type="text" 
                 name="name" 
                 placeholder="Name" 
+                autoFocus
+                maxLength="45"
                 defaultValue={props.listData.name}
                 onChange={(event) => {
                   setListTitle(event.target.value); 
@@ -135,6 +137,8 @@ const ListBody = props => {
                   type="text" 
                   name="name" 
                   placeholder="Name" 
+                  autoFocus
+                  maxLength="45"
                   defaultValue={item.name}
                   onChange={(event) => {
                     setItemName(event.target.value);
@@ -149,6 +153,7 @@ const ListBody = props => {
                 <input 
                   type="text" 
                   name="description" 
+                  maxLength="245"
                   placeholder="Description" 
                   defaultValue={item.description}
                   onChange={(event) => {
@@ -223,7 +228,8 @@ const ListBody = props => {
                 <input 
                   type="text" 
                   name="description" 
-                  placeholder="Description" 
+                  placeholder="Description"
+                  maxLength="245" 
                   defaultValue={props.listData.description} 
                   onChange={(event) => {
                     setListDescription(event.target.value);
