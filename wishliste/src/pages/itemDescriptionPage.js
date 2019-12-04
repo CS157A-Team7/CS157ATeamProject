@@ -5,7 +5,7 @@ import Header from '../components/header';
 import FullList2 from '../components/FullList2';
 import Popup from 'reactjs-popup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPlus, faPen, faTimes, faShare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPlus, faPen, faTimes, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useHistory, useParams } from 'react-router-dom';
 
 const ItemDescriptionPage = (props) => {
@@ -17,8 +17,9 @@ const ItemDescriptionPage = (props) => {
     const [dbChange, setDbChange] = useState(false);
     const [deletingItems, setDeletingItems] = useState(false);
     const [editingItems, setEditingItems] = useState(false);
-    const [listSharingOpen, setListSharingOpen] = useState(false);
     const [nameError, setNameError] = useState(false);
+    const [shareError, setShareError] = useState("");
+
     let history = useHistory();
     let {id} = useParams();
 
@@ -31,6 +32,8 @@ const ItemDescriptionPage = (props) => {
         .then(function(response){
             if(response.data instanceof Object){
                 setList(response.data);
+            } else {
+              setShareError(response.data);
             }
             console.log(response.data);
         })
@@ -92,7 +95,10 @@ const ItemDescriptionPage = (props) => {
       }
     })
     .then((response) => {
-      setList(response.data)
+      setList({
+        ...list,
+        items: response.data
+      })
     })
     .catch(function(error){
       console.log(error);
@@ -164,7 +170,11 @@ const ItemDescriptionPage = (props) => {
     <div className="App">
       <Header page="ItemDescriptionPage" signedIn={props.loggedIn} toggleLogIn={props.toggleLogIn} setUsername={props.setUsername} username={props.username}/>
 
-      {!props.loggedIn ? '' : !deletingItems ?
+      {shareError !== "" ? 
+        <div className="List-Unaccessable-Error">
+          Error: {shareError}
+        </div>
+      : !props.loggedIn ? '' : !deletingItems ?
         <div className="Centered-button-container">
           <div className="Fa-icon-style Fa-icon-color" onClick={() => {
             history.push('/Home')
@@ -245,30 +255,6 @@ const ItemDescriptionPage = (props) => {
           >
             <FontAwesomeIcon icon={faPen} size="s" />
           </div>
-          <Popup
-            trigger={
-              <div className="Fa-icon-style Fa-icon-color">
-                <FontAwesomeIcon icon={faShare} size="s" />
-              </div>
-            }
-            position="right top"
-            on="click"
-            open={listSharingOpen}
-            onOpen={() => setListSharingOpen(true)}
-            onClose={() => setListSharingOpen(false)}
-            closeOnDocumentClick
-            mouseLeaveDelay={300}
-            mouseEnterDelay={0}
-            contentStyle={{ padding: "0px", border: "none" }}
-            arrow={false}
-          > 
-            <div className="Plain-menu">
-              <label className="Label-menu-item">
-                Shareable URL is: <br />
-                {list.url}
-              </label>
-            </div>
-          </Popup>
         </div>
         : //else (if user is deleting items)...
         <div className="Centered-button-container">
@@ -282,7 +268,7 @@ const ItemDescriptionPage = (props) => {
       }
 
       <div className="New-Homepage-Layout">
-        {list && list.items ? 
+        {shareError === "" && list && list.items ? 
           <FullList2 
             listData={list} 
             deletingItems={deletingItems} 

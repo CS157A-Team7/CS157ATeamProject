@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const validateInput = (username, password, props, history) => {
+const validateInput = (username, password, props, history, setPasswordError) => {
   axios.get('/api/sign_in.php', {
     params: {
       username: username,
@@ -55,14 +55,16 @@ const validateInput = (username, password, props, history) => {
       props.toggleLogIn();
       props.setUsername(username);
       history.push("/Home");
-    };
+    } else {
+      setPasswordError(true);
+    }
     console.log(response.data);
   })
   .catch(function(error) {
     //erase input fields & show error on frontend too
     console.log(error);
     document.getElementById('myForm').reset();
-    alert('Incorrect login details. Please check your username/password and try again.');
+    // alert('Incorrect login details. Please check your username/password and try again.');
   });
   console.log("done with validateInput function");
 }
@@ -150,6 +152,7 @@ const SignInPage = props => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   const [dbChange, setDbChange] = useState("");
 
@@ -201,6 +204,8 @@ const SignInPage = props => {
                   setPassword(event.target.value)
                   console.log(password)
                 }}
+                error={passwordError}
+                helperText={passwordError?"Incorrect login details. Please check your username/ password and try again.":""}
               />
             </Grid>
 
@@ -212,7 +217,7 @@ const SignInPage = props => {
             color="primary"
             className={classes.submit}
             //onClick={() => signIn(username, password)}
-            onClick={() => validateInput(username, password, props, history)}
+            onClick={() => validateInput(username, password, props, history, setPasswordError)}
           >
             Sign In
           </Button>
@@ -228,7 +233,7 @@ const SignInPage = props => {
            Log out
           </Button>
 
-          <Button
+          {/* <Button
             type="button"
             fullWidth
             variant="contained"
@@ -237,7 +242,7 @@ const SignInPage = props => {
             onClick={() => console.log(username)}
           >
            print out the username in the console
-          </Button>
+          </Button> */}
 
           <Grid container>
             <Grid item xs>

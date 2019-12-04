@@ -9,15 +9,27 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
 class FriendsPage extends Component {
   state = {
-    username: "ash_ketchum@hotmail.com",
-    friends: [
-      { username: "ching-seh.wu@sjsu.edu" },
-      { username: "bill@aol.com" },
-      { username: "sam@aol.com" }
-    ],
+    // username: "ash_ketchum@hotmail.com",
+    friends: [],
     addingFriend: false,
   }
   
+  componentDidMount(){
+    const params = new URLSearchParams();
+    params.append('username', this.props.username);
+    axios.post('/api/getFriends.php', params)
+    .then((response) => {
+      if(response.data instanceof Array)
+      {
+        this.setState({ friends:response.data });
+      }
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -55,7 +67,7 @@ class FriendsPage extends Component {
               </form>
             </div>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={console.log("Add friend or get error b/c user doesn't exist")} />
+              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Add friend or get error b/c user doesn't exist")} />
               <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({addingFriend: false})}/>
             </div>
           </Popup>
