@@ -18,6 +18,7 @@
 	
 	$expiration_date = !empty($expiration_date) ? "'$expiration_date'" : "NULL";
 	$date = !empty($date) ? "'$date'" : "NULL";
+	$type = !empty($type) ? "'$type'" : "NULL";
 	
 	$query = "INSERT INTO list(name, description) VALUES ('$name', '$description')";
 	
@@ -50,7 +51,7 @@
 				echo '0';
 			}
 			
-			$other_query = "INSERT INTO surprise_wishlist(list_id, owner, type, expiration_date) VALUES ('$list_id', '$owner', '$type', $expiration_date)";
+			$other_query = "INSERT INTO surprise_wishlist(list_id, owner, type, expiration_date) VALUES ('$list_id', '$owner', $type, $expiration_date)";
 			if($conn->query($other_query) === TRUE){
 				echo 'Added to surprise_wishlist';
 			}

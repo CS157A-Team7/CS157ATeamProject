@@ -21,9 +21,9 @@ class HomePage extends Component {
     newListDescription: "",
     newListDate: "",
     url: "",
-    owner: "",
+    owner: this.props.username,
     typeOfList: 0,
-    type: 0,
+    type: "",
     dbChange: false,
     newWishlistOpen: false,
     newSWishlistOpen: false,
@@ -75,8 +75,11 @@ class HomePage extends Component {
       params.append('username', this.props.username);
       axios.post('/api/getListswithItems.php', params)
       .then((response) => {
-        this.setState({ results:response.data });
-        console.log(this.state.results)
+        if(response.data instanceof Array){
+          this.setState({ results:response.data });
+          console.log(this.state.results)
+        }
+        console.log(response.data);
       })
       .catch(function(error){
           console.log(error);
@@ -203,6 +206,31 @@ class HomePage extends Component {
     })
     .catch(function(error){
       console.log(error);
+    });
+  }
+
+  sendSupriseList = () => {
+  this.setState({
+    list: {
+      ...this.state.list,
+      type: 0
+    }
+  }, () => {
+    axios({
+      url: '/api/sendSurpriseList.php',
+      method: 'post',
+      data: {
+        list: this.state.list,
+        selected_friends: this.state.friendsSelected
+      }
+      })
+      .then((response) => {
+        this.toggleDBChange();
+        console.log(response.data);
+      })
+      .catch(function(error){
+          console.log(error);
+      });
     });
   }
 
@@ -643,7 +671,7 @@ class HomePage extends Component {
             >
               <FontAwesomeIcon icon={faPen} size="s" />
             </div>
-            {this.state.list.type==="wish"?
+            {this.state.list.list_type==="wish"?
               <Popup
                 trigger={
                   <div className="Fa-icon-style Fa-icon-color">
@@ -680,7 +708,7 @@ class HomePage extends Component {
                   </div>
                 }
               </Popup>
-            :this.state.list.type==="surprise"?
+            :this.state.list.list_type==="surprise"?
               <Popup
                 trigger={
                   <div className="Fa-icon-style Fa-icon-color">
@@ -711,7 +739,7 @@ class HomePage extends Component {
                     Note: you can't make any changes to the list once it's sent to collaborators
                   </label>
                   <div className="Menu-button-container">
-                    <input className="Menu-button" type="button" value="Send" onClick={() => console.log("Send surprise list")} />
+                    <input className="Menu-button" type="button" value="Send" onClick={this.sendSupriseList} />
                     <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
                   </div>
                 </div>

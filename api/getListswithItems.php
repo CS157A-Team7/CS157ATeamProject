@@ -33,13 +33,73 @@
 		$todo_rows = $todo_result->num_rows;
 		
 		if($surprise_rows === 1){
-			$row['type'] = 'surprise';
+			$row['list_type'] = 'surprise';
+			
+			$url_query = "SELECT url from wishlist WHERE list_id = '$list_id'";
+			$url_result = $conn->query($url_query);
+			if(!$url_result) die ("Database access failed: " . $conn->error);
+			
+			$url_row = $url_result->num_rows;
+			if($url_row === 1){
+				$url_result->data_seek(0);
+				$url = $url_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['url'] = $url['url'];
+			}
+			
+			$date_query = "SELECT expiration_date from surprise_wishlist WHERE list_id = '$list_id'";
+			$date_result = $conn->query($date_query);
+			if(!$date_result) die ("Database access failed: " . $conn->error);
+			
+			$date_row = $date_result->num_rows;
+			if($date_row === 1){
+				$date_result->data_seek(0);
+				$date = $date_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['date'] = $date['expiration_date'];
+			}
+			
+			$owner_query = "SELECT owner from surprise_wishlist WHERE list_id = '$list_id'";
+			$owner_result = $conn->query($owner_query);
+			if(!$owner_result) die ("Database access failed: " . $conn->error);
+			
+			$owner_row = $owner_result->num_rows;
+			if($owner_row === 1){
+				$owner_result->data_seek(0);
+				$owner = $owner_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['owner'] = $owner['owner'];
+			}
+			
+			$type_query = "SELECT type from surprise_wishlist WHERE list_id = '$list_id'";
+			$type_result = $conn->query($type_query);
+			if(!$type_result) die ("Database access failed: " . $conn->error);
+			
+			$type_row = $type_result->num_rows;
+			if($type_row === 1){
+				$type_result->data_seek(0);
+				$type = $type_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['type'] = $type['type'];
+			}
+			
 		}
 		elseif($todo_rows === 1){
-			$row['type'] = 'todo';
+			$row['list_type'] = 'todo';
+			$date_query = "SELECT date from todo_list WHERE list_id = '$list_id'";
+			$date_result = $conn->query($date_query);
+			if(!$date_result) die ("Database access failed: " . $conn->error);
+			
+			$date_row = $date_result->num_rows;
+			if($date_row === 1){
+				$date_result->data_seek(0);
+				$date = $date_result->fetch_array(MYSQLI_ASSOC);
+				
+				$row['date'] = $date['date'];
+			}
 		}
 		else{
-			$row['type'] = 'wish';
+			$row['list_type'] = 'wish';
 			
 			$url_query = "SELECT url from wishlist WHERE list_id = '$list_id'";
 			$url_result = $conn->query($url_query);
