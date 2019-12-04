@@ -785,6 +785,7 @@ class HomePage extends Component {
               toggleDBChange={this.toggleDBChange}
               toggleCheckmark={this.toggleCheckmark}
               currentPage="home"
+              username={this.props.username}
             /> : ''
           }
         </div>

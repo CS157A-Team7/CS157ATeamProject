@@ -197,7 +197,11 @@ const ListBody = props => {
         <Popup
           trigger={
             <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
-              {props.listData.description}
+              {props.listData.description} <br />
+              {props.listData.date && props.listData.list_type === "surprise" && props.owner === props.username ? "Date set: " + props.listData.date
+              : props.listData.date && props.listData.list_type === "surprise" ? "Date set by " + props.listData.owner + ": " + props.listData.date
+              : props.listData.date && props.listData.list_type === "todo" ? "Complete by: " + props.listData.date
+              : ""}
             </div>
           }
           position="left top"
@@ -246,7 +250,11 @@ const ListBody = props => {
         </Popup>
       :
         <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
-          {props.listData.description}
+          {props.listData.description} <br /> 
+          {props.listData.date && props.listData.list_type === "surprise" && props.owner === props.username ? "Date set: " + props.listData.date
+          : props.listData.date && props.listData.list_type === "surprise" ? "Date set by " + props.listData.owner + ": " + props.listData.date
+          : props.listData.date && props.listData.list_type === "todo" ? "Complete by: " + props.listData.date
+          : ""}
         </div>
       }
       <ul>
