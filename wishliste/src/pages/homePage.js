@@ -713,7 +713,7 @@ class HomePage extends Component {
                   </div>
                 }
               </Popup>
-            :this.state.list.list_type==="surprise" && this.state.list.type!=="1"?
+            :this.state.list.list_type==="surprise" && !this.state.list.type? //original, hasn't been shared
               <Popup
                 trigger={
                   <div className="Fa-icon-style Fa-icon-color">
@@ -731,31 +731,52 @@ class HomePage extends Component {
                 contentStyle={{ padding: "0px", border: "none", width:"400px" }}
                 arrow={false}
               >
-                {this.state.list.type==="" ? //original, hasn't been shared yet
-                  <div className="Wide-menu"> 
-                    <label className="Label-menu-item">
-                      Select collaborators for '{this.state.list.name}' 
-                    </label>
-                    <CheckableFriends 
-                      friends={this.state.friends}
-                      friendsSelected={this.state.friendsSelected} 
-                      handleFriendsSelected={this.handleFriendsSelected}
+                <div className="Wide-menu"> 
+                  <label className="Label-menu-item">
+                    Select collaborators for '{this.state.list.name}' 
+                  </label>
+                  <CheckableFriends 
+                    friends={this.state.friends}
+                    friendsSelected={this.state.friendsSelected} 
+                    handleFriendsSelected={this.handleFriendsSelected}
+                  />
+                  <label className="Label-menu-item">
+                    Note: you can't make any changes to the list once it's sent to collaborators
+                  </label>
+                  <div className="Menu-button-container">
+                    <input className="Menu-button" type="button" value="Send" onClick={() => {
+                      this.sendSupriseList()
+                      this.setState({surpriseSharingOpen: false})
+                      }}
                     />
-                    <label className="Label-menu-item">
-                      Note: you can't make any changes to the list once it's sent to collaborators
-                    </label>
-                    <div className="Menu-button-container">
-                      <input className="Menu-button" type="button" value="Send" onClick={this.sendSupriseList} />
-                      <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
-                    </div>
+                    <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({surpriseSharingOpen: false})}/>
                   </div>
-                : //original, already been shared 
-                  <div className="Wide-menu">
-                    <label className="Label-menu-item">
-                      {this.state.list.name} has been shared!
-                    </label>
+                </div>
+              </Popup>
+            :this.state.list.list_type==="surprise" && this.state.list.type==="0"? //original, already sent
+              <Popup
+                trigger={
+                  <div className="Fa-icon-style Fa-icon-color">
+                    <FontAwesomeIcon icon={faShare} size="s" />
                   </div>
                 }
+                position="right top"
+                on="click"
+                open={this.state.surpriseSharingOpen}
+                onOpen={() => this.setState({surpriseSharingOpen: true})}
+                onClose={() => this.setState({surpriseSharingOpen: false})}
+                closeOnDocumentClick
+                mouseLeaveDelay={300}
+                mouseEnterDelay={0}
+                contentStyle={{ padding: "0px", border: "none" }}
+                arrow={false}
+              >
+                <div className="Plain-menu">
+                  <label className="Label-menu-item">
+                    '{this.state.list.name}' has been shared! <br />
+                    Any further changes made to the list won't be seen by the collaborators
+                  </label>
+                </div>
               </Popup>
             :"" /*no share button for todo lists or surprise wishlist (copy)*/}
           </div>
