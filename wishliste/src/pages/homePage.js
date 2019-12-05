@@ -242,6 +242,12 @@ class HomePage extends Component {
   handleGetList = list => {
     const selectedList = list;
     this.setState({list: selectedList});
+    this.setState({newItemOpen: false});
+    this.setState({deletingItems: false});
+    this.setState({itemsToDelete: []});
+    this.setState({editingItems: false});
+    this.setState({listSharingOpen: false});
+    this.setState({surpriseSharingOpen: false});
     console.log(this.state.list);
   }
 
@@ -606,7 +612,8 @@ class HomePage extends Component {
           </div>
           } 
 
-          {Object.entries(this.state.list).length === 0 ? '' : !this.state.deletingItems ?
+          {Object.entries(this.state.list).length === 0 ? '' : this.state.list.type==="1" && this.props.username!==this.state.list.owner ? ""
+          : !this.state.deletingItems ?
           <div className="New-button-container-thin">
             <Popup
               trigger={
