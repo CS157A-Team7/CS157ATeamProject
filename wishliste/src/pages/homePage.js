@@ -326,6 +326,20 @@ class HomePage extends Component {
     let items = this.state.list.items;
     items[index].checked = items[index].checked == 1 ? 0 : 1;
 
+    if(this.state.list.list_type === "surprise" && this.state.list.type === "1"){
+      if(items[index].checked === 1){
+        var byLine = " -checked by ";
+        var name = byLine.concat(this.props.username);
+        var signature = items[index].description.concat(name);
+        items[index].description = signature;
+      }
+      else{
+        let loc = items[index].description.indexOf(' -checked by');
+        let editedDescription = items[index].description.slice(0,loc);
+        items[index].description = editedDescription;
+      }
+    }
+
     this.setState({
       list: {
         ...this.state.list,
