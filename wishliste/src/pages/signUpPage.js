@@ -58,7 +58,7 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
 
   function isUpper(str) {
     for (var i = 0; i < passArray.length; i++) {
-      if (passArray[i] === passArray[i].toUpperCase()) {
+      if ((passArray[i] === passArray[i].toUpperCase()) && isAlpha(passArray[i])) {
         containsUpper = true;
         //console.log(passArray[i]);
       }
@@ -87,6 +87,10 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
 
   function isValid(str){
     return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+  }
+
+  function isAlpha(str) {
+    return /^[a-zA-Z]$/.test(str);
   }
 
   if (password1 === "") {
