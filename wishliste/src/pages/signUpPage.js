@@ -51,25 +51,71 @@ const checkUsername = (username, setUsernameError) => {
 
 const checkPasswords = (password1, password2, setPassword1Error, setPassword2Error) => {
   var p1_passed = true;
+
+  var containsUpper = false;
+  var containsNumeric = false;
+  var passArray = password1.split('');
+
+  function isUpper(str) {
+    for (var i = 0; i < passArray.length; i++) {
+      if ((passArray[i] === passArray[i].toUpperCase()) && isAlpha(passArray[i])) {
+        containsUpper = true;
+      }
+    }
+    console.log(containsUpper)
+    return containsUpper;
+  }
+
+  function isNumeric(str) {
+    for (var i = 0; i < passArray.length; i++) {
+      if (passArray[i] == 0 || passArray[i] == 1 || passArray[i] == 2 ||
+        passArray[i] == 3 || passArray[i] == 4 || passArray[i] == 5 ||
+      passArray[i] == 6 || passArray[i] == 7 || passArray[i] == 8 || passArray[i] == 9) {
+        containsNumeric = true;
+      }
+    }
+    console.log(containsNumeric)
+    return containsNumeric;
+  }
+
+  function isValid(str){
+    return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+  }
+
+  function isAlpha(str) {
+    return /^[a-zA-Z]$/.test(str);
+  }
+
   if (password1 === "") {
     setPassword1Error("empty");
     p1_passed = false;
-  } else if (password1.length < 8) {
+  }
+  if (password1.length < 8) {
     setPassword1Error("unsafe");
     p1_passed = false;
   }
+  if (!isNumeric(password1)) {
+    setPassword1Error("numeric");
+    p1_passed = false;
+  }
+  if (isValid(password1)) {
+    setPassword1Error("special");
+  }
+  if (!isUpper(password1)) {
+    setPassword1Error("uppercase");
+    p1_passed = false;
+  }
+
+
   if (password2 === "") {
     setPassword2Error("empty");
     return false;
   } else if (password2 !== password1) {
     setPassword2Error("notMatching");
     return false;
-  } else if (password2.length < 8) {
-    setPassword2Error("unsafe");
-    return false;
   }
   return p1_passed;
-} 
+}
 
 const signUp = (email, password1, password2, setUsernameError, setPassword1Error, setPassword2Error, history, props) => {
   setUsernameError("");
@@ -188,11 +234,14 @@ const SignUpPage = props => {
                 helperText={
                   password1Error==="empty"?"Password is required"
                   :password1Error==="unsafe"?"Password must be at least 8 characters long"
+                  :password1Error==="uppercase"?"Password must contain at least 1 upper case character"
+                  :password1Error==="numeric"?"Password must contain at least 1 numeric character"
+                  :password1Error==="special"?"Password must contain at least 1 special character"
                   :""
                 }
               />
             </Grid>
-            <Grid item xs={12}> 
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -211,6 +260,9 @@ const SignUpPage = props => {
                   password2Error==="empty"?"Password is required"
                   :password2Error==="notMatching"?"Passwords don't match"
                   :password2Error==="unsafe"?"Password must be at least 8 characters long"
+                  :password2Error==="uppercase"?"Password must contain at least 1 upper case character"
+                  :password2Error==="numeric"?"Password must contain at least 1 numeric character"
+                  :password2Error==="special"?"Password must contain at least 1 special character"
                   :""
                 }
               />
