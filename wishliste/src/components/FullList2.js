@@ -170,9 +170,9 @@ const ListBody = props => {
                 value="Confirm" 
                 onClick={() => {
                   let newName = itemName === '' ? item.name : itemName;
-                  let newDescription = itemDescription === '' ? item.description : itemDescription;
+                  let newDescription = itemDescription;// === '' ? item.description : itemDescription;
                   props.handleItemChange(index,newName, newDescription);
-                  props.updateDB(newName, newDescription, item.item_id);
+                  props.updateDB(newName, newDescription, item.item_id, setItemName, setItemDescription);
                   props.closeEditMenu();
                 }}/>
               <input className="Menu-button" type="button" value="Cancel" onClick={() => props.closeEditMenu()}/>
@@ -283,7 +283,7 @@ class FullList2 extends Component {
     this.setState({editMenuOpen: {}})
   }
 
-  updateDB = (name, description, item_id) => {
+  updateDB = (name, description, item_id, setItemName, setItemDescription) => {
     const params = new URLSearchParams();
     console.log(name);
     console.log(description);
@@ -319,6 +319,8 @@ class FullList2 extends Component {
       axios.post('/api/updateItem.php', params)
       .then((response) => {
         this.props.toggleDBChange();
+        setItemName('');
+        setItemDescription('');
       })
       .catch(function(error){
           console.log(error);
