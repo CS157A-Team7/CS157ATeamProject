@@ -349,6 +349,8 @@ class HomePage extends Component {
       const params = new URLSearchParams();
       params.append('checkmark', items[index].checked);
       params.append('item_id', items[index].item_id);
+      params.append('description',items[index].description);
+      params.append('list_type',this.state.list.type);
       axios.post('/api/updateItemCheckmark.php', params)
       .then((response) => {
         console.log(response.data);
