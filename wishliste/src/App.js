@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-// import logo from './logo.svg';
 import './assets/App.css';
-// import SignUp from './SignUp.js';
 import SignUpPage from './pages/signUpPage';
 import SignInPage from './pages/signInPage';
 import HomePage from './pages/homePage';
@@ -24,14 +22,12 @@ class App extends Component {
     axios.get('/api/getCookie.php')
     .then((response) => {
       if(response.data){
-        console.log(response.data);
         this.setState({username: response.data});
         this.setState({loggedIn: true});
 
       }
     })
     .catch(function(error){
-        console.log(error);
     });
   };
 
@@ -54,7 +50,7 @@ class App extends Component {
         <div>
           <Switch>
             <div>
-              <ul>
+              {/* <ul>
                 <li>
                   <Link to="/Home">Home</Link>
                 </li>
@@ -79,7 +75,7 @@ class App extends Component {
                 <li>
                   <Link to="/Friends">Friends</Link>
                 </li>
-              </ul>
+              </ul> */}
               <Route path="/Home" render={() => 
                 this.state.loggedIn ? (
                   <HomePage 

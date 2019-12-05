@@ -19,7 +19,6 @@ const logMeOut = (props, history) => {
         history.push("/");
     })
     .catch(function(error){
-        console.log(error);
     });
 }
 

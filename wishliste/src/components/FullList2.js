@@ -40,7 +40,6 @@ const ListHead = props => {
                 defaultValue={props.listData.name}
                 onChange={(event) => {
                   setListTitle(event.target.value); 
-                  console.log(listTitle);
                 }} 
                 autoFocus
               />
@@ -78,13 +77,10 @@ const ListItem = props => {
     <li className={!props.deletingItems?'not-deleting':props.itemsToDelete.includes(props.item)?'deleting-checked':'deleting-unchecked'}
       onClick={() => {
         if (props.currentPage === "singleList" && !props.signedIn) {
-          console.log("Can't check/uncheck while anonymously viewing list");
         } else if (props.deletingItems) {
-          console.log("Select/deselect "+props.item.name+" to be deleted");
           props.handleItemsToDelete(props.item);
         } else {
           props.toggleCheckmark(props.index);
-          console.log("Check/uncheck "+props.item.name)
         }
       }} 
     >
@@ -142,7 +138,6 @@ const ListBody = props => {
                   defaultValue={item.name}
                   onChange={(event) => {
                     setItemName(event.target.value);
-                    console.log(itemName);
                   }}
                   autoFocus
                 />
@@ -158,7 +153,6 @@ const ListBody = props => {
                   defaultValue={item.description}
                   onChange={(event) => {
                     setItemDescription(event.target.value); 
-                    console.log(itemDescription);
                   }}
                 />
               </label>
@@ -233,7 +227,6 @@ const ListBody = props => {
                   defaultValue={props.listData.description} 
                   onChange={(event) => {
                     setListDescription(event.target.value);
-                    console.log(listDescription);
                   }}
                   autoFocus
                 />
@@ -285,9 +278,6 @@ class FullList2 extends Component {
 
   updateDB = (name, description, item_id, setItemName, setItemDescription) => {
     const params = new URLSearchParams();
-    console.log(name);
-    console.log(description);
-    console.log(item_id);
     if(name !== '' && description === '' && item_id === '')
     {
       params.append('list_id', this.props.listData.list_id);
@@ -297,7 +287,6 @@ class FullList2 extends Component {
         this.props.toggleDBChange();
       })
       .catch(function(error){
-          console.log(error);
       });
     }
     else if(name === '' && description !== '' && item_id === '')
@@ -309,7 +298,6 @@ class FullList2 extends Component {
         this.props.toggleDBChange();
       })
       .catch(function(error){
-          console.log(error);
       });
     }
     else {
@@ -323,7 +311,6 @@ class FullList2 extends Component {
         setItemDescription('');
       })
       .catch(function(error){
-          console.log(error);
       });
     }
   }

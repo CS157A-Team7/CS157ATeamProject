@@ -25,10 +25,8 @@ class FriendsPage extends Component {
       {
         this.setState({ friends:response.data });
       }
-      console.log(response.data);
     })
     .catch(function(error){
-        console.log(error);
     });
   };
 
@@ -52,7 +50,6 @@ class FriendsPage extends Component {
       .then((response) => {
         if(response.data){
           this.setState({friendError: "doesntExist"})
-          console.log(response.data)
         }
         else{
           let friends = this.state.friends;
@@ -64,7 +61,6 @@ class FriendsPage extends Component {
         }
       })
       .catch(function(error){
-          console.log(error);
       });
     }
   }
@@ -109,7 +105,6 @@ class FriendsPage extends Component {
                     className={this.state.friendError!==""?"input-error":""}
                     onChange={(event) => {
                       this.setState({ friend: event.target.value },()=>{
-                        console.log(this.state.friend);
                       }) 
                     }}
                   />

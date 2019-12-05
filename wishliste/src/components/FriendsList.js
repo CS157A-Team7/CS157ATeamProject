@@ -12,7 +12,7 @@ const ListHead = () => {
 const ListBody = props => {
   const friends = props.friends.map((friend) => {
     return (
-      <li onClick={() => console.log("clicked on " + friend.username)}>
+      <li>
         {friend.username}
       </li>
     )

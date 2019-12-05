@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    marginTop: theme.spacing(10),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
@@ -36,13 +37,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-// const resetPassword = (username) => {
-//   //check to see if username is in db
-//   //if it is, go to next page(?)
-//   //if it isn't, print error here
-//   console.log("reset password for account w/ username " + username);
-// }
 
 const ForgotPasswordPage = () => {
   const classes = useStyles();
@@ -63,10 +57,8 @@ const ForgotPasswordPage = () => {
       } else {
         setUsernameError(true);
       }
-      console.log(response.data);
     })
     .catch(function(error){
-        console.log(error);
     });
   }
 
@@ -93,7 +85,6 @@ const ForgotPasswordPage = () => {
                 autoComplete="email"
                 onChange={(event) => {
                   setUsername(event.target.value)
-                  console.log(username)
                 }}
                 error={usernameError}
                 helperText={usernameError?"Username doesn't exist":""}
