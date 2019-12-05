@@ -7,7 +7,8 @@
 
     $query = "(SELECT `Username 1` AS username FROM friends_with WHERE `Username 2`='$username')
 	UNION
-	(SELECT `Username 2` AS username FROM friends_with WHERE `Username 1`='$username')";
+	(SELECT `Username 2` AS username FROM friends_with WHERE `Username 1`='$username')
+	ORDER BY 'username'";
     $result = $conn->query($query);
     if(!$result) die ("Database access failed: " . $conn->error);
 
