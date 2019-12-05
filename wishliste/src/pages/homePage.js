@@ -107,6 +107,9 @@ class HomePage extends Component {
       .then((response) => {
         if(response.data){
           this.toggleDBChange();
+          this.setState({newListName: ""});
+          this.setState({newListDescription: ""});
+          this.setState({newListDate: ""});
         };
         console.log(response.data);
       })
@@ -138,6 +141,8 @@ class HomePage extends Component {
         if(response.data){
           this.toggleDBChange();
           this.updateList();
+          this.setState({newItemName: ""});
+          this.setState({newItemDescription: ""});
         };
         console.log(response.data);
       })
