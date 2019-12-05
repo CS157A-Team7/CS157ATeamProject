@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import '../assets/App.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 
 class ListNames extends Component {
@@ -22,11 +20,6 @@ class ListNames extends Component {
                 }
               }}
             >
-              {/* {!deletingLists?'':listsToDelete.includes(list)?
-                <FontAwesomeIcon icon={faTrashAlt} className="Delete-icon-selected" size="xs" />
-                : 
-                <FontAwesomeIcon icon={faTrashAlt} className="Delete-icon-deselected" size="xs" />
-              } */}
               {list.name}
             </div>
         )

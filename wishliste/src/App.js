@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-// import logo from './logo.svg';
 import './assets/App.css';
-// import SignUp from './SignUp.js';
 import SignUpPage from './pages/signUpPage';
 import SignInPage from './pages/signInPage';
 import HomePage from './pages/homePage';
