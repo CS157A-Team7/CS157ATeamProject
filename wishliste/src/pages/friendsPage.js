@@ -11,6 +11,7 @@ class FriendsPage extends Component {
   state = {
     // username: "ash_ketchum@hotmail.com",
     friends: [],
+    friend: '',
     addingFriend: false,
   }
   
@@ -29,6 +30,29 @@ class FriendsPage extends Component {
         console.log(error);
     });
   };
+
+  addFriend = () => {
+    axios.get('/api/addFriend.php', {
+      params: {
+        username: this.props.username,
+        friend: this.state.friend
+      }
+    })
+    .then((response) => {
+        if(response.data){
+          console.log(response.data)
+        }
+        else{
+          let friends = this.state.friends;
+          let friend = {username:this.state.friend};
+          friends.push(friend);
+          this.setState({friends: friends});
+        }
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+  }
 
   render() {
     return (
@@ -62,12 +86,18 @@ class FriendsPage extends Component {
               <form className="Label-menu-item">
                 <label>
                   Add friend
-                  <input type="text" name="name" placeholder="Username" />
+                  <input type="text" name="name" placeholder="Username" maxLength="45"
+                      onChange={(event) => {
+                      this.setState({ friend: event.target.value },()=>{
+                        console.log(this.state.friend);
+                      }) 
+                    }}
+                  />
                 </label>
               </form>
             </div>
             <div className="Menu-button-container">
-              <input className="Menu-button" type="button" value="Confirm" onClick={() => console.log("Add friend or get error b/c user doesn't exist")} />
+              <input className="Menu-button" type="button" value="Confirm" onClick={this.addFriend} />
               <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({addingFriend: false})}/>
             </div>
           </Popup>
