@@ -60,14 +60,7 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
     for (var i = 0; i < passArray.length; i++) {
       if ((passArray[i] === passArray[i].toUpperCase()) && isAlpha(passArray[i])) {
         containsUpper = true;
-        //console.log(passArray[i]);
       }
-      // if (passArray[i] === 0 || passArray[i] === 1 || passArray[i] === 2 ||
-      //   passArray[i] === 3 || passArray[i] === 4 || passArray[i] === 5 ||
-      // passArray[i] === 6 || passArray[i] === 7 || passArray[i] === 8 || passArray[i] === 9) {
-      //   containsNumeric = true;
-      // }
-      //console.log(passArray[i].toUpperCase());
     }
     console.log(containsUpper)
     return containsUpper;
@@ -97,10 +90,6 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
     setPassword1Error("empty");
     p1_passed = false;
   }
-  // if (!isUpper(password1)) {
-  //   setPassword1Error("uppercase");
-  //   p1_passed = false;
-  // }
   if (password1.length < 8) {
     setPassword1Error("unsafe");
     p1_passed = false;
@@ -109,10 +98,6 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
     setPassword1Error("numeric");
     p1_passed = false;
   }
-  // if (!isUpper(password1)) {
-  //   setPassword1Error("uppercase");
-  //   p1_passed = false;
-  // }
   if (isValid(password1)) {
     setPassword1Error("special");
   }
@@ -129,18 +114,6 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
     setPassword2Error("notMatching");
     return false;
   }
-  //  else if (password2.length < 8) {
-  //   setPassword2Error("unsafe");
-  //   return false;
-  // }
-  // else if (containsUpper === false) {
-  //   setPassword2Error("uppercase");
-  // } else if (isNumeric(password2)) {
-  //   setPassword2Error("numeric");
-  //   p1_passed = false;
-  // } else if (isValid(password2)) {
-  //   setPassword2Error("special");
-  // }
   return p1_passed;
 }
 
