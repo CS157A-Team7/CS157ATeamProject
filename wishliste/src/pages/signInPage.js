@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    marginTop: theme.spacing(10),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
@@ -222,7 +223,7 @@ const SignInPage = props => {
             Sign In
           </Button>
 
-          <Button
+          {/* <Button
             type="button"
             fullWidth
             variant="contained"
@@ -231,7 +232,7 @@ const SignInPage = props => {
             onClick={() => logMeOut(props, history)}
           >
            Log out
-          </Button>
+          </Button> */}
 
           {/* <Button
             type="button"

@@ -54,7 +54,7 @@ class App extends Component {
         <div>
           <Switch>
             <div>
-              <ul>
+              {/* <ul>
                 <li>
                   <Link to="/Home">Home</Link>
                 </li>
@@ -79,7 +79,7 @@ class App extends Component {
                 <li>
                   <Link to="/Friends">Friends</Link>
                 </li>
-              </ul>
+              </ul> */}
               <Route path="/Home" render={() => 
                 this.state.loggedIn ? (
                   <HomePage 
