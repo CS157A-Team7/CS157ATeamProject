@@ -413,6 +413,7 @@ li.deleting-checked {
 .bottom-text-error {
   color: #ff0000;
   font-size: 2vmin;
+  text-align: left;
 }
 
 /* Button container for home screen */
