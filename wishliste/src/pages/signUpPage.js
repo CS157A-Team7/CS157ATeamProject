@@ -80,7 +80,6 @@ const signUp = (email, password1, password2, setUsernameError, setPassword1Error
   const goodPasswords = checkPasswords(password1, password2, setPassword1Error, setPassword2Error);
 
   if (goodUsername && goodPasswords) {
-    console.log("sign up w/ username " + email + " and password " + password1);
 
     const params = new URLSearchParams();
     params.append('username', email);
@@ -88,7 +87,6 @@ const signUp = (email, password1, password2, setUsernameError, setPassword1Error
     axios.post('/api/addNewAccount.php', params)
     .then((response) => {
       if (response.data === 0) {
-        console.log("Username already taken");
         setUsernameError("taken");
       } else {
         //redirect to home page
@@ -96,10 +94,8 @@ const signUp = (email, password1, password2, setUsernameError, setPassword1Error
         props.setUsername(email);
         history.push("/Home");
       }
-      console.log(response.data);
     })
     .catch(function(error){
-        console.log(error);
     });
   }
 }
@@ -126,29 +122,6 @@ const SignUpPage = props => {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -160,7 +133,6 @@ const SignUpPage = props => {
                 autoComplete="email"
                 onChange={(event) => {
                   setEmail(event.target.value)
-                  console.log(email)
                 }}
                 error={usernameError!==""}
                 helperText={
@@ -183,7 +155,6 @@ const SignUpPage = props => {
                 autoComplete="current-password"
                 onChange={(event) => {
                   setPassword1(event.target.value)
-                  console.log(password1)
                 }}
                 error={password1Error!==""}
                 helperText={
@@ -205,7 +176,6 @@ const SignUpPage = props => {
                 autoComplete="current-password"
                 onChange={(event) => {
                   setPassword2(event.target.value)
-                  console.log(password2)
                 }}
                 error={password2Error!==""}
                 helperText={

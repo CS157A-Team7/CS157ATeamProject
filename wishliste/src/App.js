@@ -24,14 +24,12 @@ class App extends Component {
     axios.get('/api/getCookie.php')
     .then((response) => {
       if(response.data){
-        console.log(response.data);
         this.setState({username: response.data});
         this.setState({loggedIn: true});
 
       }
     })
     .catch(function(error){
-        console.log(error);
     });
   };
 

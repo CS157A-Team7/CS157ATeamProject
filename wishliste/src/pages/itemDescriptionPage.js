@@ -35,10 +35,8 @@ const ItemDescriptionPage = (props) => {
             } else {
               setShareError(response.data);
             }
-            console.log(response.data);
         })
         .catch(function(error){
-            console.log(error);
         });
     },[]);
   
@@ -57,16 +55,13 @@ const ItemDescriptionPage = (props) => {
           toggleDBChange();
           updateList();
         };
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
       setNewItemOpen(false);
       setNameError(false);
     } else {
       setNameError(true);
-      console.log("Error: no name for the new item");
     }
   }
 
@@ -77,13 +72,11 @@ const ItemDescriptionPage = (props) => {
     data: itemsToDelete  
     })
     .then((response) => {
-      console.log(response.data);
       setItemsToDelete([]);
       toggleDBChange();
       updateList();
     })
     .catch(function(error){
-        console.log(error);
     });
     setDeletingItems(false);
   }
@@ -101,7 +94,6 @@ const ItemDescriptionPage = (props) => {
       })
     })
     .catch(function(error){
-      console.log(error);
     });
   }
 
@@ -150,10 +142,8 @@ const ItemDescriptionPage = (props) => {
     params.append('item_id', items[index].item_id);
     axios.post('/api/updateItemCheckmark.php', params)
     .then((response) => {
-      console.log(response.data);
     })
     .catch(function(error){
-        console.log(error);
     });
   };
 
@@ -210,7 +200,6 @@ const ItemDescriptionPage = (props) => {
                     className={nameError?"input-error":""}
                     onChange={(event) => {
                       setNewItemName(event.target.value)
-                      console.log(newItemName)
                     }}
                   />
                 </label>
@@ -220,7 +209,6 @@ const ItemDescriptionPage = (props) => {
                   <input type="text" name="description" placeholder="Description" maxLength="245"
                     onChange={(event) => {
                       setNewItemDescription(event.target.value)
-                      console.log(newItemDescription)
                     }}
                   />
                 </label>

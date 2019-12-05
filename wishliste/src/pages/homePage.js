@@ -48,11 +48,8 @@ class HomePage extends Component {
       {
         this.setState({ results:response.data });
       }
-      console.log(response.data);
-      console.log(this.state.results)
     })
     .catch(function(error){
-        console.log(error);
     });
 
     axios.post('/api/getFriends.php', params)
@@ -61,11 +58,8 @@ class HomePage extends Component {
       {
         this.setState({ friends:response.data });
       }
-      console.log(response.data);
-      console.log(this.state.friends)
     })
     .catch(function(error){
-        console.log(error);
     });
   };
 
@@ -77,12 +71,9 @@ class HomePage extends Component {
       .then((response) => {
         if(response.data instanceof Array){
           this.setState({ results:response.data });
-          console.log(this.state.results)
         }
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
 
       this.toggleDBChange();
@@ -111,19 +102,15 @@ class HomePage extends Component {
           this.setState({newListDescription: ""});
           this.setState({newListDate: ""});
         };
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
       this.setState({newWishlistOpen: false});
       this.setState({newSWishlistOpen: false});
       this.setState({newTodoListOpen: false});
       this.setState({nameError: false});
-      console.log("CreatedList");
     } else {
       this.setState({nameError: true});
-      console.log("Error: no name for the new list");
     }
   }
 
@@ -144,17 +131,13 @@ class HomePage extends Component {
           this.setState({newItemName: ""});
           this.setState({newItemDescription: ""});
         };
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
       this.setState({newItemOpen: false});
       this.setState({nameError: false});
-      console.log(this.state.newItem);
     } else {
       this.setState({nameError: true});
-      console.log("Error: no name for the new item");
     }
   }
 
@@ -165,16 +148,13 @@ class HomePage extends Component {
     data: this.state.itemsToDelete  
     })
     .then((response) => {
-      console.log(response.data);
       this.setState({itemsToDelete: []});
       this.toggleDBChange();
       this.updateList();
     })
     .catch(function(error){
-        console.log(error);
     });
     this.setState({deletingItems: false})
-    console.log(this.state.itemsToDelete);
   }
 
   deleteLists = () => {
@@ -184,15 +164,12 @@ class HomePage extends Component {
       data: this.state.listsToDelete  
       })
       .then((response) => {
-        console.log(response.data);
         this.setState({listsToDelete: []});
         this.toggleDBChange();
       })
       .catch(function(error){
-          console.log(error);
       });
       this.setState({deletingLists: false})
-      console.log(this.state.itemsToDelete);
   }
 
   updateList = () => {
@@ -210,7 +187,6 @@ class HomePage extends Component {
       });
     })
     .catch(function(error){
-      console.log(error);
     });
   }
 
@@ -231,10 +207,8 @@ class HomePage extends Component {
       })
       .then((response) => {
         this.toggleDBChange();
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
     });
   }
@@ -248,7 +222,6 @@ class HomePage extends Component {
     this.setState({editingItems: false});
     this.setState({listSharingOpen: false});
     this.setState({surpriseSharingOpen: false});
-    console.log(this.state.list);
   }
 
   handleItemsToDelete = item => {
@@ -264,7 +237,6 @@ class HomePage extends Component {
         itemsToDelete: [...this.state.itemsToDelete, item]
       });
     }
-    console.log(this.state.itemsToDelete);
   }
 
   handleListsToDelete = list => {
@@ -280,7 +252,6 @@ class HomePage extends Component {
         listsToDelete: [...this.state.listsToDelete, list]
       });
     }
-    console.log(this.state.listsToDelete);
   }
 
   handleListNameChange = newName => {
@@ -353,10 +324,8 @@ class HomePage extends Component {
       params.append('list_type',this.state.list.type);
       axios.post('/api/updateItemCheckmark.php', params)
       .then((response) => {
-        console.log(response.data);
       })
       .catch(function(error){
-          console.log(error);
       });
     });
   };
@@ -374,7 +343,6 @@ class HomePage extends Component {
         friendsSelected: [...this.state.friendsSelected, friend]
       });
     }
-    console.log(this.state.friendsSelected);
   }
 
   generateUrl = () => {
@@ -389,10 +357,8 @@ class HomePage extends Component {
           url: response.data
         }
       });
-      console.log(response.data);
     })
     .catch(function(error){
-        console.log(error);
     });
   }
 
@@ -459,7 +425,6 @@ class HomePage extends Component {
                           className={this.state.nameError?"input-error":""}
                           onChange={(event) => {
                             this.setState({ newListName: event.target.value }) 
-                            console.log(this.state.newListName)
                           }}
                         />
                       </label>
@@ -469,7 +434,6 @@ class HomePage extends Component {
                         <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
-                          console.log(this.state.newListDescription)
                         }}
                         />
                       </label>
@@ -510,7 +474,6 @@ class HomePage extends Component {
                           className={this.state.nameError?"input-error":""}
                           onChange={(event) => {
                             this.setState({ newListName: event.target.value }) 
-                            console.log(this.state.newListName)
                           }}
                         />
                       </label>
@@ -520,7 +483,6 @@ class HomePage extends Component {
                         <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
-                          console.log(this.state.newListDescription)
                         }}
                         />
                       </label>
@@ -530,7 +492,6 @@ class HomePage extends Component {
                         <input type="date" name="date" 
                           onChange={(event) => {
                             this.setState({ newListDate: event.target.value}, () => {
-                              console.log(this.state.newListDate);
                             })
                           }}
                         />
@@ -572,7 +533,6 @@ class HomePage extends Component {
                           className={this.state.nameError?"input-error":""}
                           onChange={(event) => {
                             this.setState({ newListName: event.target.value }) 
-                            console.log(this.state.newListName)
                           }}
                         />
                       </label>
@@ -582,7 +542,6 @@ class HomePage extends Component {
                         <input type="text" name="description" placeholder="Description" maxLength="245"
                          onChange={(event) => {
                           this.setState({ newListDescription: event.target.value }) 
-                          console.log(this.state.newListDescription)
                         }}
                         />
                       </label>
@@ -592,7 +551,6 @@ class HomePage extends Component {
                         <input type="date" name="date" 
                           onChange={(event) => {
                           this.setState({ newListDate: event.target.value}, () => {
-                            console.log(this.state.newListDate);
                           })
                         }}
                         />
@@ -660,7 +618,6 @@ class HomePage extends Component {
                       className={this.state.nameError?"input-error":""}
                       onChange={(event) => {
                         this.setState({ newItemName: event.target.value }) 
-                        console.log(this.state.newItemName)
                       }}
                     />
                   </label>
@@ -670,7 +627,6 @@ class HomePage extends Component {
                     <input type="text" name="description" placeholder="Description" maxLength="245"
                       onChange={(event) => {
                         this.setState({ newItemDescription: event.target.value })
-                        console.log(this.state.newItemDescription)
                       }}
                     />
                   </label>
