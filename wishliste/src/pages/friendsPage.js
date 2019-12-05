@@ -13,6 +13,7 @@ class FriendsPage extends Component {
     friends: [],
     friend: '',
     addingFriend: false,
+    friendError: "",
   }
   
   componentDidMount(){
@@ -32,14 +33,25 @@ class FriendsPage extends Component {
   };
 
   addFriend = () => {
-    axios.get('/api/addFriend.php', {
-      params: {
-        username: this.props.username,
-        friend: this.state.friend
+    let checkDB = true;
+    this.state.friends.map((aFriend) => {
+      if (aFriend.username===this.state.friend) {
+        this.setState({friendError: "alreadyAdded"})
+        checkDB = false;
       }
-    })
-    .then((response) => {
+    });
+    if (this.state.friend===this.props.username) {
+      this.setState({friendError: "yourself"})
+    } else if (checkDB) {
+      axios.get('/api/addFriend.php', {
+        params: {
+          username: this.props.username,
+          friend: this.state.friend
+        }
+      })
+      .then((response) => {
         if(response.data){
+          this.setState({friendError: "doesntExist"})
           console.log(response.data)
         }
         else{
@@ -47,13 +59,14 @@ class FriendsPage extends Component {
           let friend = {username:this.state.friend};
           friends.push(friend);
           this.setState({friends: friends});
+          this.setState({addingFriend: false})
+          this.setState({friendError: ""})
         }
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-    
-    this.setState({addingFriend: false})
+      })
+      .catch(function(error){
+          console.log(error);
+      });
+    }
   }
 
   render() {
@@ -77,7 +90,10 @@ class FriendsPage extends Component {
             on="click"
             open={this.state.addingFriend}
             onOpen={() => this.setState({addingFriend: true})}
-            onClose={() => this.setState({addingFriend: false})}
+            onClose={() => {
+              this.setState({addingFriend: false})
+              this.setState({friendError: ""})
+            }}
             closeOnDocumentClick
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
@@ -87,20 +103,33 @@ class FriendsPage extends Component {
             <div className="Plain-menu">
               <form className="Label-menu-item">
                 <label>
-                  Add friend
-                  <input type="text" name="name" placeholder="Username" maxLength="45"
-                      onChange={(event) => {
+                  Add friend <br />
+                  <input type="text" name="name" autoFocus maxLength="45" 
+                    placeholder="Username"
+                    className={this.state.friendError!==""?"input-error":""}
+                    onChange={(event) => {
                       this.setState({ friend: event.target.value },()=>{
                         console.log(this.state.friend);
                       }) 
                     }}
                   />
                 </label>
+                <label className="bottom-text-error">
+                  <br />
+                  {this.state.friendError === "alreadyAdded" ? "User is already your friend"
+                  :this.state.friendError === "yourself" ? "Can't add yourself..."
+                  :this.state.friendError === "doesntExist" ? "User does not exist. Try again"
+                  :""
+                  }
+                </label>
               </form>
             </div>
             <div className="Menu-button-container">
               <input className="Menu-button" type="button" value="Confirm" onClick={this.addFriend} />
-              <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({addingFriend: false})}/>
+              <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                this.setState({addingFriend: false})
+                this.setState({friendError: ""})
+              }}/>
             </div>
           </Popup>
         </div>
