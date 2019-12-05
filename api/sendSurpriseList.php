@@ -50,9 +50,8 @@
 		for($i = 0; $i < count($items); $i++){
 			$item_name = $items[$i]['name'];
 			$item_description = $items[$i]['description'];
-			$item_checked = $items[$i]['checked'];
 			
-			$add_item_query = "INSERT INTO item(name, description, checked) VALUES ('$item_name', '$item_description', '$item_checked')";
+			$add_item_query = "INSERT INTO item(name, description, checked) VALUES ('$item_name', '$item_description', 0)";
 			if ($conn->query($add_item_query) === TRUE) {
 				$new_item_id = $conn->insert_id;
 				$list_has_items_query = "INSERT INTO list_has_items(list_id, item_id) VALUES ('$new_list_id', '$new_item_id')";
