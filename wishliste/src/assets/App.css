@@ -410,6 +410,11 @@ li.deleting-checked {
   color: #ff0000;
 }
 
+.bottom-text-error {
+  color: #ff0000;
+  font-size: 2vmin;
+}
+
 /* Button container for home screen */
 .New-button-container-thin {
   background-color: white;

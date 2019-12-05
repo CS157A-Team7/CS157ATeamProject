@@ -13,6 +13,7 @@ class FriendsPage extends Component {
     friends: [],
     friend: '',
     addingFriend: false,
+    friendError: false,
   }
   
   componentDidMount(){
@@ -40,6 +41,7 @@ class FriendsPage extends Component {
     })
     .then((response) => {
         if(response.data){
+          this.setState({friendError: true})
           console.log(response.data)
         }
         else{
@@ -47,13 +49,15 @@ class FriendsPage extends Component {
           let friend = {username:this.state.friend};
           friends.push(friend);
           this.setState({friends: friends});
+          this.setState({addingFriend: false})
+          this.setState({friendError: false})
         }
     })
     .catch(function(error){
         console.log(error);
     });
     
-    this.setState({addingFriend: false})
+    
   }
 
   render() {
@@ -77,7 +81,10 @@ class FriendsPage extends Component {
             on="click"
             open={this.state.addingFriend}
             onOpen={() => this.setState({addingFriend: true})}
-            onClose={() => this.setState({addingFriend: false})}
+            onClose={() => {
+              this.setState({addingFriend: false})
+              this.setState({friendError: false})
+            }}
             closeOnDocumentClick
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
@@ -87,20 +94,30 @@ class FriendsPage extends Component {
             <div className="Plain-menu">
               <form className="Label-menu-item">
                 <label>
-                  Add friend
-                  <input type="text" name="name" placeholder="Username" maxLength="45"
-                      onChange={(event) => {
+                  Add friend <br />
+                  <input type="text" name="name" autoFocus maxLength="45" 
+                    placeholder="Username"
+                    className={this.state.friendError?"input-error":""}
+                    onChange={(event) => {
                       this.setState({ friend: event.target.value },()=>{
                         console.log(this.state.friend);
                       }) 
                     }}
                   />
                 </label>
+                {this.state.friendError?
+                  <label className="bottom-text-error">
+                    <br />User does not exist. Try again
+                  </label>
+                :""}
               </form>
             </div>
             <div className="Menu-button-container">
               <input className="Menu-button" type="button" value="Confirm" onClick={this.addFriend} />
-              <input className="Menu-button" type="button" value="Cancel" onClick={() => this.setState({addingFriend: false})}/>
+              <input className="Menu-button" type="button" value="Cancel" onClick={() => {
+                this.setState({addingFriend: false})
+                this.setState({friendError: false})
+              }}/>
             </div>
           </Popup>
         </div>
