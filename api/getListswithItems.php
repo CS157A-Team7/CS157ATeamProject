@@ -5,7 +5,7 @@
 
     $username = $_POST['username'];
 
-    $query = "SELECT list_id,name,description FROM list NATURAL JOIN account_has_lists WHERE username='$username'";
+    $query = "(SELECT list_id,name,description FROM list NATURAL JOIN account_has_lists WHERE username='$username') UNION (SELECT list_id,name,description FROM list NATURAL JOIN collaborates_on WHERE username='$username')";
     $result = $conn->query($query);
     if(!$result) die ("Database access failed: " . $conn->error);
 
