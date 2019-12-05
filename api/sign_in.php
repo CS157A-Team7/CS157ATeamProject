@@ -8,17 +8,18 @@
 
   require_once 'login.php';
   require_once 'sanitize.php';
+  require_once 'encrypt.php';
 
     $conn = new mysqli($host, $user, $password, $dbname);
     if($conn->connect_error) die($conn->connect_error);
-	
+
   //$query = "INSERT INTO account(username, password) VALUES ('$username', '$password')";
 
     //$username = mysqli_real_escape_string($db,$_POST['username']); //instead of sanitizing here use the function from api folder
     //$password = mysqli_real_escape_string($db,$_POST['password']);
 
     $username = sanitizeString($_GET['username']);
-    $password = sanitizeString($_GET['password']);
+    $password = encrypt(sanitizeString($_GET['password']));
 
     $sql = "SELECT username FROM account WHERE username = '$username' and password = '$password'";
     //$result = mysqli_query($db,$sql);
