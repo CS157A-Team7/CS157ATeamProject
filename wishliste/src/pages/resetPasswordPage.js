@@ -35,10 +35,34 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const setNewPassword = (password1, password2) => {
-  if (password1 === password2) {
+const checkPasswords = (password1, password2, setPassword1Error, setPassword2Error) => {
+  var p1_passed = true;
+  if (password1 === "") {
+    setPassword1Error("empty");
+    p1_passed = false;
+  } else if (password1.length < 8) {
+    setPassword1Error("unsafe");
+    p1_passed = false;
+  }
+  if (password2 === "") {
+    setPassword2Error("empty");
+    return false;
+  } else if (password2 !== password1) {
+    setPassword2Error("notMatching");
+    return false;
+  } else if (password2.length < 8) {
+    setPassword2Error("unsafe");
+    return false;
+  }
+  return p1_passed;
+} 
+
+const setNewPassword = (password1, password2, setPassword1Error, setPassword2Error, history) => {
+  if (checkPasswords(password1, password2, setPassword1Error, setPassword2Error)) {
     console.log("reset password to " + password1);
     //do db stuff
+    //if code is also correct, redirect to sign in page
+    history.push("/")
   }
 }
 
@@ -48,6 +72,8 @@ const ResetPasswordPage = () => {
   const [code, setCode] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [password1Error, setPassword1Error] = useState("");
+  const [password2Error, setPassword2Error] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -90,6 +116,12 @@ const ResetPasswordPage = () => {
                   setPassword1(event.target.value)
                   console.log(password1)
                 }}
+                error={password1Error!==""}
+                helperText={
+                  password1Error==="empty"?"Password is required"
+                  :password1Error==="unsafe"?"Password must be at least 8 characters long"
+                  :""
+                }
               />
             </Grid>
             <Grid item xs={12}> 
@@ -106,8 +138,13 @@ const ResetPasswordPage = () => {
                   setPassword2(event.target.value)
                   console.log(password2)
                 }}
-                error={password2!==""&&password1!==password2}
-                helperText={password2!==""&&password1!==password2?"Passwords don't match":""}
+                error={password2Error!==""}
+                helperText={
+                  password2Error==="empty"?"Password is required"
+                  :password2Error==="notMatching"?"Passwords don't match"
+                  :password2Error==="unsafe"?"Password must be at least 8 characters long"
+                  :""       
+                }
               />
             </Grid>
           </Grid>
@@ -117,12 +154,7 @@ const ResetPasswordPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => 
-              {
-                setNewPassword(password1, password2);
-                history.push('/');
-              }
-            }
+            onClick={() => setNewPassword(password1, password2, setPassword1Error, setPassword2Error, history)}
           >
             Set new password
           </Button>
