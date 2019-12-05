@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -36,17 +37,38 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const resetPassword = (username) => {
-  //check to see if username is in db
-  //if it is, go to next page(?)
-  //if it isn't, print error here
-  console.log("reset password for account w/ username " + username);
-}
+// const resetPassword = (username) => {
+//   //check to see if username is in db
+//   //if it is, go to next page(?)
+//   //if it isn't, print error here
+//   console.log("reset password for account w/ username " + username);
+// }
 
 const ForgotPasswordPage = () => {
   const classes = useStyles();
   let history = useHistory();
   const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
+
+  const resetPassword = () => {
+    axios.get('/api/forgotPassword.php', {
+      params: {
+        username: username
+      }
+    })
+    .then((response) => {
+      if(response.data===1){
+        //send email
+        history.push("/EmailSent");
+      } else {
+        setUsernameError(true);
+      }
+      console.log(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,6 +95,8 @@ const ForgotPasswordPage = () => {
                   setUsername(event.target.value)
                   console.log(username)
                 }}
+                error={usernameError}
+                helperText={usernameError?"Username doesn't exist":""}
               />
             </Grid>
           </Grid>
@@ -82,7 +106,7 @@ const ForgotPasswordPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => resetPassword(username)}
+            onClick={() => resetPassword()}
           >
             Continue
           </Button>
