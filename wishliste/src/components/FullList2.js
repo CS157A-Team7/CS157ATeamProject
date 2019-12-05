@@ -35,6 +35,8 @@ const ListHead = props => {
                 type="text" 
                 name="name" 
                 placeholder="Name" 
+                autoFocus
+                maxLength="45"
                 defaultValue={props.listData.name}
                 onChange={(event) => {
                   setListTitle(event.target.value); 
@@ -135,6 +137,8 @@ const ListBody = props => {
                   type="text" 
                   name="name" 
                   placeholder="Name" 
+                  autoFocus
+                  maxLength="45"
                   defaultValue={item.name}
                   onChange={(event) => {
                     setItemName(event.target.value);
@@ -149,6 +153,7 @@ const ListBody = props => {
                 <input 
                   type="text" 
                   name="description" 
+                  maxLength="245"
                   placeholder="Description" 
                   defaultValue={item.description}
                   onChange={(event) => {
@@ -197,7 +202,11 @@ const ListBody = props => {
         <Popup
           trigger={
             <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
-              {props.listData.description}
+              {props.listData.description} <br />
+              {props.listData.date && props.listData.list_type === "surprise" && props.owner === props.username ? "Date set: " + props.listData.date
+              : props.listData.date && props.listData.list_type === "surprise" ? "Date set by " + props.listData.owner + ": " + props.listData.date
+              : props.listData.date && props.listData.list_type === "todo" ? "Complete by: " + props.listData.date
+              : ""}
             </div>
           }
           position="left top"
@@ -219,7 +228,8 @@ const ListBody = props => {
                 <input 
                   type="text" 
                   name="description" 
-                  placeholder="Description" 
+                  placeholder="Description"
+                  maxLength="245" 
                   defaultValue={props.listData.description} 
                   onChange={(event) => {
                     setListDescription(event.target.value);
@@ -246,7 +256,11 @@ const ListBody = props => {
         </Popup>
       :
         <div className={props.currentPage==="home"?"Full-List2-list-description":"Full-List-list-description"}>
-          {props.listData.description}
+          {props.listData.description} <br /> 
+          {props.listData.date && props.listData.list_type === "surprise" && props.owner === props.username ? "Date set: " + props.listData.date
+          : props.listData.date && props.listData.list_type === "surprise" ? "Date set by " + props.listData.owner + ": " + props.listData.date
+          : props.listData.date && props.listData.list_type === "todo" ? "Complete by: " + props.listData.date
+          : ""}
         </div>
       }
       <ul>
