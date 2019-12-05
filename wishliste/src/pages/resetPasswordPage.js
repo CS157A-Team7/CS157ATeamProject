@@ -45,6 +45,7 @@ const setNewPassword = (password1, password2) => {
 const ResetPasswordPage = () => {
   let history = useHistory();
   const classes = useStyles();
+  const [code, setCode] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -60,6 +61,21 @@ const ResetPasswordPage = () => {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="code"
+                label="Code"
+                type="name"
+                id="code"
+                onChange={(event) => {
+                  setCode(event.target.value)
+                  console.log(code)
+                }}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
