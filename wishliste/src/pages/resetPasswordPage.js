@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -57,12 +58,28 @@ const checkPasswords = (password1, password2, setPassword1Error, setPassword2Err
   return p1_passed;
 } 
 
-const setNewPassword = (password1, password2, setPassword1Error, setPassword2Error, history) => {
+const setNewPassword = (password1, password2, code, setPassword1Error, setPassword2Error, history) => {
   if (checkPasswords(password1, password2, setPassword1Error, setPassword2Error)) {
     console.log("reset password to " + password1);
+    const params = new URLSearchParams();
+    params.append('password', password1);
+    params.append('code', code);
+    axios.post('/api/resetPassword.php', params)
+    .then((response) => {
+      if(response.data instanceof String)
+      {
+        console.log(response.data);
+      }
+      else{
+        history.push("/");
+      }
+    })
+    .catch(function(error){
+        console.log(error);
+    });
     //do db stuff
     //if code is also correct, redirect to sign in page
-    history.push("/")
+    
   }
 }
 
@@ -154,7 +171,7 @@ const ResetPasswordPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => setNewPassword(password1, password2, setPassword1Error, setPassword2Error, history)}
+            onClick={() => setNewPassword(password1, password2, code, setPassword1Error, setPassword2Error, history)}
           >
             Set new password
           </Button>

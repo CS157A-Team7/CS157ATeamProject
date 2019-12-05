@@ -18,6 +18,7 @@
 		$forgot_query = "INSERT INTO reset_password(username, token) VALUES ('$username', '$token')";
 		$forgot_result = $conn->query($forgot_query);
 		if(!$forgot_result) die ("Database access failed: " . $conn->error);
+		setcookie('nameForReset', $username, time() + 60 * 60 * 24, '/');
       echo 1; //username found - send email
     }else {
        echo 0; //username not found - error
