@@ -1,12 +1,13 @@
 <?php
     require_once 'login.php';
 	require_once 'sanitize.php';
+	require_once 'encrypt.php';
     $conn = new mysqli($host, $user, $password, $dbname);
     if($conn->connect_error) die($conn->connect_error);
 
 	if(isset($_COOKIE['nameForReset'])){
 		$username = $_COOKIE['nameForReset'];
-		$password = sanitizeMySQL($conn, $_POST['password']);
+		$password = encrypt(sanitizeMySQL($conn, $_POST['password']));
 		$code = sanitizeMySQL($conn, $_POST['code']);
 		
 		$code_query = "SELECT * FROM reset_password WHERE username='$username' AND token='$code'";
