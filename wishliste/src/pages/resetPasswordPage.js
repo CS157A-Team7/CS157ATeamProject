@@ -113,7 +113,7 @@ const setNewPassword = (password1, password2, code, setPassword1Error, setPasswo
     params.append('code', code);
     axios.post('/api/resetPassword.php', params)
     .then((response) => {
-      if(response.data instanceof String)
+      if(response.data)
       {
         console.log(response.data);
       }

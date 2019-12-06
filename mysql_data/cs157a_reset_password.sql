@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `reset_password`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reset_password` (
   `username` varchar(45) NOT NULL,
-  `token` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`username`)
+  `token` varchar(45) NOT NULL,
+  PRIMARY KEY (`username`,`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,6 +35,7 @@ CREATE TABLE `reset_password` (
 
 LOCK TABLES `reset_password` WRITE;
 /*!40000 ALTER TABLE `reset_password` DISABLE KEYS */;
+INSERT INTO `reset_password` VALUES ('bill@aol.com','7dc5f23c'),('ching-seh.wu@sjsu.edu','e673f1a2');
 /*!40000 ALTER TABLE `reset_password` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-04 22:44:48
+-- Dump completed on 2019-12-05 20:59:26
