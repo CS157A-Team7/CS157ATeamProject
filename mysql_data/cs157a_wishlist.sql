@@ -35,7 +35,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES (16,'wishliste.com/123qweasdzx'),(17,'wishliste.com/456rtyfghcvb'),(18,'wishliste.com/789uiojklbnm'),(19,'wishliste.com/2468mijdhser'),(20,'wishliste.com/123oprjfusbrg'),(21,'wishliste.com/76rhst35hsak'),(22,'wishliste.com/8ir64j20dk4r'),(23,'wishliste.com/h59dke456k3'),(24,'wishliste.com/fhir94y5biq83'),(25,'wishliste.com/k0238hr489d'),(26,'wishliste.com/dheu983274r'),(27,'wishliste.com/ud8e03jr4931'),(28,'wishliste.com/frh9930ru043'),(29,'wishliste.com/hdwieohde81'),(30,'wishliste.com/sjore9ru933jf');
+INSERT INTO `wishlist` VALUES (16,NULL),(17,NULL),(18,NULL),(19,NULL),(20,'wishliste.com/list/20'),(21,NULL),(22,NULL),(23,NULL),(24,NULL),(25,NULL),(26,NULL),(27,NULL),(28,NULL),(29,NULL),(30,NULL),(31,'wishliste.com/list/31'),(32,''),(33,'');
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:59
+-- Dump completed on 2019-12-06 11:07:09

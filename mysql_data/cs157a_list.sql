@@ -27,7 +27,7 @@ CREATE TABLE `list` (
   `name` varchar(45) DEFAULT NULL,
   `description` varchar(245) DEFAULT NULL,
   PRIMARY KEY (`list_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `list` (
 
 LOCK TABLES `list` WRITE;
 /*!40000 ALTER TABLE `list` DISABLE KEYS */;
-INSERT INTO `list` VALUES (1,'Homework','Homework I need to get done.'),(2,'House Chores','Chores I need to get done for today.'),(3,'Programming Tasks','Task I need to get done for the day'),(4,'Food Prep','Dishes I need to prep for the day'),(5,'Yard Work','Yard work I need to get done.'),(6,'Errands','Errands I need to run.'),(7,'Things I need to watch','Movies I need to watch'),(8,'Jobs to Apply to','Jobs I need to apply to'),(9,'Things to look up on',NULL),(10,'Games to play','Games I got to play'),(11,'Game Dev stuff','Task I need to do for Game Dev'),(12,'Essay Research','Things I need to research for my paper'),(13,'Things I need to research for my Novel',NULL),(14,'Finals to study for',NULL),(15,'Shows to watch','Shows I need to watch for motivation for finals :('),(16,'Dr. Seuss books','Getting all the Dr. Seuss books'),(17,'Garden Tools','Tools I need to buy!'),(18,'Sitcom DVD box sets','Don\'t really need them, but why not.'),(19,'Pokemon Plushies','Gotta have them all!'),(20,'Switch games','I need mroe GAMES!'),(21,'Board games','New additions for Game Night!'),(22,'Gift cards','Places that I shop from.'),(23,'Textbooks','Need to get these ASAP!'),(24,'Vegan Food','The only stuff I like.'),(25,'Things I want','Random stuff I want'),(26,'Secret','For my secret collection.'),(27,'Art supplies','Things I need to resupply on'),(28,'BBQ Stuff','Favorite BBQ stuff'),(29,'Dr. Mike\'s wedding',NULL),(30,'Figurines','I need them!');
+INSERT INTO `list` VALUES (1,'Homework','Homework I need to get done.'),(2,'House Chores','Chores I need to get done for today.'),(3,'Programming Tasks','Task I need to get done for the day'),(4,'Food Prep','Dishes I need to prep for the day'),(5,'Yard Work','Yard work I need to get done.'),(6,'Errands','Errands I need to run.'),(7,'Things I need to watch','Movies I need to watch'),(8,'Jobs to Apply to','Jobs I need to apply to'),(9,'Things to look up on',NULL),(10,'Games to play','Games I got to play'),(11,'Game Dev stuff','Task I need to do for Game Dev'),(12,'Essay Research','Things I need to research for my paper'),(13,'Things I need to research for my Novel',NULL),(14,'Finals to study for',NULL),(15,'Shows to watch','Shows I need to watch for motivation for finals :('),(16,'Dr. Seuss books','Getting all the Dr. Seuss books'),(17,'Garden Tools','Tools I need to buy!'),(18,'Sitcom DVD box sets','Don\'t really need them, but why not.'),(19,'Pokemon Plushies','Gotta have them all!'),(20,'Switch games','I need mroe GAMES!'),(21,'Board games','New additions for Game Night!'),(22,'Gift cards','Places that I shop from.'),(23,'Textbooks','Need to get these ASAP!'),(24,'Vegan Food','The only stuff I like.'),(25,'Things I want','Random stuff I want'),(26,'Secret','For my secret collection.'),(27,'Art supplies','Things I need to resupply on'),(28,'BBQ Stuff','Favorite BBQ stuff'),(29,'Dr. Mike\'s wedding',NULL),(30,'Figurines','I need them!'),(31,'Things I want','for christmas'),(32,'Test','test'),(33,'Test','test');
 /*!40000 ALTER TABLE `list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:51
+-- Dump completed on 2019-12-06 11:07:05

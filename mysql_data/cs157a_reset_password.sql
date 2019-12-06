@@ -35,7 +35,7 @@ CREATE TABLE `reset_password` (
 
 LOCK TABLES `reset_password` WRITE;
 /*!40000 ALTER TABLE `reset_password` DISABLE KEYS */;
-INSERT INTO `reset_password` VALUES ('bill@aol.com','7dc5f23c'),('ching-seh.wu@sjsu.edu','e673f1a2');
+INSERT INTO `reset_password` VALUES ('ash_ketchum@hotmail.com','0ff9e200');
 /*!40000 ALTER TABLE `reset_password` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 20:59:26
+-- Dump completed on 2019-12-06 11:07:06

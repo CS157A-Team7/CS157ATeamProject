@@ -37,7 +37,7 @@ CREATE TABLE `surprise_wishlist` (
 
 LOCK TABLES `surprise_wishlist` WRITE;
 /*!40000 ALTER TABLE `surprise_wishlist` DISABLE KEYS */;
-INSERT INTO `surprise_wishlist` VALUES (16,'ash_ketchum@hotmail.com',0,'2019-10-08'),(18,'ted.mosby@gmail.com',0,'2019-11-26'),(19,'ash_ketchum@hotmail.com',0,'2019-10-10'),(21,'ash_ketchum@hotmail.com',0,'2019-10-09'),(22,'emily@yahoo.com',0,'2019-12-25'),(25,'sarah@gmail.com',0,NULL),(29,'ching-seh.wu@sjsu.edu',0,'2019-10-31'),(30,'sam@aol.com',0,'2020-05-22'),(116,'ash_ketchum@hotmail.com',1,'2019-01-08'),(118,'ted.mosby@gmail.com',1,'2019-11-26'),(121,'ash_ketchum@hotmail.com',1,'2019-10-09'),(122,'emily@yahoo.com',1,'2019-12-25'),(125,'sarah@gmail.com',1,NULL),(129,'ching-seh.wu@sjsu.edu',1,'2019-10-31'),(130,'sam@aol.com',1,'2020-05-22');
+INSERT INTO `surprise_wishlist` VALUES (16,'ash_ketchum@hotmail.com',0,'2019-10-08'),(18,'ted.mosby@gmail.com',0,'2019-11-26'),(19,'ash_ketchum@hotmail.com',0,'2019-10-10'),(21,'ash_ketchum@hotmail.com',0,'2019-10-09'),(22,'emily@yahoo.com',0,'2019-12-25'),(25,'sarah@gmail.com',0,NULL),(29,'ching-seh.wu@sjsu.edu',0,'2019-10-31'),(30,'sam@aol.com',0,'2020-05-22'),(32,'holly@gmail.com',0,NULL),(33,'holly@gmail.com',1,NULL),(116,'ash_ketchum@hotmail.com',1,'2019-01-08'),(118,'ted.mosby@gmail.com',1,'2019-11-26'),(121,'ash_ketchum@hotmail.com',1,'2019-10-09'),(122,'emily@yahoo.com',1,'2019-12-25'),(125,'sarah@gmail.com',1,NULL),(129,'ching-seh.wu@sjsu.edu',1,'2019-10-31'),(130,'sam@aol.com',1,'2020-05-22');
 /*!40000 ALTER TABLE `surprise_wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:59
+-- Dump completed on 2019-12-06 11:07:08

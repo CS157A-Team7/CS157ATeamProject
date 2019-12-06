@@ -28,7 +28,7 @@ CREATE TABLE `item` (
   `description` varchar(245) DEFAULT NULL,
   `checked` int(1) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `item` (
 
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` VALUES (1,'The Cat in the Hat','Need for my collection.',0),(2,'The Lorax','Need for my collection.',0),(3,'Rake','My other one broke.',0),(4,'Pikachu','Need for collection.',1),(5,'Cyndaquil','My favorite pokemon!',1),(6,'Fire Emblem Three Houses','Newest Fire Emblem. Gotta have.',1),(7,'Disgaea 5','Need for my collection.',1),(8,'Database Systems: The Complete Book','For CS157A',1),(9,'Pencils','Need these. Keep losing them.',1),(10,'Paint','Need this for my masterpiece.',0),(11,'Erasers','Keep losing them.',1),(12,'Pokemon Sword','The newest pokemon game!',0),(13,'The Last of Us 2','It\'s going to be awesome!',0),(14,'Turtwig','Not as great as Cyndaquil but need it for the collection.',0),(15,'Hot dogs','For the BBQ!',1),(16,'Ditto','Need it!',0),(17,'Ditto','Need it',0);
+INSERT INTO `item` VALUES (1,'The Cat in the Hat','Need for my collection.',0),(2,'The Lorax','Need for my collection.',0),(3,'Rake','My other one broke.',0),(4,'Pikachu','Need for collection.',1),(5,'Cyndaquil','My favorite pokemon!',1),(6,'Fire Emblem Three Houses','Newest Fire Emblem. Gotta have.',1),(7,'Disgaea 5','Need for my collection.',1),(8,'Database Systems: The Complete Book','For CS157A',1),(9,'Pencils','Need these. Keep losing them.',1),(10,'Paint','Need this for my masterpiece.',0),(11,'Erasers','Keep losing them.',1),(12,'Pokemon Sword','The newest pokemon game!',0),(13,'The Last of Us 2','It\'s going to be awesome!',0),(14,'Turtwig','Not as great as Cyndaquil but need it for the collection.',0),(15,'Hot dogs','For the BBQ!',1),(16,'Ditto','Need it!',0),(17,'Ditto','Need it',0),(18,'a game','FE3H',0),(19,'a textbook','CS157A',1),(20,'item','',0),(21,'item',' -checked by bill@aol.com',1);
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:53
+-- Dump completed on 2019-12-06 11:07:07

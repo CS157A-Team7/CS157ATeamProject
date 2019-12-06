@@ -35,7 +35,7 @@ CREATE TABLE `list_has_items` (
 
 LOCK TABLES `list_has_items` WRITE;
 /*!40000 ALTER TABLE `list_has_items` DISABLE KEYS */;
-INSERT INTO `list_has_items` VALUES (16,1),(16,2),(17,3),(19,4),(19,5),(19,14),(19,17),(20,6),(20,7),(23,8),(25,12),(25,13),(27,9),(27,10),(27,11),(28,15);
+INSERT INTO `list_has_items` VALUES (16,1),(16,2),(17,3),(19,4),(19,5),(19,14),(19,17),(20,6),(20,7),(23,8),(25,12),(25,13),(27,9),(27,10),(27,11),(28,15),(31,18),(31,19),(32,20),(33,21);
 /*!40000 ALTER TABLE `list_has_items` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:58
+-- Dump completed on 2019-12-06 11:07:08

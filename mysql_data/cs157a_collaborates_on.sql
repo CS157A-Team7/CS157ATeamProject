@@ -38,7 +38,7 @@ CREATE TABLE `collaborates_on` (
 
 LOCK TABLES `collaborates_on` WRITE;
 /*!40000 ALTER TABLE `collaborates_on` DISABLE KEYS */;
-INSERT INTO `collaborates_on` VALUES ('dr.seuss@yahoo.com',125),('eric@gmail.com',125),('freddy.krueger@hotmail.com',125),('jason.vorhees@gmail.com',125),('sam@aol.com',125),('Yu.Narukami@yahoo.jp',125),('alice@aol.com',129),('ash_ketchum@hotmail.com',129),('bill@aol.com',129),('emily@yahoo.com',129),('josh.peck@aol.com',129),('sam@aol.com',129),('sarah@gmail.com',129),('ted.mosby@gmail.com',129),('Ted.Stroehmann@yahoo.com',129);
+INSERT INTO `collaborates_on` VALUES ('bill@aol.com',33),('dr.seuss@yahoo.com',125),('eric@gmail.com',125),('freddy.krueger@hotmail.com',125),('jason.vorhees@gmail.com',125),('sam@aol.com',125),('Yu.Narukami@yahoo.jp',125),('alice@aol.com',129),('ash_ketchum@hotmail.com',129),('bill@aol.com',129),('emily@yahoo.com',129),('josh.peck@aol.com',129),('sam@aol.com',129),('sarah@gmail.com',129),('ted.mosby@gmail.com',129),('Ted.Stroehmann@yahoo.com',129);
 /*!40000 ALTER TABLE `collaborates_on` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:17:00
+-- Dump completed on 2019-12-06 11:07:09

@@ -35,7 +35,7 @@ CREATE TABLE `account_has_lists` (
 
 LOCK TABLES `account_has_lists` WRITE;
 /*!40000 ALTER TABLE `account_has_lists` DISABLE KEYS */;
-INSERT INTO `account_has_lists` VALUES ('alice@aol.com',6),('alice@aol.com',11),('ash_ketchum@hotmail.com',3),('ash_ketchum@hotmail.com',15),('ash_ketchum@hotmail.com',19),('ash_ketchum@hotmail.com',20),('ash_ketchum@hotmail.com',21),('bill@aol.com',12),('bill@aol.com',28),('ching-seh.wu@sjsu.edu',14),('ching-seh.wu@sjsu.edu',23),('ching-seh.wu@sjsu.edu',29),('dr.seuss@yahoo.com',1),('dr.seuss@yahoo.com',16),('emily@yahoo.com',12),('emily@yahoo.com',22),('emily@yahoo.com',28),('eric@gmail.com',7),('eric@gmail.com',8),('freddy.krueger@hotmail.com',24),('josh.peck@aol.com',5),('sam@aol.com',30),('sarah@gmail.com',2),('sarah@gmail.com',13),('sarah@gmail.com',17),('sarah@gmail.com',25),('sarah@gmail.com',28),('ted.mosby@gmail.com',18),('Ted.Stroehmann@yahoo.com',3),('Ted.Stroehmann@yahoo.com',4),('Yu.Narukami@yahoo.jp',9),('Yu.Narukami@yahoo.jp',10);
+INSERT INTO `account_has_lists` VALUES ('alice@aol.com',6),('alice@aol.com',11),('ash_ketchum@hotmail.com',3),('ash_ketchum@hotmail.com',15),('ash_ketchum@hotmail.com',19),('ash_ketchum@hotmail.com',20),('ash_ketchum@hotmail.com',21),('bill@aol.com',12),('bill@aol.com',28),('ching-seh.wu@sjsu.edu',14),('ching-seh.wu@sjsu.edu',23),('ching-seh.wu@sjsu.edu',29),('dr.seuss@yahoo.com',1),('dr.seuss@yahoo.com',16),('emily@yahoo.com',12),('emily@yahoo.com',22),('emily@yahoo.com',28),('eric@gmail.com',7),('eric@gmail.com',8),('freddy.krueger@hotmail.com',24),('holly@gmail.com',31),('holly@gmail.com',32),('josh.peck@aol.com',5),('sam@aol.com',30),('sarah@gmail.com',2),('sarah@gmail.com',13),('sarah@gmail.com',17),('sarah@gmail.com',25),('sarah@gmail.com',28),('ted.mosby@gmail.com',18),('Ted.Stroehmann@yahoo.com',3),('Ted.Stroehmann@yahoo.com',4),('Yu.Narukami@yahoo.jp',9),('Yu.Narukami@yahoo.jp',10);
 /*!40000 ALTER TABLE `account_has_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:51
+-- Dump completed on 2019-12-06 11:07:05

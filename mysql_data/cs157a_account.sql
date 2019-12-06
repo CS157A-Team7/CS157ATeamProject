@@ -35,7 +35,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('alice@aol.com','bobAndAlice!'),('another.user@gmail.com','StrongPassword123!'),('ash_ketchum@hotmail.com','Gotta5atch3m@ll'),('bill@aol.com','iambill'),('ching-seh.wu@sjsu.edu','1234'),('dr.seuss@yahoo.com','catIndaHat!'),('emily@yahoo.com','0987654321'),('eric@gmail.com','h75i603s'),('freddy.krueger@hotmail.com','Nightmare@ElmStreet'),('jason.vorhees@gmail.com','fridaydathirteenth!'),('josh.peck@aol.com','bobAndAlice!'),('sam@aol.com','5amIam'),('sarah@gmail.com','54321'),('ted.mosby@gmail.com','howImetYourMother!'),('Ted.Stroehmann@yahoo.com','5omething@boutMary'),('Yu.Narukami@yahoo.jp','Persona!');
+INSERT INTO `account` VALUES ('alice@aol.com','be291720fb3b4f4ddef85fc9d5db360e'),('another.user@gmail.com','c1e72a9a76e78ffc5ec25c22097ad117'),('ash_ketchum@hotmail.com','e7ceed80cb0072b5bb44a382942917bb'),('bill@aol.com','88e160ee7c882b8ec6ac8ea47a210a3a'),('ching-seh.wu@sjsu.edu','06e36249d57436bf1c963c7cdf859b5b'),('dr.seuss@yahoo.com','9b32418c826a7de5f5baac397b4ed2cb'),('emily@yahoo.com','f8b4cbcfe2c53245815a786f684d4947'),('eric@gmail.com','6e1614a7baf22cc87c0dd35fc0f12e93'),('freddy.krueger@hotmail.com','76e081625586fccc2d54054f25050406'),('holly@gmail.com','b9fbb86c466fd803bab77478aa31c419'),('jason.vorhees@gmail.com','e778a0d2ef87f07fc0599c0b40ecd33e'),('josh.peck@aol.com','1f6f7b5b7fe94d315d2b500b0d0d1b16'),('sam@aol.com','2e6a07f88296238ce947210b950b44bd'),('sarah@gmail.com','7b7d5e7bc24697940b9985b7033f0b2e'),('ted.mosby@gmail.com','22300e065792ab59064d0fe676fe880a'),('Ted.Stroehmann@yahoo.com','22300e065792ab59064d0fe676fe880a'),('Yu.Narukami@yahoo.jp','a704dd0f4fd563425c0c83588b97eaba');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 15:16:50
+-- Dump completed on 2019-12-06 11:07:04
